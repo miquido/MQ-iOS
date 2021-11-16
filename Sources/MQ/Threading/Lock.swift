@@ -1,14 +1,18 @@
+import struct Darwin.time_t
+
 /// Abstraction over locking.
 ///
 /// ``Lock`` interface can be used as an abstraction over any locking mechanism.
 /// Its specific behavior depends on concrete implementation of a lock.
 public struct Lock {
 
-	// Acquire the lock with given deadline.
-	// Deadline argument as Epoch time - number of seconds from January 1st 1970.
+	// Acquire the lock waiting indefinetly if needed.
+	private var acquire: () -> Void
+	// Acquire the lock before given deadline while waiting or continue.
+	// Deadline argument is epoch time - number of seconds from January 1st 1970.
 	// Deadline verification depends on concrete implementation of a lock.
 	// Returns `true` if acquiring lock succeed and `false` otherwise.
-	private var acquireBefore: (Int) -> Bool
+	private var acquireBefore: (time_t) -> Bool
 	// Try acquire the lock if able.
 	// Returns `true` if acquiring lock succeed and `false` otherwise.
 	private var tryAcquire: () -> Bool
@@ -24,8 +28,11 @@ public struct Lock {
 	/// thread sanitizer enabled.
 	///
 	/// - Parameters:
-	///   - acquireBefore: Function used to acquire the lock aka lock. Locking should occur before provided deadline. Function should block
-	///   current thread until lock becomes acquired or deadline passes.
+	///   - acquire: Function used to acquire the lock aka lock.
+	///   Function should block current thread until lock becomes acquired.
+	///   - acquireBefore: Function used to acquire the lock before given deadline
+	///   aka lock before. Locking should occur before provided deadline.
+	///   Function should block current thread until lock becomes acquired or deadline passes.
 	///   Function should return `true` when locking succeeded or `false` otherwise.
 	///   - tryAcquire: Function used to acquire the lock if able aka try lock.
 	///   Locking should occur if possible and not block current thread.
@@ -33,10 +40,12 @@ public struct Lock {
 	///   - release: Function used to release the lock aka unlock.
 	///   It should have no effect when lock was not acquired and unlock otherwhise.
 	public init(
-		acquireBefore: @escaping (Int) -> Bool,
+		acquire: @escaping () -> Void,
+		acquireBefore: @escaping (time_t) -> Bool,
 		tryAcquire: @escaping () -> Bool,
 		release: @escaping () -> Void
 	) {
+		self.acquire = acquire
 		self.acquireBefore = acquireBefore
 		self.tryAcquire = tryAcquire
 		self.release = release
@@ -51,7 +60,26 @@ extension Lock {
 	///
 	/// - warning: This method will never timeout. It will wait for acquiring the lock indefinetly.
 	public func lock() {
-		_ = self.acquireBefore(.max)
+		self.acquire()
+	}
+
+	/// Acquire the lock with given deadline requirement.
+	///
+	/// This method call will block current thread until lock becomes acquired
+	/// or dedline requirement fails. Thread execution will be continued
+	/// without acquiring the lock after the deadline time.
+	///
+	/// - warning: This method will continue thread execution
+	/// without acquiring the lock when deadline requirement fails.
+	///
+	/// - Parameter deadline: Deadline for acquiring the lock.
+	/// Representerd by epoch time - number of seconds from January 1st 1970.
+	///
+	/// - Returns: `true` if acquiring lock was successful, `false` otherwise.
+	public func lock(
+		before deadline: time_t
+	) -> Bool {
+		self.acquireBefore(deadline)
 	}
 
 	/// Try acquire the lock if able.
@@ -114,8 +142,13 @@ extension Lock {
 			_ lock: NSLock = .init()
 		) -> Self {
 			Self(
+				acquire: lock.lock,
 				acquireBefore: { time in
-					lock.lock(before: .init(timeIntervalSince1970: TimeInterval(time)))
+					lock.lock(
+						before: .init(
+							timeIntervalSince1970: TimeInterval(time)
+						)
+					)
 				},
 				tryAcquire: lock.try,
 				release: lock.unlock
@@ -133,8 +166,13 @@ extension Lock {
 			_ lock: NSRecursiveLock = .init()
 		) -> Self {
 			Self(
+				acquire: lock.lock,
 				acquireBefore: { time in
-					lock.lock(before: .init(timeIntervalSince1970: TimeInterval(time)))
+					lock.lock(
+						before: .init(
+							timeIntervalSince1970: TimeInterval(time)
+						)
+					)
 				},
 				tryAcquire: lock.try,
 				release: lock.unlock
