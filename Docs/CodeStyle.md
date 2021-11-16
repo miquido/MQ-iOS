@@ -1,0 +1,3 @@
+# MQ code style
+
+To be completed...
