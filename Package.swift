@@ -14,7 +14,7 @@ let package = Package(
 		.library(
 			name: "MQ",
 			targets: [
-				"MQ",
+				"MQ"
 			]
 		)
 	],
@@ -25,7 +25,7 @@ let package = Package(
 		.testTarget(
 			name: "MQTests",
 			dependencies: [
-				"MQ",
+				"MQ"
 			]
 		),
 	],

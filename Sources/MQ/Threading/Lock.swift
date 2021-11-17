@@ -10,7 +10,7 @@ public struct Lock {
 	private var acquire: () -> Void
 	// Acquire the lock before given deadline while waiting or continue.
 	// Deadline argument is epoch time in nanoseconds
-  // which is number of nanoseconds from January 1st 1970.
+	// which is number of nanoseconds from January 1st 1970.
 	// Deadline verification depends on concrete implementation of a lock.
 	// Returns `true` if acquiring lock succeed and `false` otherwise.
 	private var acquireBefore: (UInt64) -> Bool
@@ -34,8 +34,8 @@ public struct Lock {
 	///   - acquireBefore: Function used to acquire the lock before given deadline
 	///   aka lock before. Locking should occur before provided deadline.
 	///   Function should block current thread until lock becomes acquired or deadline passes.
-  ///   Deadline time is represented by epoch time in nanoseconds
-  ///   which is number of nanoseconds from January 1st 1970.
+	///   Deadline time is represented by epoch time in nanoseconds
+	///   which is number of nanoseconds from January 1st 1970.
 	///   Function should return `true` when locking succeeded or `false` otherwise.
 	///   - tryAcquire: Function used to acquire the lock if able aka try lock.
 	///   Locking should occur if possible and not block current thread.
@@ -77,7 +77,7 @@ extension Lock {
 	///
 	/// - Parameter deadline: Deadline for acquiring the lock.
 	/// Representerd by epoch time nanoseconds
-  /// which is number of nanoseconds from January 1st 1970.
+	/// which is number of nanoseconds from January 1st 1970.
 	///
 	/// - Returns: `true` if acquiring lock was successful, `false` otherwise.
 	public func lock(
@@ -174,7 +174,7 @@ extension Lock {
 				acquireBefore: { time in
 					lock.lock(
 						before: .init(
-              timeIntervalSince1970: TimeInterval(nanosec: time)
+							timeIntervalSince1970: TimeInterval(nanosec: time)
 						)
 					)
 				},
@@ -187,7 +187,7 @@ extension Lock {
 
 extension TimeInterval {
 
-  fileprivate init(nanosec: UInt64) {
-    self.init(nanosec * 1000000000)
-  }
+	fileprivate init(nanosec: UInt64) {
+		self.init(nanosec * 1_000_000_000)
+	}
 }
