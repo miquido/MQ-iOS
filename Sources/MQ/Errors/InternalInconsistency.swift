@@ -11,7 +11,7 @@ public struct InternalInconsistency: TheError {
 	///   Filled automatically based on compile time constants.
 	///   - line: Line in given source code file.
 	///   Filled automatically based on compile time constants.
-	/// - Returns: New instance of ``InrernalInconsistency`` error with given context.
+	/// - Returns: New instance of ``InternalInconsistency`` error with given context.
 	public static func error(
 		message: StaticString,
 		file: StaticString = #fileID,

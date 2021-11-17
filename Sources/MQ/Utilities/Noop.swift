@@ -1,5 +1,11 @@
-/// Convenient placeholder for no operation.
-public let noop: Void = ()
+/// Convenient placeholder for a function that does nothing
+/// or no operation..
+///
+/// Convenient function placeholder for no operation.
+/// Does nothing and has empty implementation.
+///
+/// - Note: Empty methods are striped out in release builds.
+public func noop() {}
 
 /// Convenient placeholder for a function that does nothing.
 ///
@@ -12,7 +18,7 @@ public let noop: Void = ()
 public func noop<A1>(
 	_: A1
 ) {
-	noop
+  noop()
 }
 
 /// Convenient placeholder for a function that does nothing.
@@ -29,7 +35,7 @@ public func noop<A1, A2>(
 	_: A1,
 	_: A2
 ) {
-	noop
+  noop()
 }
 
 /// Convenient placeholder for a function that does nothing.
@@ -48,7 +54,7 @@ public func noop<A1, A2, A3>(
 	_: A2,
 	_: A3
 ) {
-	noop
+  noop()
 }
 
 /// Convenient placeholder for a function that does nothing.
@@ -68,7 +74,9 @@ public func noop<A1, A2, A3, A4>(
 	_: A2,
 	_: A3,
 	_: A4
-) { noop }
+) {
+  noop()
+}
 
 /// Convenient placeholder for a function that does nothing.
 ///
@@ -90,7 +98,7 @@ public func noop<A1, A2, A3, A4, A5>(
 	_: A4,
 	_: A5
 ) {
-	noop
+  noop()
 }
 
 /// Convenient placeholder for a function that does nothing.
@@ -115,7 +123,7 @@ public func noop<A1, A2, A3, A4, A5, A6>(
 	_: A5,
 	_: A6
 ) {
-	noop
+  noop()
 }
 
 /// Convenient placeholder for a function that does nothing.
@@ -142,7 +150,7 @@ public func noop<A1, A2, A3, A4, A5, A6, A7>(
 	_: A6,
 	_: A7
 ) {
-	noop
+  noop()
 }
 
 /// Convenient placeholder for a function that does nothing.
@@ -171,5 +179,5 @@ public func noop<A1, A2, A3, A4, A5, A6, A7, A8>(
 	_: A7,
 	_: A8
 ) {
-	noop
+  noop()
 }

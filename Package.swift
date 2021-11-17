@@ -13,13 +13,21 @@ let package = Package(
 	products: [
 		.library(
 			name: "MQ",
-			targets: ["MQ"]
+			targets: [
+				"MQ",
+			]
 		)
 	],
 	targets: [
 		.target(
 			name: "MQ"
-		)
+		),
+		.testTarget(
+			name: "MQTests",
+			dependencies: [
+				"MQ",
+			]
+		),
 	],
 	swiftLanguageVersions: [.v5]
 )

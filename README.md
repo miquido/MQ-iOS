@@ -2,7 +2,7 @@
 
 ## MQ is:
 - a Swift package providing extensions for the language
-- a foundation for writing code in certain style
+- a foundation for writing code in a certain style
 
 ## MQ is not:
 - a place to put commonly used fragments of code

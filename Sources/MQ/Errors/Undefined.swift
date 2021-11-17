@@ -1,6 +1,6 @@
 /// ``TheError`` for undefined errors.
 ///
-/// ``Undefined`` error can occur when some undefined failiure occurs.
+/// ``Undefined`` error can occur when some undefined failure occurs.
 /// It is ment to be used as a default error for cases where cause of failure is not defined.
 public struct Undefined: TheError {
 

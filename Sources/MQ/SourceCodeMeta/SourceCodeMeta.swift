@@ -90,7 +90,7 @@ extension SourceCodeMeta: CustomStringConvertible {
 			description.append("\n \" \(self.message.asString) ")
 		}
 		else {
-			noop
+			noop()
 		}
 
 		return description
