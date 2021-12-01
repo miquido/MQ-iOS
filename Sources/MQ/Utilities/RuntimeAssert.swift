@@ -6,20 +6,24 @@
 /// - warning: If you replace this implementation you are responsible for release behaviour of it.
 ///
 /// - warning: Implementation exchange is not thread safe.
-public var runtimeAssertionMethod:
-	(
-		_ condition: () -> Bool,
-		_ message: String,
-		_ file: StaticString,
-		_ line: UInt
-	) -> Void = { condition, message, file, line in
-		assert(
-			condition(),
-			message,
-			file: file,
-			line: line
-		)
-	}
+public var runtimeAssertionMethod: RuntimeAssertionMethod? = { condition, message, file, line in
+	assert(
+		condition(),
+		message,
+		file: file,
+		line: line
+	)
+}
+
+/// Type of ``runtimeAssertionMethod``.
+///
+/// Used to replace runtime assertion implementation.
+public typealias RuntimeAssertionMethod = (
+	_ condition: () -> Bool,
+	_ message: String,
+	_ file: StaticString,
+	_ line: UInt
+) -> Void
 
 /// Replacement for Swift ``assert``.
 ///
@@ -39,7 +43,7 @@ public func runtimeAssert(
 	file: StaticString = #fileID,
 	line: UInt = #line
 ) {
-	runtimeAssertionMethod(
+	runtimeAssertionMethod?(
 		condition,
 		message,
 		file,
@@ -63,7 +67,7 @@ public func runtimeAssertionFailure(
 	file: StaticString = #fileID,
 	line: UInt = #line
 ) {
-	runtimeAssertionMethod(
+	runtimeAssertionMethod?(
 		{ false },
 		message,
 		file,

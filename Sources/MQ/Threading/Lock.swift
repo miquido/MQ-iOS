@@ -183,13 +183,13 @@ extension Lock {
 			)
 		}
 	}
-#endif
 
-extension TimeInterval {
+	extension TimeInterval {
 
-	fileprivate init(
-		nanosec: UInt64
-	) {
-		self.init(TimeInterval(nanosec) / 1_000_000_000)
+		fileprivate init(
+			nanosec: UInt64
+		) {
+			self.init(TimeInterval(nanosec) / 1_000_000_000)
+		}
 	}
-}
+#endif
