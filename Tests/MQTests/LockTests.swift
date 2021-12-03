@@ -1,5 +1,5 @@
-import XCTest
 import MQ
+import XCTest
 
 final class LockTests: XCTestCase {
 
@@ -7,8 +7,13 @@ final class LockTests: XCTestCase {
 		var result: Void?
 		let _: Lock = .init(
 			acquire: { result = void },
-      acquireBefore: { _ in result = void; return false },
-			tryAcquire: { result = void; return false },
+			acquireBefore: { _ in result = void
+				return false
+			},
+			tryAcquire: {
+				result = void
+				return false
+			},
 			release: { result = void }
 		)
 
@@ -16,9 +21,9 @@ final class LockTests: XCTestCase {
 	}
 
 	func test_lock_callsAcquire() {
-    var result: Void?
+		var result: Void?
 		let lock: Lock = .init(
-      acquire: { result = void },
+			acquire: { result = void },
 			acquireBefore: unimplemented(),
 			tryAcquire: unimplemented(),
 			release: unimplemented()
@@ -26,108 +31,113 @@ final class LockTests: XCTestCase {
 
 		lock.lock()
 
-    XCTAssertNotNil(result)
+		XCTAssertNotNil(result)
 	}
 
-  func test_unlock_callsRelease() {
-    var result: Void?
-    let lock: Lock = .init(
-      acquire: unimplemented(),
-      acquireBefore: unimplemented(),
-      tryAcquire: unimplemented(),
-      release: { result = void }
-    )
+	func test_unlock_callsRelease() {
+		var result: Void?
+		let lock: Lock = .init(
+			acquire: unimplemented(),
+			acquireBefore: unimplemented(),
+			tryAcquire: unimplemented(),
+			release: { result = void }
+		)
 
-    lock.unlock()
+		lock.unlock()
 
-    XCTAssertNotNil(result)
-  }
+		XCTAssertNotNil(result)
+	}
 
-  func test_lockBefore_callsAcquireBefore() {
-    var result: Void?
-    let lock: Lock = .init(
-      acquire: unimplemented(),
-      acquireBefore: { _ in result = void; return false },
-      tryAcquire: unimplemented(),
-      release: unimplemented()
-    )
+	func test_lockBefore_callsAcquireBefore() {
+		var result: Void?
+		let lock: Lock = .init(
+			acquire: unimplemented(),
+			acquireBefore: { _ in result = void
+				return false
+			},
+			tryAcquire: unimplemented(),
+			release: unimplemented()
+		)
 
-    _ = lock.lock(before: 0)
+		_ = lock.lock(before: 0)
 
-    XCTAssertNotNil(result)
-  }
+		XCTAssertNotNil(result)
+	}
 
-  func test_lockBefore_returnsAcquireBeforeResult() {
-    var result: Bool?
-    let lock: Lock = .init(
-      acquire: unimplemented(),
-      acquireBefore: always(false),
-      tryAcquire: unimplemented(),
-      release: unimplemented()
-    )
+	func test_lockBefore_returnsAcquireBeforeResult() {
+		var result: Bool?
+		let lock: Lock = .init(
+			acquire: unimplemented(),
+			acquireBefore: always(false),
+			tryAcquire: unimplemented(),
+			release: unimplemented()
+		)
 
-    result = lock.lock(before: 0)
+		result = lock.lock(before: 0)
 
-    XCTAssertEqual(result, false)
-  }
+		XCTAssertEqual(result, false)
+	}
 
-  func test_trylock_callsTryAcquire() {
-    var result: Void?
-    let lock: Lock = .init(
-      acquire: unimplemented(),
-      acquireBefore: unimplemented(),
-      tryAcquire: { result = void; return false },
-      release: unimplemented()
-    )
+	func test_trylock_callsTryAcquire() {
+		var result: Void?
+		let lock: Lock = .init(
+			acquire: unimplemented(),
+			acquireBefore: unimplemented(),
+			tryAcquire: {
+				result = void
+				return false
+			},
+			release: unimplemented()
+		)
 
-    _ = lock.tryLock()
+		_ = lock.tryLock()
 
-    XCTAssertNotNil(result)
-  }
+		XCTAssertNotNil(result)
+	}
 
-  func test_trylock_returnsTryAcquireResult() {
-    var result: Bool?
-    let lock: Lock = .init(
-      acquire: unimplemented(),
-      acquireBefore: unimplemented(),
-      tryAcquire: always(false),
-      release: unimplemented()
-    )
+	func test_trylock_returnsTryAcquireResult() {
+		var result: Bool?
+		let lock: Lock = .init(
+			acquire: unimplemented(),
+			acquireBefore: unimplemented(),
+			tryAcquire: always(false),
+			release: unimplemented()
+		)
 
-    result = lock.tryLock()
+		result = lock.tryLock()
 
-    XCTAssertEqual(result, false)
-  }
+		XCTAssertEqual(result, false)
+	}
 
-  func test_withLock_acquiresLockBeforeExecutingTask() {
-    var result: Void?
-    let lock: Lock = .init(
-      acquire: { result = void },
-      acquireBefore: unimplemented(),
-      tryAcquire: unimplemented(),
-      release: noop
-    )
+	func test_withLock_acquiresLockBeforeExecutingTask() {
+		var result: Void?
+		let lock: Lock = .init(
+			acquire: { result = void },
+			acquireBefore: unimplemented(),
+			tryAcquire: unimplemented(),
+			release: noop
+		)
 
-    lock
-      .withLock {
-        XCTAssertNotNil(result)
-      }
-  }
+		lock
+			.withLock {
+				XCTAssertNotNil(result)
+			}
+	}
 
-  func test_withLock_acquiresLockAfterExecutingTask() {
-    var result: Void?
-    let lock: Lock = .init(
-      acquire: noop,
-      acquireBefore: unimplemented(),
-      tryAcquire: unimplemented(),
-      release: { result = void }
-    )
+	func test_withLock_acquiresLockAfterExecutingTask() {
+		var result: Void?
+		let lock: Lock = .init(
+			acquire: noop,
+			acquireBefore: unimplemented(),
+			tryAcquire: unimplemented(),
+			release: { result = void }
+		)
 
-    lock
-      .withLock {
-        XCTAssertNil(result)
-      }
-    
-    XCTAssertNotNil(result)
-  }
+		lock
+			.withLock {
+				XCTAssertNil(result)
+			}
+
+		XCTAssertNotNil(result)
+	}
 }

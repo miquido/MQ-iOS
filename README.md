@@ -1,5 +1,9 @@
 # MQ
 
+[![Platforms](https://img.shields.io/badge/platform-iOS%20|%20iPadOS%20|%20macOS-gray.svg?style=flat)]()
+[![Swift Package Manager compatible](https://img.shields.io/badge/Swift%20Package%20Manager-compatible-brightgreen.svg)](https://github.com/apple/swift-package-manager)
+[![SwiftVersion](https://img.shields.io/badge/Swift-5.5-brightgreen.svg)]()
+
 ## MQ is:
 - a Swift package providing extensions for the language
 - a foundation for writing code in a certain style
