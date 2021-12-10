@@ -1,7 +1,8 @@
 /// ``TheError`` for undefined errors.
 ///
 /// ``Undefined`` error can occur when some undefined failure occurs.
-/// It is ment to be used as a default error for cases where cause of failure is not defined.
+/// It is ment to be used as a default error for cases where
+/// cause of failure is not known or not defined.
 public struct Undefined: TheError {
 
 	/// Create instance of ``Undefined`` error.
@@ -24,7 +25,8 @@ public struct Undefined: TheError {
 				message: message,
 				file: file,
 				line: line
-			)
+			),
+			underlyingError: underlyingError
 		)
 	}
 
