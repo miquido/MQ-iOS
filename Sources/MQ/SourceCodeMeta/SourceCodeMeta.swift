@@ -106,7 +106,7 @@ extension SourceCodeMeta: CustomDebugStringConvertible {
 				.appending(
 					self.values
 						.reduce(
-							into: "",
+							into: String(),
 							{ (result, value) in
 								result.append("\n - \(value.key): \(value.value)")
 							}
