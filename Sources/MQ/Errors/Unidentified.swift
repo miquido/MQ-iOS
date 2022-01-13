@@ -27,7 +27,8 @@ public struct Unidentified: TheError {
         message: message,
         file: file,
         line: line
-      ),
+      )
+      .with(underlyingError, for: "underlyingError"),
       underlyingError: underlyingError
     )
   }
@@ -36,4 +37,32 @@ public struct Unidentified: TheError {
   public var context: SourceCodeContext
   /// Underlying, unrecognized error if any.
   public var underlyingError: Error
+}
+
+extension Error {
+
+  /// Convert the error to ``Unidentified`` error.
+  ///
+  /// `underlyingError` of newly created error will be this error instance.
+  ///
+  /// - Parameters:
+  ///   - message: Message associated with this error conversion.
+  ///   Default value is "Unidentified".
+  ///   - file: Source code file identifier.
+  ///   Filled automatically based on compile time constants.
+  ///   - line: Line in given source code file.
+  ///   Filled automatically based on compile time constants.
+  /// - Returns: New instance of ``Unidentified`` error with given context.
+  public func asUnidentified(
+    message: StaticString = "Unidentified",
+    file: StaticString = #fileID,
+    line: UInt = #line
+  ) -> Unidentified {
+    .error(
+      message: message,
+      underlyingError: self,
+      file: file,
+      line: line
+    )
+  }
 }
