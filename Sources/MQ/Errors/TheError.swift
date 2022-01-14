@@ -24,17 +24,18 @@ extension TheError {
 	///
 	/// - Parameters:
 	///   - message: Optional, additional message associated with process termination.
+	///   Default is empty.
 	///   - file: Source code file identifier.
 	///   Filled automatically based on compile time constants.
 	///   - line: Line in given source code file.
 	///   Filled automatically based on compile time constants.
 	public func asFatalError(
-		message: String? = .none,
+		message: @autoclosure () -> String = .init(),
 		file: StaticString = #fileID,
 		line: UInt = #line
 	) -> Never {
 		fatalError(
-			"\(message.map { "\($0)\n" } ?? "\n")\(self.debugDescription)",
+			"\(message())\n\(self.debugDescription)",
 			file: file,
 			line: line
 		)
@@ -48,19 +49,42 @@ extension TheError {
 	///
 	/// - Parameters:
 	///   - message: Optional, additional message associated with process termination.
+	///   Default is empty.
 	///   - file: Source code file identifier.
 	///   Filled automatically based on compile time constants.
 	///   - line: Line in given source code file.
 	///   Filled automatically based on compile time constants.
 	public func asAssertionFailure(
-		message: String? = .none,
+		message: @autoclosure () -> String = .init(),
 		file: StaticString = #fileID,
 		line: UInt = #line
 	) {
 		runtimeAssertionFailure(
-			message: "\(message.map { "\($0)\n" } ?? "\n")\(self.debugDescription)",
+			message: "\(message())\n\(self.debugDescription)",
 			file: file,
 			line: line
+		)
+	}
+
+	/// Treat this error as a breakpoint in debug builds.
+	///
+	/// Trigger a breakpoint with this errror as a cause.
+	/// It has no effect on release builds and debug builds without debugger attached.
+	///
+	/// - Parameters:
+	///   - message: Optional, additional message associated with breakpoint message.
+	///   Default is empty.
+	///   - file: Source code file identifier.
+	///   Filled automatically based on compile time constants.
+	///   - line: Line in given source code file.
+	///   Filled automatically based on compile time constants.
+	public func asBreakpoint(
+		message: @autoclosure () -> String = .init(),
+		file: StaticString = #fileID,
+		line: UInt = #line
+	) {
+		breakpoint(
+			"\(file):\(line) \(message())\n\(self.debugDescription)"
 		)
 	}
 

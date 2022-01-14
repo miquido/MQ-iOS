@@ -23,9 +23,9 @@ public func always<V>(
 /// - Returns: Function throwing always the same error.
 @inlinable
 public func alwaysThrowing<V>(
-  _ error: @autoclosure @escaping () -> Error
+	_ error: @autoclosure @escaping () -> Error
 ) -> () throws -> V {
-  { throw error() }
+	{ throw error() }
 }
 
 /// Convenience function helper for returning always the same value.
@@ -38,9 +38,9 @@ public func alwaysThrowing<V>(
 /// - Returns: Function returning always the same value.
 @inlinable
 public func alwaysAsync<V>(
-  _ value: @autoclosure @escaping () -> V
+	_ value: @autoclosure @escaping () -> V
 ) -> () async -> V {
-  { value() }
+	{ value() }
 }
 
 /// Convenience function helper for throwing always the same error.
@@ -53,9 +53,9 @@ public func alwaysAsync<V>(
 /// - Returns: Function throwing always the same error.
 @inlinable
 public func alwaysAsyncThrowing<V>(
-  _ error: @autoclosure @escaping () -> Error
+	_ error: @autoclosure @escaping () -> Error
 ) -> () async throws -> V {
-  { throw error() }
+	{ throw error() }
 }
 
 /// Convenience function helper for returning always the same value.
@@ -71,7 +71,7 @@ public func always<A1, V>(
 	_ value: @autoclosure @escaping () -> V
 ) -> (A1) -> V {
 	{ _ in
-    value()
+		value()
 	}
 }
 
@@ -85,11 +85,11 @@ public func always<A1, V>(
 /// - Returns: Function throwing always the same error.
 @inlinable
 public func alwaysThrowing<A1, V>(
-  _ error: @autoclosure @escaping () -> Error
+	_ error: @autoclosure @escaping () -> Error
 ) -> (A1) throws -> V {
-  { _ in
-    throw error()
-  }
+	{ _ in
+		throw error()
+	}
 }
 
 /// Convenience function helper for returning always the same value.
@@ -102,11 +102,11 @@ public func alwaysThrowing<A1, V>(
 /// - Returns: Function returning always the same value.
 @inlinable
 public func always<A1, V>(
-  _ value: @autoclosure @escaping () -> V
+	_ value: @autoclosure @escaping () -> V
 ) -> (inout A1) -> V {
-  { _ in
-    value()
-  }
+	{ _ in
+		value()
+	}
 }
 
 /// Convenience function helper for throwing always the same error.
@@ -119,11 +119,11 @@ public func always<A1, V>(
 /// - Returns: Function throwing always the same error.
 @inlinable
 public func alwaysThrowing<A1, V>(
-  _ error: @autoclosure @escaping () -> Error
+	_ error: @autoclosure @escaping () -> Error
 ) -> (inout A1) throws -> V {
-  { _ in
-    throw error()
-  }
+	{ _ in
+		throw error()
+	}
 }
 
 /// Convenience function helper for returning always the same value.
@@ -136,11 +136,11 @@ public func alwaysThrowing<A1, V>(
 /// - Returns: Function returning always the same value.
 @inlinable
 public func alwaysAsync<A1, V>(
-  _ value: @autoclosure @escaping () -> V
+	_ value: @autoclosure @escaping () -> V
 ) -> (A1) async -> V {
-  { _ in
-    value()
-  }
+	{ _ in
+		value()
+	}
 }
 
 /// Convenience function helper for throwing always the same error.
@@ -153,11 +153,11 @@ public func alwaysAsync<A1, V>(
 /// - Returns: Function throwing always the same error.
 @inlinable
 public func alwaysAsyncThrowing<A1, V>(
-  _ error: @autoclosure @escaping () -> Error
+	_ error: @autoclosure @escaping () -> Error
 ) -> (A1) async throws -> V {
-  { _ in
-    throw error()
-  }
+	{ _ in
+		throw error()
+	}
 }
 
 /// Convenience function helper for returning always the same value.
@@ -170,11 +170,11 @@ public func alwaysAsyncThrowing<A1, V>(
 /// - Returns: Function returning always the same value.
 @inlinable
 public func always<A1, A2, V>(
-  _ value: @autoclosure @escaping () -> V
+	_ value: @autoclosure @escaping () -> V
 ) -> (A1, A2) -> V {
-  { _, _ in
-    value()
-  }
+	{ _, _ in
+		value()
+	}
 }
 
 /// Convenience function helper for throwing always the same error.
@@ -190,7 +190,7 @@ public func alwaysThrowing<A1, A2, V>(
 	_ error: @autoclosure @escaping () -> Error
 ) -> (A1, A2) throws -> V {
 	{ _, _ in
-    throw error()
+		throw error()
 	}
 }
 
@@ -204,11 +204,11 @@ public func alwaysThrowing<A1, A2, V>(
 /// - Returns: Function returning always the same value.
 @inlinable
 public func alwaysAsync<A1, A2, V>(
-  _ value: @autoclosure @escaping () -> V
+	_ value: @autoclosure @escaping () -> V
 ) -> (A1, A2) async -> V {
-  { _, _ in
-    value()
-  }
+	{ _, _ in
+		value()
+	}
 }
 
 /// Convenience function helper for throwing always the same error.
@@ -221,11 +221,11 @@ public func alwaysAsync<A1, A2, V>(
 /// - Returns: Function throwing always the same error.
 @inlinable
 public func alwaysAsyncThrowing<A1, A2, V>(
-  _ error: @autoclosure @escaping () -> Error
+	_ error: @autoclosure @escaping () -> Error
 ) -> (A1, A2) async throws -> V {
-  { _, _ in
-    throw error()
-  }
+	{ _, _ in
+		throw error()
+	}
 }
 
 /// Convenience function helper for returning always the same value.
@@ -238,11 +238,11 @@ public func alwaysAsyncThrowing<A1, A2, V>(
 /// - Returns: Function returning always the same value.
 @inlinable
 public func always<A1, A2, A3, V>(
-  _ value: @autoclosure @escaping () -> V
+	_ value: @autoclosure @escaping () -> V
 ) -> (A1, A2, A3) -> V {
-  { _, _, _ in
-    value()
-  }
+	{ _, _, _ in
+		value()
+	}
 }
 
 /// Convenience function helper for throwing always the same error.
@@ -258,7 +258,7 @@ public func alwaysThrowing<A1, A2, A3, V>(
 	_ error: @autoclosure @escaping () -> Error
 ) -> (A1, A2, A3) throws -> V {
 	{ _, _, _ in
-    throw error()
+		throw error()
 	}
 }
 
@@ -272,11 +272,11 @@ public func alwaysThrowing<A1, A2, A3, V>(
 /// - Returns: Function returning always the same value.
 @inlinable
 public func alwaysAsync<A1, A2, A3, V>(
-  _ value: @autoclosure @escaping () -> V
+	_ value: @autoclosure @escaping () -> V
 ) -> (A1, A2, A3) async -> V {
-  { _, _, _ in
-    value()
-  }
+	{ _, _, _ in
+		value()
+	}
 }
 
 /// Convenience function helper for throwing always the same error.
@@ -289,11 +289,11 @@ public func alwaysAsync<A1, A2, A3, V>(
 /// - Returns: Function throwing always the same error.
 @inlinable
 public func alwaysAsyncThrowing<A1, A2, A3, V>(
-  _ error: @autoclosure @escaping () -> Error
+	_ error: @autoclosure @escaping () -> Error
 ) -> (A1, A2, A3) async throws -> V {
-  { _, _, _ in
-    throw error()
-  }
+	{ _, _, _ in
+		throw error()
+	}
 }
 
 /// Convenience function helper for returning always the same value.
@@ -306,11 +306,11 @@ public func alwaysAsyncThrowing<A1, A2, A3, V>(
 /// - Returns: Function returning always the same value.
 @inlinable
 public func always<A1, A2, A3, A4, V>(
-  _ value: @autoclosure @escaping () -> V
+	_ value: @autoclosure @escaping () -> V
 ) -> (A1, A2, A3, A4) -> V {
-  { _, _, _, _ in
-    value()
-  }
+	{ _, _, _, _ in
+		value()
+	}
 }
 
 /// Convenience function helper for throwing always the same error.
@@ -326,7 +326,7 @@ public func alwaysThrowing<A1, A2, A3, A4, V>(
 	_ error: @autoclosure @escaping () -> Error
 ) -> (A1, A2, A3, A4) throws -> V {
 	{ _, _, _, _ in
-    throw error()
+		throw error()
 	}
 }
 
@@ -340,11 +340,11 @@ public func alwaysThrowing<A1, A2, A3, A4, V>(
 /// - Returns: Function returning always the same value.
 @inlinable
 public func alwaysAsync<A1, A2, A3, A4, V>(
-  _ value: @autoclosure @escaping () -> V
+	_ value: @autoclosure @escaping () -> V
 ) -> (A1, A2, A3, A4) async -> V {
-  { _, _, _, _ in
-    value()
-  }
+	{ _, _, _, _ in
+		value()
+	}
 }
 
 /// Convenience function helper for throwing always the same error.
@@ -357,11 +357,11 @@ public func alwaysAsync<A1, A2, A3, A4, V>(
 /// - Returns: Function throwing always the same error.
 @inlinable
 public func alwaysAsyncThrowing<A1, A2, A3, A4, V>(
-  _ error: @autoclosure @escaping () -> Error
+	_ error: @autoclosure @escaping () -> Error
 ) -> (A1, A2, A3, A4) async throws -> V {
-  { _, _, _, _ in
-    throw error()
-  }
+	{ _, _, _, _ in
+		throw error()
+	}
 }
 
 /// Convenience function helper for returning always the same value.
@@ -374,11 +374,11 @@ public func alwaysAsyncThrowing<A1, A2, A3, A4, V>(
 /// - Returns: Function returning always the same value.
 @inlinable
 public func always<A1, A2, A3, A4, A5, V>(
-  _ value: @autoclosure @escaping () -> V
+	_ value: @autoclosure @escaping () -> V
 ) -> (A1, A2, A3, A4, A5) -> V {
-  { _, _, _, _, _ in
-    value()
-  }
+	{ _, _, _, _, _ in
+		value()
+	}
 }
 
 /// Convenience function helper for throwing always the same error.
@@ -394,7 +394,7 @@ public func alwaysThrowing<A1, A2, A3, A4, A5, V>(
 	_ error: @autoclosure @escaping () -> Error
 ) -> (A1, A2, A3, A4, A5) throws -> V {
 	{ _, _, _, _, _ in
-    throw error()
+		throw error()
 	}
 }
 
@@ -408,11 +408,11 @@ public func alwaysThrowing<A1, A2, A3, A4, A5, V>(
 /// - Returns: Function returning always the same value.
 @inlinable
 public func alwaysAsync<A1, A2, A3, A4, A5, V>(
-  _ value: @autoclosure @escaping () -> V
+	_ value: @autoclosure @escaping () -> V
 ) -> (A1, A2, A3, A4, A5) async -> V {
-  { _, _, _, _, _ in
-    value()
-  }
+	{ _, _, _, _, _ in
+		value()
+	}
 }
 
 /// Convenience function helper for throwing always the same error.
@@ -425,11 +425,11 @@ public func alwaysAsync<A1, A2, A3, A4, A5, V>(
 /// - Returns: Function throwing always the same error.
 @inlinable
 public func alwaysAsyncThrowing<A1, A2, A3, A4, A5, V>(
-  _ error: @autoclosure @escaping () -> Error
+	_ error: @autoclosure @escaping () -> Error
 ) -> (A1, A2, A3, A4, A5) async throws -> V {
-  { _, _, _, _, _ in
-    throw error()
-  }
+	{ _, _, _, _, _ in
+		throw error()
+	}
 }
 
 /// Convenience function helper for returning always the same value.
@@ -445,7 +445,7 @@ public func always<A1, A2, A3, A4, A5, A6, V>(
 	_ value: @autoclosure @escaping () -> V
 ) -> (A1, A2, A3, A4, A5, A6) -> V {
 	{ _, _, _, _, _, _ in
-    value()
+		value()
 	}
 }
 
@@ -459,11 +459,11 @@ public func always<A1, A2, A3, A4, A5, A6, V>(
 /// - Returns: Function throwing always the same error.
 @inlinable
 public func alwaysThrowing<A1, A2, A3, A4, A5, A6, V>(
-  _ error: @autoclosure @escaping () -> Error
+	_ error: @autoclosure @escaping () -> Error
 ) -> (A1, A2, A3, A4, A5, A6) throws -> V {
-  { _, _, _, _, _, _ in
-    throw error()
-  }
+	{ _, _, _, _, _, _ in
+		throw error()
+	}
 }
 
 /// Convenience function helper for returning always the same value.
@@ -476,11 +476,11 @@ public func alwaysThrowing<A1, A2, A3, A4, A5, A6, V>(
 /// - Returns: Function returning always the same value.
 @inlinable
 public func alwaysAsync<A1, A2, A3, A4, A5, A6, V>(
-  _ value: @autoclosure @escaping () -> V
+	_ value: @autoclosure @escaping () -> V
 ) -> (A1, A2, A3, A4, A5, A6) async -> V {
-  { _, _, _, _, _, _ in
-    value()
-  }
+	{ _, _, _, _, _, _ in
+		value()
+	}
 }
 
 /// Convenience function helper for throwing always the same error.
@@ -493,11 +493,11 @@ public func alwaysAsync<A1, A2, A3, A4, A5, A6, V>(
 /// - Returns: Function throwing always the same error.
 @inlinable
 public func alwaysAsyncThrowing<A1, A2, A3, A4, A5, A6, V>(
-  _ error: @autoclosure @escaping () -> Error
+	_ error: @autoclosure @escaping () -> Error
 ) -> (A1, A2, A3, A4, A5, A6) async throws -> V {
-  { _, _, _, _, _, _ in
-    throw error()
-  }
+	{ _, _, _, _, _, _ in
+		throw error()
+	}
 }
 
 /// Convenience function helper for returning always the same value.
@@ -510,11 +510,11 @@ public func alwaysAsyncThrowing<A1, A2, A3, A4, A5, A6, V>(
 /// - Returns: Function returning always the same value.
 @inlinable
 public func always<A1, A2, A3, A4, A5, A6, A7, V>(
-  _ value: @autoclosure @escaping () -> V
+	_ value: @autoclosure @escaping () -> V
 ) -> (A1, A2, A3, A4, A5, A6, A7) -> V {
-  { _, _, _, _, _, _, _ in
-    value()
-  }
+	{ _, _, _, _, _, _, _ in
+		value()
+	}
 }
 
 /// Convenience function helper for throwing always the same error.
@@ -530,7 +530,7 @@ public func alwaysThrowing<A1, A2, A3, A4, A5, A6, A7, V>(
 	_ error: @autoclosure @escaping () -> Error
 ) -> (A1, A2, A3, A4, A5, A6, A7) throws -> V {
 	{ _, _, _, _, _, _, _ in
-    throw error()
+		throw error()
 	}
 }
 
@@ -544,11 +544,11 @@ public func alwaysThrowing<A1, A2, A3, A4, A5, A6, A7, V>(
 /// - Returns: Function returning always the same value.
 @inlinable
 public func alwaysAsync<A1, A2, A3, A4, A5, A6, A7, V>(
-  _ value: @autoclosure @escaping () -> V
+	_ value: @autoclosure @escaping () -> V
 ) -> (A1, A2, A3, A4, A5, A6, A7) async -> V {
-  { _, _, _, _, _, _, _ in
-    value()
-  }
+	{ _, _, _, _, _, _, _ in
+		value()
+	}
 }
 
 /// Convenience function helper for throwing always the same error.
@@ -561,11 +561,11 @@ public func alwaysAsync<A1, A2, A3, A4, A5, A6, A7, V>(
 /// - Returns: Function throwing always the same error.
 @inlinable
 public func alwaysAsyncThrowing<A1, A2, A3, A4, A5, A6, A7, V>(
-  _ error: @autoclosure @escaping () -> Error
+	_ error: @autoclosure @escaping () -> Error
 ) -> (A1, A2, A3, A4, A5, A6, A7) async throws -> V {
-  { _, _, _, _, _, _, _ in
-    throw error()
-  }
+	{ _, _, _, _, _, _, _ in
+		throw error()
+	}
 }
 
 /// Convenience function helper for returning always the same value.
@@ -581,7 +581,7 @@ public func always<A1, A2, A3, A4, A5, A6, A7, A8, V>(
 	_ value: @autoclosure @escaping () -> V
 ) -> (A1, A2, A3, A4, A5, A6, A7, A8) -> V {
 	{ _, _, _, _, _, _, _, _ in
-    value()
+		value()
 	}
 }
 
@@ -595,11 +595,11 @@ public func always<A1, A2, A3, A4, A5, A6, A7, A8, V>(
 /// - Returns: Function throwing always the same error.
 @inlinable
 public func alwaysThrowing<A1, A2, A3, A4, A5, A6, A7, A8, V>(
-  _ error: @autoclosure @escaping () -> Error
+	_ error: @autoclosure @escaping () -> Error
 ) -> (A1, A2, A3, A4, A5, A6, A7, A8) throws -> V {
-  { _, _, _, _, _, _, _, _ in
-    throw error()
-  }
+	{ _, _, _, _, _, _, _, _ in
+		throw error()
+	}
 }
 
 /// Convenience function helper for returning always the same value.
@@ -612,11 +612,11 @@ public func alwaysThrowing<A1, A2, A3, A4, A5, A6, A7, A8, V>(
 /// - Returns: Function returning always the same value.
 @inlinable
 public func alwaysAsync<A1, A2, A3, A4, A5, A6, A7, A8, V>(
-  _ value: @autoclosure @escaping () -> V
+	_ value: @autoclosure @escaping () -> V
 ) -> (A1, A2, A3, A4, A5, A6, A7, A8) async -> V {
-  { _, _, _, _, _, _, _, _ in
-    value()
-  }
+	{ _, _, _, _, _, _, _, _ in
+		value()
+	}
 }
 
 /// Convenience function helper for throwing always the same error.
@@ -629,9 +629,9 @@ public func alwaysAsync<A1, A2, A3, A4, A5, A6, A7, A8, V>(
 /// - Returns: Function throwing always the same error.
 @inlinable
 public func alwaysAsyncThrowing<A1, A2, A3, A4, A5, A6, A7, A8, V>(
-  _ error: @autoclosure @escaping () -> Error
+	_ error: @autoclosure @escaping () -> Error
 ) -> (A1, A2, A3, A4, A5, A6, A7, A8) async throws -> V {
-  { _, _, _, _, _, _, _, _ in
-    throw error()
-  }
+	{ _, _, _, _, _, _, _, _ in
+		throw error()
+	}
 }

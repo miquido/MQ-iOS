@@ -6,7 +6,7 @@
 ///
 /// - Note: Empty methods are striped out in release builds.
 @inlinable
-public func noop() { /* noop */ }
+public func noop() { /* noop */  }
 
 /// Convenient placeholder for a function that does nothing
 /// or no operation..
@@ -16,7 +16,7 @@ public func noop() { /* noop */ }
 ///
 /// - Note: Empty methods are striped out in release builds.
 @inlinable
-public func noop() async { /* noop */ }
+public func noop() async { /* noop */  }
 
 /// Convenient placeholder for a function that does nothing.
 ///
@@ -29,7 +29,7 @@ public func noop() async { /* noop */ }
 @inlinable
 public func noop<A1>(
 	_: A1
-) { /* noop */ }
+) { /* noop */  }
 
 /// Convenient placeholder for a function that does nothing.
 ///
@@ -41,8 +41,8 @@ public func noop<A1>(
 /// - Parameter _: placeholder
 @inlinable
 public func noop<A1>(
-  _: inout A1
-) { /* noop */ }
+	_: inout A1
+) { /* noop */  }
 
 /// Convenient placeholder for a function that does nothing.
 ///
@@ -54,8 +54,8 @@ public func noop<A1>(
 /// - Parameter _: placeholder
 @inlinable
 public func noop<A1>(
-  _: A1
-) async { /* noop */ }
+	_: A1
+) async { /* noop */  }
 
 /// Convenient placeholder for a function that does nothing.
 ///
@@ -71,7 +71,7 @@ public func noop<A1>(
 public func noop<A1, A2>(
 	_: A1,
 	_: A2
-) { /* noop */ }
+) { /* noop */  }
 
 /// Convenient placeholder for a function that does nothing.
 ///
@@ -85,9 +85,9 @@ public func noop<A1, A2>(
 ///   - _: placeholder
 @inlinable
 public func noop<A1, A2>(
-  _: A1,
-  _: A2
-) async { /* noop */ }
+	_: A1,
+	_: A2
+) async { /* noop */  }
 
 /// Convenient placeholder for a function that does nothing.
 ///
@@ -105,7 +105,7 @@ public func noop<A1, A2, A3>(
 	_: A1,
 	_: A2,
 	_: A3
-) { /* noop */ }
+) { /* noop */  }
 
 /// Convenient placeholder for a function that does nothing.
 ///
@@ -120,10 +120,10 @@ public func noop<A1, A2, A3>(
 ///   - _: placeholder
 @inlinable
 public func noop<A1, A2, A3>(
-  _: A1,
-  _: A2,
-  _: A3
-) async { /* noop */ }
+	_: A1,
+	_: A2,
+	_: A3
+) async { /* noop */  }
 
 /// Convenient placeholder for a function that does nothing.
 ///
@@ -143,7 +143,7 @@ public func noop<A1, A2, A3, A4>(
 	_: A2,
 	_: A3,
 	_: A4
-) { /* noop */ }
+) { /* noop */  }
 
 /// Convenient placeholder for a function that does nothing.
 ///
@@ -159,11 +159,11 @@ public func noop<A1, A2, A3, A4>(
 ///   - _: placeholder
 @inlinable
 public func noop<A1, A2, A3, A4>(
-  _: A1,
-  _: A2,
-  _: A3,
-  _: A4
-) async { /* noop */ }
+	_: A1,
+	_: A2,
+	_: A3,
+	_: A4
+) async { /* noop */  }
 
 /// Convenient placeholder for a function that does nothing.
 ///
@@ -185,7 +185,7 @@ public func noop<A1, A2, A3, A4, A5>(
 	_: A3,
 	_: A4,
 	_: A5
-) { /* noop */ }
+) { /* noop */  }
 
 /// Convenient placeholder for a function that does nothing.
 ///
@@ -202,12 +202,12 @@ public func noop<A1, A2, A3, A4, A5>(
 ///   - _: placeholder
 @inlinable
 public func noop<A1, A2, A3, A4, A5>(
-  _: A1,
-  _: A2,
-  _: A3,
-  _: A4,
-  _: A5
-) async { /* noop */ }
+	_: A1,
+	_: A2,
+	_: A3,
+	_: A4,
+	_: A5
+) async { /* noop */  }
 
 /// Convenient placeholder for a function that does nothing.
 ///
@@ -231,7 +231,7 @@ public func noop<A1, A2, A3, A4, A5, A6>(
 	_: A4,
 	_: A5,
 	_: A6
-) { /* noop */ }
+) { /* noop */  }
 
 /// Convenient placeholder for a function that does nothing.
 ///
@@ -249,13 +249,13 @@ public func noop<A1, A2, A3, A4, A5, A6>(
 ///   - _: placeholder
 @inlinable
 public func noop<A1, A2, A3, A4, A5, A6>(
-  _: A1,
-  _: A2,
-  _: A3,
-  _: A4,
-  _: A5,
-  _: A6
-) async { /* noop */ }
+	_: A1,
+	_: A2,
+	_: A3,
+	_: A4,
+	_: A5,
+	_: A6
+) async { /* noop */  }
 
 /// Convenient placeholder for a function that does nothing.
 ///
@@ -281,7 +281,7 @@ public func noop<A1, A2, A3, A4, A5, A6, A7>(
 	_: A5,
 	_: A6,
 	_: A7
-) { /* noop */ }
+) { /* noop */  }
 
 /// Convenient placeholder for a function that does nothing.
 ///
@@ -300,14 +300,14 @@ public func noop<A1, A2, A3, A4, A5, A6, A7>(
 ///   - _: placeholder
 @inlinable
 public func noop<A1, A2, A3, A4, A5, A6, A7>(
-  _: A1,
-  _: A2,
-  _: A3,
-  _: A4,
-  _: A5,
-  _: A6,
-  _: A7
-) async { /* noop */ }
+	_: A1,
+	_: A2,
+	_: A3,
+	_: A4,
+	_: A5,
+	_: A6,
+	_: A7
+) async { /* noop */  }
 
 /// Convenient placeholder for a function that does nothing.
 ///
@@ -335,7 +335,7 @@ public func noop<A1, A2, A3, A4, A5, A6, A7, A8>(
 	_: A6,
 	_: A7,
 	_: A8
-) { /* noop */ }
+) { /* noop */  }
 
 /// Convenient placeholder for a function that does nothing.
 ///
@@ -355,12 +355,12 @@ public func noop<A1, A2, A3, A4, A5, A6, A7, A8>(
 ///   - _: placeholder
 @inlinable
 public func noop<A1, A2, A3, A4, A5, A6, A7, A8>(
-  _: A1,
-  _: A2,
-  _: A3,
-  _: A4,
-  _: A5,
-  _: A6,
-  _: A7,
-  _: A8
-) async { /* noop */ }
+	_: A1,
+	_: A2,
+	_: A3,
+	_: A4,
+	_: A5,
+	_: A6,
+	_: A7,
+	_: A8
+) async { /* noop */  }
