@@ -80,7 +80,7 @@ public func unimplementedAsync() -> Never {
 /// - Parameters:
 ///   Filled automatically based on compile time constants.
 /// - Throws: Unimplemented error.
-/// - Returns: Unimplemented error as result.
+/// - Returns: Function throwing always the same ``Unimplemented`` error when executed.
 public func unimplementedThrowing() throws -> Error {
 	throw Unimplemented.error()
 }
@@ -93,7 +93,7 @@ public func unimplementedThrowing() throws -> Error {
 /// - Parameters:
 ///   Filled automatically based on compile time constants.
 /// - Throws: Unimplemented error.
-/// - Returns: Unimplemented error as a result.
+/// - Returns: Function throwing always the same ``Unimplemented`` error when executed.
 public func unimplementedAsyncThrowing() async throws -> Error {
 	throw Unimplemented.error()
 }
@@ -150,7 +150,7 @@ public func unimplementedAsync<R>() -> () async -> R {
 ///
 /// - Parameters:
 ///   Filled automatically based on compile time constants.
-/// - Returns: Placeholder function which terminates the process with ``Unimplemented`` error when executed.
+/// - Returns: Function throwing always the same ``Unimplemented`` error when executed.
 public func unimplementedThrow<R>() -> () throws -> R {
 	{
 		throw Unimplemented.error()
@@ -164,7 +164,7 @@ public func unimplementedThrow<R>() -> () throws -> R {
 ///
 /// - Parameters:
 ///   Filled automatically based on compile time constants.
-/// - Returns: Placeholder function which terminates the process with ``Unimplemented`` error when executed.
+/// - Returns: Function throwing always the same ``Unimplemented`` error when executed.
 public func unimplementedAsyncThrow<R>() -> () async throws -> R {
 	{
 		throw Unimplemented.error()
@@ -223,7 +223,7 @@ public func unimplementedAsync<A1, R>() -> (A1) async -> R {
 ///
 /// - Parameters:
 ///   Filled automatically based on compile time constants.
-/// - Returns: Placeholder function which terminates the process with ``Unimplemented`` error when executed.
+/// - Returns: Function throwing always the same ``Unimplemented`` error when executed.
 public func unimplementedThrowing<A1, R>() -> (A1) throws -> R {
 	{ _ in
 		throw Unimplemented.error()
@@ -237,8 +237,8 @@ public func unimplementedThrowing<A1, R>() -> (A1) throws -> R {
 ///
 /// - Parameters:
 ///   Filled automatically based on compile time constants.
-/// - Returns: Placeholder function which terminates the process with ``Unimplemented`` error when executed.
-public func unimplementedThrowing<A1, R>() -> (A1) async throws -> R {
+/// - Returns: Function throwing always the same ``Unimplemented`` error when executed.
+public func unimplementedAsyncThrowing<A1, R>() -> (A1) async throws -> R {
 	{ _ in
 		throw Unimplemented.error()
 	}
@@ -296,7 +296,7 @@ public func unimplementedAsync<A1, A2, R>() -> (A1, A2) async -> R {
 ///
 /// - Parameters:
 ///   Filled automatically based on compile time constants.
-/// - Returns: Placeholder function which terminates the process with ``Unimplemented`` error when executed.
+/// - Returns: Function throwing always the same ``Unimplemented`` error when executed.
 public func unimplementedThrowing<A1, A2, R>() -> (A1, A2) throws -> R {
 	{ _, _ in
 		throw Unimplemented.error()
@@ -310,8 +310,8 @@ public func unimplementedThrowing<A1, A2, R>() -> (A1, A2) throws -> R {
 ///
 /// - Parameters:
 ///   Filled automatically based on compile time constants.
-/// - Returns: Placeholder function which terminates the process with ``Unimplemented`` error when executed.
-public func unimplementedThrowing<A1, A2, R>() -> (A1, A2) async throws -> R {
+/// - Returns: Function throwing always the same ``Unimplemented`` error when executed.
+public func unimplementedAsyncThrowing<A1, A2, R>() -> (A1, A2) async throws -> R {
 	{ _, _ in
 		throw Unimplemented.error()
 	}
@@ -369,7 +369,7 @@ public func unimplementedAsync<A1, A2, A3, R>() -> (A1, A2, A3) async -> R {
 ///
 /// - Parameters:
 ///   Filled automatically based on compile time constants.
-/// - Returns: Placeholder function which terminates the process with ``Unimplemented`` error when executed.
+/// - Returns: Function throwing always the same ``Unimplemented`` error when executed.
 public func unimplementedThrowing<A1, A2, A3, R>() -> (A1, A2, A3) throws -> R {
 	{ _, _, _ in
 		throw Unimplemented.error()
@@ -383,7 +383,7 @@ public func unimplementedThrowing<A1, A2, A3, R>() -> (A1, A2, A3) throws -> R {
 ///
 /// - Parameters:
 ///   Filled automatically based on compile time constants.
-/// - Returns: Placeholder function which terminates the process with ``Unimplemented`` error when executed.
+/// - Returns: Function throwing always the same ``Unimplemented`` error when executed.
 public func unimplementedAsyncThrowing<A1, A2, A3, R>() -> (A1, A2, A3) async throws -> R {
 	{ _, _, _ in
 		throw Unimplemented.error()
@@ -442,7 +442,7 @@ public func unimplementedAsync<A1, A2, A3, A4, R>() -> (A1, A2, A3, A4) async ->
 ///
 /// - Parameters:
 ///   Filled automatically based on compile time constants.
-/// - Returns: Placeholder function which terminates the process with ``Unimplemented`` error when executed.
+/// - Returns: Function throwing always the same ``Unimplemented`` error when executed.
 public func unimplementedThrowing<A1, A2, A3, A4, R>() -> (A1, A2, A3, A4) throws -> R {
 	{ _, _, _, _ in
 		throw Unimplemented.error()
@@ -456,7 +456,7 @@ public func unimplementedThrowing<A1, A2, A3, A4, R>() -> (A1, A2, A3, A4) throw
 ///
 /// - Parameters:
 ///   Filled automatically based on compile time constants.
-/// - Returns: Placeholder function which terminates the process with ``Unimplemented`` error when executed.
+/// - Returns: Function throwing always the same ``Unimplemented`` error when executed.
 public func unimplementedAsyncThrowing<A1, A2, A3, A4, R>() -> (A1, A2, A3, A4) async throws -> R {
 	{ _, _, _, _ in
 		throw Unimplemented.error()
@@ -515,7 +515,7 @@ public func unimplementedAsync<A1, A2, A3, A4, A5, R>() -> (A1, A2, A3, A4, A5) 
 ///
 /// - Parameters:
 ///   Filled automatically based on compile time constants.
-/// - Returns: Placeholder function which terminates the process with ``Unimplemented`` error when executed.
+/// - Returns: Function throwing always the same ``Unimplemented`` error when executed.
 public func unimplementedThrowing<A1, A2, A3, A4, A5, R>() -> (A1, A2, A3, A4, A5) throws -> R {
 	{ _, _, _, _, _ in
 		throw Unimplemented.error()
@@ -529,7 +529,7 @@ public func unimplementedThrowing<A1, A2, A3, A4, A5, R>() -> (A1, A2, A3, A4, A
 ///
 /// - Parameters:
 ///   Filled automatically based on compile time constants.
-/// - Returns: Placeholder function which terminates the process with ``Unimplemented`` error when executed.
+/// - Returns: Function throwing always the same ``Unimplemented`` error when executed.
 public func unimplementedAsyncThrowing<A1, A2, A3, A4, A5, R>() -> (A1, A2, A3, A4, A5) async throws -> R {
 	{ _, _, _, _, _ in
 		throw Unimplemented.error()
@@ -588,7 +588,7 @@ public func unimplementedAsync<A1, A2, A3, A4, A5, A6, R>() -> (A1, A2, A3, A4, 
 ///
 /// - Parameters:
 ///   Filled automatically based on compile time constants.
-/// - Returns: Placeholder function which terminates the process with ``Unimplemented`` error when executed.
+/// - Returns: Function throwing always the same ``Unimplemented`` error when executed.
 public func unimplementedThrowing<A1, A2, A3, A4, A5, A6, R>() -> (A1, A2, A3, A4, A5, A6) throws -> R {
 	{ _, _, _, _, _, _ in
 		throw Unimplemented.error()
@@ -602,7 +602,7 @@ public func unimplementedThrowing<A1, A2, A3, A4, A5, A6, R>() -> (A1, A2, A3, A
 ///
 /// - Parameters:
 ///   Filled automatically based on compile time constants.
-/// - Returns: Placeholder function which terminates the process with ``Unimplemented`` error when executed.
+/// - Returns: Function throwing always the same ``Unimplemented`` error when executed.
 public func unimplementedAsyncThrowing<A1, A2, A3, A4, A5, A6, R>() -> (A1, A2, A3, A4, A5, A6) async throws -> R {
 	{ _, _, _, _, _, _ in
 		throw Unimplemented.error()
@@ -661,7 +661,7 @@ public func unimplementedAsync<A1, A2, A3, A4, A5, A6, A7, R>() -> (A1, A2, A3, 
 ///
 /// - Parameters:
 ///   Filled automatically based on compile time constants.
-/// - Returns: Placeholder function which terminates the process with ``Unimplemented`` error when executed.
+/// - Returns: Function throwing always the same ``Unimplemented`` error when executed.
 public func unimplementedThrowing<A1, A2, A3, A4, A5, A6, A7, R>() -> (A1, A2, A3, A4, A5, A6, A7) throws -> R {
 	{ _, _, _, _, _, _, _ in
 		throw Unimplemented.error()
@@ -675,7 +675,7 @@ public func unimplementedThrowing<A1, A2, A3, A4, A5, A6, A7, R>() -> (A1, A2, A
 ///
 /// - Parameters:
 ///   Filled automatically based on compile time constants.
-/// - Returns: Placeholder function which terminates the process with ``Unimplemented`` error when executed.
+/// - Returns: Function throwing always the same ``Unimplemented`` error when executed.
 public func unimplementedAsyncThrowing<A1, A2, A3, A4, A5, A6, A7, R>() -> (A1, A2, A3, A4, A5, A6, A7) async throws ->
 	R
 {
@@ -736,7 +736,7 @@ public func unimplementedAsync<A1, A2, A3, A4, A5, A6, A7, A8, R>() -> (A1, A2, 
 ///
 /// - Parameters:
 ///   Filled automatically based on compile time constants.
-/// - Returns: Placeholder function which terminates the process with ``Unimplemented`` error when executed.
+/// - Returns: Function throwing always the same ``Unimplemented`` error when executed.
 public func unimplementedThrowing<A1, A2, A3, A4, A5, A6, A7, A8, R>() -> (A1, A2, A3, A4, A5, A6, A7, A8) throws -> R {
 	{ _, _, _, _, _, _, _, _ in
 		throw Unimplemented.error()
@@ -750,7 +750,7 @@ public func unimplementedThrowing<A1, A2, A3, A4, A5, A6, A7, A8, R>() -> (A1, A
 ///
 /// - Parameters:
 ///   Filled automatically based on compile time constants.
-/// - Returns: Placeholder function which terminates the process with ``Unimplemented`` error when executed.
+/// - Returns: Function throwing always the same ``Unimplemented`` error when executed.
 public func unimplementedAsyncThrowing<A1, A2, A3, A4, A5, A6, A7, A8, R>() -> (A1, A2, A3, A4, A5, A6, A7, A8) async
 	throws -> R
 {
