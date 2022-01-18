@@ -58,6 +58,44 @@ public func unimplemented(
 		.asFatalError()
 }
 
+/// Convenient placeholder for unimplemented part of code.
+///
+/// Placeholder for indicating unimplemented async part of code.
+/// Terminates process with ``Unimplemented`` error as the cause.
+///
+/// - Parameters:
+///   Filled automatically based on compile time constants.
+/// - Returns: Never, function terminates the process.
+public func unimplementedAsync() -> Never {
+	Unimplemented
+		.error()
+		.asFatalError()
+}
+
+/// Convenient placeholder for unimplemented part of code.
+///
+/// Placeholder for indicating unimplemented throwing part of code.
+/// Terminates process with ``Unimplemented`` error as the cause.
+///
+/// - Parameters:
+///   Filled automatically based on compile time constants.
+/// - Returns: Never, function terminates the process.
+public func unimplementedThrowing() throws -> Never {
+	throw Unimplemented.error()
+}
+
+/// Convenient placeholder for unimplemented part of code.
+///
+/// Placeholder for indicating unimplemented async throwing part of code.
+/// Terminates process with ``Unimplemented`` error as the cause.
+///
+/// - Parameters:
+///   Filled automatically based on compile time constants.
+/// - Returns: Never, function terminates the process.
+public func unimplementedAsyncThrowing() async throws -> Never {
+	throw Unimplemented.error()
+}
+
 /// Convenient placeholder for unimplemented function.
 ///
 /// Placeholder for a function indicating unimplemented part of code.
@@ -84,6 +122,50 @@ public func unimplemented<R>(
 				line: line
 			)
 			.asFatalError()
+	}
+}
+
+/// Convenient placeholder for unimplemented function.
+///
+/// Placeholder for a function indicating unimplemented async part of code.
+/// Terminates process with ``Unimplemented`` error as the cause when the function becomes executed.
+///
+/// - Parameters:
+///   Filled automatically based on compile time constants.
+/// - Returns: Placeholder function which terminates the process with ``Unimplemented`` error when executed.
+public func unimplementedAsync<R>() -> () async -> R {
+	{
+		Unimplemented
+			.error()
+			.asFatalError()
+	}
+}
+
+/// Convenient placeholder for unimplemented function.
+///
+/// Placeholder for a function indicating unimplemented throwing part of code.
+/// Terminates process with ``Unimplemented`` error as the cause when the function becomes executed.
+///
+/// - Parameters:
+///   Filled automatically based on compile time constants.
+/// - Returns: Placeholder function which terminates the process with ``Unimplemented`` error when executed.
+public func unimplementedThrow<R>() -> () throws -> R {
+	{
+		throw Unimplemented.error()
+	}
+}
+
+/// Convenient placeholder for unimplemented function.
+///
+/// Placeholder for a function indicating unimplemented async throwing part of code.
+/// Terminates process with ``Unimplemented`` error as the cause when the function becomes executed.
+///
+/// - Parameters:
+///   Filled automatically based on compile time constants.
+/// - Returns: Placeholder function which terminates the process with ``Unimplemented`` error when executed.
+public func unimplementedAsyncThrow<R>() -> () async throws -> R {
+	{
+		throw Unimplemented.error()
 	}
 }
 
@@ -118,6 +200,50 @@ public func unimplemented<A1, R>(
 
 /// Convenient placeholder for unimplemented function.
 ///
+/// Placeholder for a function indicating unimplemented async part of code.
+/// Terminates process with ``Unimplemented`` error as the cause when the function becomes executed.
+///
+/// - Parameters:
+///   Filled automatically based on compile time constants.
+/// - Returns: Placeholder function which terminates the process with ``Unimplemented`` error when executed.
+public func unimplementedAsync<A1, R>() -> (A1) async -> R {
+	{ _ in
+		Unimplemented
+			.error()
+			.asFatalError()
+	}
+}
+
+/// Convenient placeholder for unimplemented function.
+///
+/// Placeholder for a function indicating unimplemented throwing part of code.
+/// Terminates process with ``Unimplemented`` error as the cause when the function becomes executed.
+///
+/// - Parameters:
+///   Filled automatically based on compile time constants.
+/// - Returns: Placeholder function which terminates the process with ``Unimplemented`` error when executed.
+public func unimplementedThrowing<A1, R>() -> (A1) throws -> R {
+	{ _ in
+		throw Unimplemented.error()
+	}
+}
+
+/// Convenient placeholder for unimplemented function.
+///
+/// Placeholder for a function indicating unimplemented async throwing part of code.
+/// Terminates process with ``Unimplemented`` error as the cause when the function becomes executed.
+///
+/// - Parameters:
+///   Filled automatically based on compile time constants.
+/// - Returns: Placeholder function which terminates the process with ``Unimplemented`` error when executed.
+public func unimplementedThrowing<A1, R>() -> (A1) async throws -> R {
+	{ _ in
+		throw Unimplemented.error()
+	}
+}
+
+/// Convenient placeholder for unimplemented function.
+///
 /// Placeholder for a function indicating unimplemented part of code.
 /// Terminates process with ``Unimplemented`` error as the cause when the function becomes executed.
 ///
@@ -142,6 +268,50 @@ public func unimplemented<A1, A2, R>(
 				line: line
 			)
 			.asFatalError()
+	}
+}
+
+/// Convenient placeholder for unimplemented function.
+///
+/// Placeholder for a function indicating unimplemented async part of code.
+/// Terminates process with ``Unimplemented`` error as the cause when the function becomes executed.
+///
+/// - Parameters:
+///   Filled automatically based on compile time constants.
+/// - Returns: Placeholder function which terminates the process with ``Unimplemented`` error when executed.
+public func unimplementedAsync<A1, A2, R>() -> (A1, A2) async -> R {
+	{ _, _ in
+		Unimplemented
+			.error()
+			.asFatalError()
+	}
+}
+
+/// Convenient placeholder for unimplemented function.
+///
+/// Placeholder for a function indicating unimplemented throwing part of code.
+/// Terminates process with ``Unimplemented`` error as the cause when the function becomes executed.
+///
+/// - Parameters:
+///   Filled automatically based on compile time constants.
+/// - Returns: Placeholder function which terminates the process with ``Unimplemented`` error when executed.
+public func unimplementedThrowing<A1, A2, R>() -> (A1, A2) throws -> R {
+	{ _, _ in
+		throw Unimplemented.error()
+	}
+}
+
+/// Convenient placeholder for unimplemented function.
+///
+/// Placeholder for a function indicating unimplemented async throwing part of code.
+/// Terminates process with ``Unimplemented`` error as the cause when the function becomes executed.
+///
+/// - Parameters:
+///   Filled automatically based on compile time constants.
+/// - Returns: Placeholder function which terminates the process with ``Unimplemented`` error when executed.
+public func unimplementedThrowing<A1, A2, R>() -> (A1, A2) async throws-> R {
+	{ _, _ in
+		throw Unimplemented.error()
 	}
 }
 
@@ -176,6 +346,50 @@ public func unimplemented<A1, A2, A3, R>(
 
 /// Convenient placeholder for unimplemented function.
 ///
+/// Placeholder for a function indicating unimplemented async part of code.
+/// Terminates process with ``Unimplemented`` error as the cause when the function becomes executed.
+///
+/// - Parameters:
+///   Filled automatically based on compile time constants.
+/// - Returns: Placeholder function which terminates the process with ``Unimplemented`` error when executed.
+public func unimplementedAsync<A1, A2, A3, R>() -> (A1, A2, A3) async -> R {
+	{ _, _, _ in
+		Unimplemented
+			.error()
+			.asFatalError()
+	}
+}
+
+/// Convenient placeholder for unimplemented function.
+///
+/// Placeholder for a function indicating unimplemented throwing part of code.
+/// Terminates process with ``Unimplemented`` error as the cause when the function becomes executed.
+///
+/// - Parameters:
+///   Filled automatically based on compile time constants.
+/// - Returns: Placeholder function which terminates the process with ``Unimplemented`` error when executed.
+public func unimplementedThrowing<A1, A2, A3, R>() -> (A1, A2, A3) throws -> R {
+	{ _, _, _ in
+		throw Unimplemented.error()
+	}
+}
+
+/// Convenient placeholder for unimplemented function.
+///
+/// Placeholder for a function indicating unimplemented async throwing part of code.
+/// Terminates process with ``Unimplemented`` error as the cause when the function becomes executed.
+///
+/// - Parameters:
+///   Filled automatically based on compile time constants.
+/// - Returns: Placeholder function which terminates the process with ``Unimplemented`` error when executed.
+public func unimplementedAsyncThrowing<A1, A2, A3, R>() -> (A1, A2, A3) async throws -> R {
+	{ _, _, _ in
+		throw Unimplemented.error()
+	}
+}
+
+/// Convenient placeholder for unimplemented function.
+///
 /// Placeholder for a function indicating unimplemented part of code.
 /// Terminates process with ``Unimplemented`` error as the cause when the function becomes executed.
 ///
@@ -200,6 +414,50 @@ public func unimplemented<A1, A2, A3, A4, R>(
 				line: line
 			)
 			.asFatalError()
+	}
+}
+
+/// Convenient placeholder for unimplemented function.
+///
+/// Placeholder for a function indicating unimplemented async part of code.
+/// Terminates process with ``Unimplemented`` error as the cause when the function becomes executed.
+///
+/// - Parameters:
+///   Filled automatically based on compile time constants.
+/// - Returns: Placeholder function which terminates the process with ``Unimplemented`` error when executed.
+public func unimplementedAsync<A1, A2, A3, A4, R>() -> (A1, A2, A3, A4) async -> R {
+	{ _, _, _, _ in
+		Unimplemented
+			.error()
+			.asFatalError()
+	}
+}
+
+/// Convenient placeholder for unimplemented function.
+///
+/// Placeholder for a function indicating unimplemented throwing part of code.
+/// Terminates process with ``Unimplemented`` error as the cause when the function becomes executed.
+///
+/// - Parameters:
+///   Filled automatically based on compile time constants.
+/// - Returns: Placeholder function which terminates the process with ``Unimplemented`` error when executed.
+public func unimplementedThrowing<A1, A2, A3, A4, R>() -> (A1, A2, A3, A4) throws -> R {
+	{ _, _, _, _ in
+		throw Unimplemented.error()
+	}
+}
+
+/// Convenient placeholder for unimplemented function.
+///
+/// Placeholder for a function indicating unimplemented async throwing part of code.
+/// Terminates process with ``Unimplemented`` error as the cause when the function becomes executed.
+///
+/// - Parameters:
+///   Filled automatically based on compile time constants.
+/// - Returns: Placeholder function which terminates the process with ``Unimplemented`` error when executed.
+public func unimplementedAsyncThrowing<A1, A2, A3, A4, R>() -> (A1, A2, A3, A4) async throws -> R {
+	{ _, _, _, _ in
+		throw Unimplemented.error()
 	}
 }
 
@@ -234,6 +492,50 @@ public func unimplemented<A1, A2, A3, A4, A5, R>(
 
 /// Convenient placeholder for unimplemented function.
 ///
+/// Placeholder for a function indicating unimplemented async part of code.
+/// Terminates process with ``Unimplemented`` error as the cause when the function becomes executed.
+///
+/// - Parameters:
+///   Filled automatically based on compile time constants.
+/// - Returns: Placeholder function which terminates the process with ``Unimplemented`` error when executed.
+public func unimplementedAsync<A1, A2, A3, A4, A5, R>() -> (A1, A2, A3, A4, A5) async -> R {
+	{ _, _, _, _, _ in
+		Unimplemented
+			.error()
+			.asFatalError()
+	}
+}
+
+/// Convenient placeholder for unimplemented function.
+///
+/// Placeholder for a function indicating unimplemented throwing part of code.
+/// Terminates process with ``Unimplemented`` error as the cause when the function becomes executed.
+///
+/// - Parameters:
+///   Filled automatically based on compile time constants.
+/// - Returns: Placeholder function which terminates the process with ``Unimplemented`` error when executed.
+public func unimplementedThrowing<A1, A2, A3, A4, A5, R>() -> (A1, A2, A3, A4, A5) throws -> R {
+	{ _, _, _, _, _ in
+		throw Unimplemented.error()
+	}
+}
+
+/// Convenient placeholder for unimplemented function.
+///
+/// Placeholder for a function indicating unimplemented async throwing part of code.
+/// Terminates process with ``Unimplemented`` error as the cause when the function becomes executed.
+///
+/// - Parameters:
+///   Filled automatically based on compile time constants.
+/// - Returns: Placeholder function which terminates the process with ``Unimplemented`` error when executed.
+public func unimplementedAsyncThrowing<A1, A2, A3, A4, A5, R>() -> (A1, A2, A3, A4, A5) async throws -> R {
+	{ _, _, _, _, _ in
+		throw Unimplemented.error()
+	}
+}
+
+/// Convenient placeholder for unimplemented function.
+///
 /// Placeholder for a function indicating unimplemented part of code.
 /// Terminates process with ``Unimplemented`` error as the cause when the function becomes executed.
 ///
@@ -258,6 +560,50 @@ public func unimplemented<A1, A2, A3, A4, A5, A6, R>(
 				line: line
 			)
 			.asFatalError()
+	}
+}
+
+/// Convenient placeholder for unimplemented function.
+///
+/// Placeholder for a function indicating unimplemented async part of code.
+/// Terminates process with ``Unimplemented`` error as the cause when the function becomes executed.
+///
+/// - Parameters:
+///   Filled automatically based on compile time constants.
+/// - Returns: Placeholder function which terminates the process with ``Unimplemented`` error when executed.
+public func unimplementedAsync<A1, A2, A3, A4, A5, A6, R>() -> (A1, A2, A3, A4, A5, A6) async -> R {
+	{ _, _, _, _, _, _ in
+		Unimplemented
+			.error()
+			.asFatalError()
+	}
+}
+
+/// Convenient placeholder for unimplemented function.
+///
+/// Placeholder for a function indicating unimplemented throwing part of code.
+/// Terminates process with ``Unimplemented`` error as the cause when the function becomes executed.
+///
+/// - Parameters:
+///   Filled automatically based on compile time constants.
+/// - Returns: Placeholder function which terminates the process with ``Unimplemented`` error when executed.
+public func unimplementedThrowing<A1, A2, A3, A4, A5, A6, R>() -> (A1, A2, A3, A4, A5, A6) throws -> R {
+	{ _, _, _, _, _, _ in
+		throw Unimplemented.error()
+	}
+}
+
+/// Convenient placeholder for unimplemented function.
+///
+/// Placeholder for a function indicating unimplemented async throwing part of code.
+/// Terminates process with ``Unimplemented`` error as the cause when the function becomes executed.
+///
+/// - Parameters:
+///   Filled automatically based on compile time constants.
+/// - Returns: Placeholder function which terminates the process with ``Unimplemented`` error when executed.
+public func unimplementedAsyncThrowing<A1, A2, A3, A4, A5, A6, R>() -> (A1, A2, A3, A4, A5, A6) async throws -> R {
+	{ _, _, _, _, _, _ in
+		throw Unimplemented.error()
 	}
 }
 
@@ -292,6 +638,50 @@ public func unimplemented<A1, A2, A3, A4, A5, A6, A7, R>(
 
 /// Convenient placeholder for unimplemented function.
 ///
+/// Placeholder for a function indicating unimplemented async part of code.
+/// Terminates process with ``Unimplemented`` error as the cause when the function becomes executed.
+///
+/// - Parameters:
+///   Filled automatically based on compile time constants.
+/// - Returns: Placeholder function which terminates the process with ``Unimplemented`` error when executed.
+public func unimplementedAsync<A1, A2, A3, A4, A5, A6, A7, R>() -> (A1, A2, A3, A4, A5, A6, A7) async -> R {
+	{ _, _, _, _, _, _, _ in
+		Unimplemented
+			.error()
+			.asFatalError()
+	}
+}
+
+/// Convenient placeholder for unimplemented function.
+///
+/// Placeholder for a function indicating unimplemented throwing part of code.
+/// Terminates process with ``Unimplemented`` error as the cause when the function becomes executed.
+///
+/// - Parameters:
+///   Filled automatically based on compile time constants.
+/// - Returns: Placeholder function which terminates the process with ``Unimplemented`` error when executed.
+public func unimplementedThrowing<A1, A2, A3, A4, A5, A6, A7, R>() -> (A1, A2, A3, A4, A5, A6, A7) throws -> R {
+	{ _, _, _, _, _, _, _ in
+		throws Unimplemented.error()
+	}
+}
+
+/// Convenient placeholder for unimplemented function.
+///
+/// Placeholder for a function indicating unimplemented async throwing part of code.
+/// Terminates process with ``Unimplemented`` error as the cause when the function becomes executed.
+///
+/// - Parameters:
+///   Filled automatically based on compile time constants.
+/// - Returns: Placeholder function which terminates the process with ``Unimplemented`` error when executed.
+public func unimplementedAsyncThrowing<A1, A2, A3, A4, A5, A6, A7, R>() -> (A1, A2, A3, A4, A5, A6, A7) async throws -> R {
+	{ _, _, _, _, _, _, _ in
+		throws Unimplemented.error()
+	}
+}
+
+/// Convenient placeholder for unimplemented function.
+///
 /// Placeholder for a function indicating unimplemented part of code.
 /// Terminates process with ``Unimplemented`` error as the cause when the function becomes executed.
 ///
@@ -316,5 +706,49 @@ public func unimplemented<A1, A2, A3, A4, A5, A6, A7, A8, R>(
 				line: line
 			)
 			.asFatalError()
+	}
+}
+
+/// Convenient placeholder for unimplemented function.
+///
+/// Placeholder for a function indicating unimplemented async part of code.
+/// Terminates process with ``Unimplemented`` error as the cause when the function becomes executed.
+///
+/// - Parameters:
+///   Filled automatically based on compile time constants.
+/// - Returns: Placeholder function which terminates the process with ``Unimplemented`` error when executed.
+public func unimplementedAsync<A1, A2, A3, A4, A5, A6, A7, A8, R>() -> (A1, A2, A3, A4, A5, A6, A7, A8) async -> R {
+	{ _, _, _, _, _, _, _, _ in
+		Unimplemented
+			.error()
+			.asFatalError()
+	}
+}
+
+/// Convenient placeholder for unimplemented function.
+///
+/// Placeholder for a function indicating unimplemented throwing part of code.
+/// Terminates process with ``Unimplemented`` error as the cause when the function becomes executed.
+///
+/// - Parameters:
+///   Filled automatically based on compile time constants.
+/// - Returns: Placeholder function which terminates the process with ``Unimplemented`` error when executed.
+public func unimplementedThrowing<A1, A2, A3, A4, A5, A6, A7, A8, R>() -> (A1, A2, A3, A4, A5, A6, A7, A8) throws -> R {
+	{ _, _, _, _, _, _, _, _ in
+		throws Unimplemented.error()
+	}
+}
+
+/// Convenient placeholder for unimplemented function.
+///
+/// Placeholder for a function indicating unimplemented async throwing part of code.
+/// Terminates process with ``Unimplemented`` error as the cause when the function becomes executed.
+///
+/// - Parameters:
+///   Filled automatically based on compile time constants.
+/// - Returns: Placeholder function which terminates the process with ``Unimplemented`` error when executed.
+public func unimplementedAsyncThrowing<A1, A2, A3, A4, A5, A6, A7, A8, R>() -> (A1, A2, A3, A4, A5, A6, A7, A8) async throws -> R {
+	{ _, _, _, _, _, _, _, _ in
+		throws Unimplemented.error()
 	}
 }
