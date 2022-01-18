@@ -1,6 +1,6 @@
 extension StaticString {
 
-	/// Check whenever the string is empty.
+	/// Check if the string is empty.
 	///
 	/// - Returns: `true` if string is empty, `false` otherwise.
 	///
