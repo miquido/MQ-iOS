@@ -64,38 +64,81 @@ public func unimplemented(
 /// Terminates process with ``Unimplemented`` error as the cause.
 ///
 /// - Parameters:
+///   - message: Message associated with this error.
+///   Default value is "Unimplemented".
+///   - file: Source code file identifier.
+///   Filled automatically based on compile time constants.
+///   - line: Line in given source code file.
 ///   Filled automatically based on compile time constants.
 /// - Returns: Never, function terminates the process.
-public func unimplementedAsync() -> Never {
+public func unimplementedAsync(
+	_ message: StaticString = "Unimplemented",
+	file: StaticString = #fileID,
+	line: UInt = #line
+) -> Never {
 	Unimplemented
-		.error()
+		.error(
+			message: message,
+			file: file,
+			line: line
+		)
 		.asFatalError()
 }
 
 /// Convenient placeholder for unimplemented part of code.
 ///
 /// Placeholder for indicating unimplemented throwing part of code.
-/// Terminates process with ``Unimplemented`` error as the cause.
+/// Throw ``Unimplemented`` error as the cause.
 ///
 /// - Parameters:
+///   - message: Message associated with this error.
+///   Default value is "Unimplemented".
+///   - file: Source code file identifier.
+///   Filled automatically based on compile time constants.
+///   - line: Line in given source code file.
 ///   Filled automatically based on compile time constants.
 /// - Throws: Unimplemented error.
 /// - Returns: Function throwing always the same ``Unimplemented`` error when executed.
-public func unimplementedThrowing() throws -> Error {
-	throw Unimplemented.error()
+public func unimplementedThrowing(
+	_ message: StaticString = "Unimplemented",
+	file: StaticString = #fileID,
+	line: UInt = #line
+) throws -> Error {
+	throw
+		Unimplemented
+		.error(
+			message: message,
+			file: file,
+			line: line
+		)
 }
 
 /// Convenient placeholder for unimplemented part of code.
 ///
 /// Placeholder for indicating unimplemented async throwing part of code.
-/// Terminates process with ``Unimplemented`` error as the cause.
+/// Throw ``Unimplemented`` error as the cause.
 ///
 /// - Parameters:
+///   - message: Message associated with this error.
+///   Default value is "Unimplemented".
+///   - file: Source code file identifier.
+///   Filled automatically based on compile time constants.
+///   - line: Line in given source code file.
 ///   Filled automatically based on compile time constants.
 /// - Throws: Unimplemented error.
 /// - Returns: Function throwing always the same ``Unimplemented`` error when executed.
-public func unimplementedAsyncThrowing() async throws -> Error {
-	throw Unimplemented.error()
+public func unimplementedAsyncThrowing(
+	_ message: StaticString = "Unimplemented",
+	file: StaticString = #fileID,
+	line: UInt = #line
+) async throws -> Error {
+	throw
+		Unimplemented
+		.error(
+			message: message,
+			file: file,
+			line: line
+		)
 }
 
 /// Convenient placeholder for unimplemented function.
@@ -133,12 +176,25 @@ public func unimplemented<R>(
 /// Terminates process with ``Unimplemented`` error as the cause when the function becomes executed.
 ///
 /// - Parameters:
+///   - message: Message associated with this error.
+///   Default value is "Unimplemented".
+///   - file: Source code file identifier.
+///   Filled automatically based on compile time constants.
+///   - line: Line in given source code file.
 ///   Filled automatically based on compile time constants.
 /// - Returns: Placeholder function which terminates the process with ``Unimplemented`` error when executed.
-public func unimplementedAsync<R>() -> () async -> R {
+public func unimplementedAsync<R>(
+	_ message: StaticString = "Unimplemented",
+	file: StaticString = #fileID,
+	line: UInt = #line
+) -> () async -> R {
 	{
 		Unimplemented
-			.error()
+			.error(
+				message: message,
+				file: file,
+				line: line
+			)
 			.asFatalError()
 	}
 }
@@ -146,28 +202,58 @@ public func unimplementedAsync<R>() -> () async -> R {
 /// Convenient placeholder for unimplemented function.
 ///
 /// Placeholder for a function indicating unimplemented throwing part of code.
-/// Terminates process with ``Unimplemented`` error as the cause when the function becomes executed.
+/// Throw ``Unimplemented`` error as the cause.
 ///
 /// - Parameters:
+///   - message: Message associated with this error.
+///   Default value is "Unimplemented".
+///   - file: Source code file identifier.
+///   Filled automatically based on compile time constants.
+///   - line: Line in given source code file.
 ///   Filled automatically based on compile time constants.
 /// - Returns: Function throwing always the same ``Unimplemented`` error when executed.
-public func unimplementedThrow<R>() -> () throws -> R {
+public func unimplementedThrow<R>(
+	_ message: StaticString = "Unimplemented",
+	file: StaticString = #fileID,
+	line: UInt = #line
+) -> () throws -> R {
 	{
-		throw Unimplemented.error()
+		throw
+			Unimplemented
+			.error(
+				message: message,
+				file: file,
+				line: line
+			)
 	}
 }
 
 /// Convenient placeholder for unimplemented function.
 ///
 /// Placeholder for a function indicating unimplemented async throwing part of code.
-/// Terminates process with ``Unimplemented`` error as the cause when the function becomes executed.
+/// Throw ``Unimplemented`` error as the cause.
 ///
 /// - Parameters:
+///   - message: Message associated with this error.
+///   Default value is "Unimplemented".
+///   - file: Source code file identifier.
+///   Filled automatically based on compile time constants.
+///   - line: Line in given source code file.
 ///   Filled automatically based on compile time constants.
 /// - Returns: Function throwing always the same ``Unimplemented`` error when executed.
-public func unimplementedAsyncThrow<R>() -> () async throws -> R {
+public func unimplementedAsyncThrow<R>(
+	_ message: StaticString = "Unimplemented",
+	file: StaticString = #fileID,
+	line: UInt = #line
+) -> () async throws -> R {
 	{
-		throw Unimplemented.error()
+		throw
+			Unimplemented
+			.error(
+				message: message,
+				file: file,
+				line: line
+			)
 	}
 }
 
@@ -206,12 +292,25 @@ public func unimplemented<A1, R>(
 /// Terminates process with ``Unimplemented`` error as the cause when the function becomes executed.
 ///
 /// - Parameters:
+///   - message: Message associated with this error.
+///   Default value is "Unimplemented".
+///   - file: Source code file identifier.
+///   Filled automatically based on compile time constants.
+///   - line: Line in given source code file.
 ///   Filled automatically based on compile time constants.
 /// - Returns: Placeholder function which terminates the process with ``Unimplemented`` error when executed.
-public func unimplementedAsync<A1, R>() -> (A1) async -> R {
+public func unimplementedAsync<A1, R>(
+	_ message: StaticString = "Unimplemented",
+	file: StaticString = #fileID,
+	line: UInt = #line
+) -> (A1) async -> R {
 	{ _ in
 		Unimplemented
-			.error()
+			.error(
+				message: message,
+				file: file,
+				line: line
+			)
 			.asFatalError()
 	}
 }
@@ -219,28 +318,58 @@ public func unimplementedAsync<A1, R>() -> (A1) async -> R {
 /// Convenient placeholder for unimplemented function.
 ///
 /// Placeholder for a function indicating unimplemented throwing part of code.
-/// Terminates process with ``Unimplemented`` error as the cause when the function becomes executed.
+/// Throw ``Unimplemented`` error as the cause.
 ///
 /// - Parameters:
+///   - message: Message associated with this error.
+///   Default value is "Unimplemented".
+///   - file: Source code file identifier.
+///   Filled automatically based on compile time constants.
+///   - line: Line in given source code file.
 ///   Filled automatically based on compile time constants.
 /// - Returns: Function throwing always the same ``Unimplemented`` error when executed.
-public func unimplementedThrowing<A1, R>() -> (A1) throws -> R {
+public func unimplementedThrowing<A1, R>(
+	_ message: StaticString = "Unimplemented",
+	file: StaticString = #fileID,
+	line: UInt = #line
+) -> (A1) throws -> R {
 	{ _ in
-		throw Unimplemented.error()
+		throw
+			Unimplemented
+			.error(
+				message: message,
+				file: file,
+				line: line
+			)
 	}
 }
 
 /// Convenient placeholder for unimplemented function.
 ///
 /// Placeholder for a function indicating unimplemented async throwing part of code.
-/// Terminates process with ``Unimplemented`` error as the cause when the function becomes executed.
+/// Throw ``Unimplemented`` error as the cause.
 ///
 /// - Parameters:
+///   - message: Message associated with this error.
+///   Default value is "Unimplemented".
+///   - file: Source code file identifier.
+///   Filled automatically based on compile time constants.
+///   - line: Line in given source code file.
 ///   Filled automatically based on compile time constants.
 /// - Returns: Function throwing always the same ``Unimplemented`` error when executed.
-public func unimplementedAsyncThrowing<A1, R>() -> (A1) async throws -> R {
+public func unimplementedAsyncThrowing<A1, R>(
+	_ message: StaticString = "Unimplemented",
+	file: StaticString = #fileID,
+	line: UInt = #line
+) -> (A1) async throws -> R {
 	{ _ in
-		throw Unimplemented.error()
+		throw
+			Unimplemented
+			.error(
+				message: message,
+				file: file,
+				line: line
+			)
 	}
 }
 
@@ -279,12 +408,25 @@ public func unimplemented<A1, A2, R>(
 /// Terminates process with ``Unimplemented`` error as the cause when the function becomes executed.
 ///
 /// - Parameters:
+///   - message: Message associated with this error.
+///   Default value is "Unimplemented".
+///   - file: Source code file identifier.
+///   Filled automatically based on compile time constants.
+///   - line: Line in given source code file.
 ///   Filled automatically based on compile time constants.
 /// - Returns: Placeholder function which terminates the process with ``Unimplemented`` error when executed.
-public func unimplementedAsync<A1, A2, R>() -> (A1, A2) async -> R {
+public func unimplementedAsync<A1, A2, R>(
+	_ message: StaticString = "Unimplemented",
+	file: StaticString = #fileID,
+	line: UInt = #line
+) -> (A1, A2) async -> R {
 	{ _, _ in
 		Unimplemented
-			.error()
+			.error(
+				message: message,
+				file: file,
+				line: line
+			)
 			.asFatalError()
 	}
 }
@@ -292,28 +434,58 @@ public func unimplementedAsync<A1, A2, R>() -> (A1, A2) async -> R {
 /// Convenient placeholder for unimplemented function.
 ///
 /// Placeholder for a function indicating unimplemented throwing part of code.
-/// Terminates process with ``Unimplemented`` error as the cause when the function becomes executed.
+/// Throw ``Unimplemented`` error as the cause.
 ///
 /// - Parameters:
+///   - message: Message associated with this error.
+///   Default value is "Unimplemented".
+///   - file: Source code file identifier.
+///   Filled automatically based on compile time constants.
+///   - line: Line in given source code file.
 ///   Filled automatically based on compile time constants.
 /// - Returns: Function throwing always the same ``Unimplemented`` error when executed.
-public func unimplementedThrowing<A1, A2, R>() -> (A1, A2) throws -> R {
+public func unimplementedThrowing<A1, A2, R>(
+	_ message: StaticString = "Unimplemented",
+	file: StaticString = #fileID,
+	line: UInt = #line
+) -> (A1, A2) throws -> R {
 	{ _, _ in
-		throw Unimplemented.error()
+		throw
+			Unimplemented
+			.error(
+				message: message,
+				file: file,
+				line: line
+			)
 	}
 }
 
 /// Convenient placeholder for unimplemented function.
 ///
 /// Placeholder for a function indicating unimplemented async throwing part of code.
-/// Terminates process with ``Unimplemented`` error as the cause when the function becomes executed.
+/// Throw ``Unimplemented`` error as the cause.
 ///
 /// - Parameters:
+///   - message: Message associated with this error.
+///   Default value is "Unimplemented".
+///   - file: Source code file identifier.
+///   Filled automatically based on compile time constants.
+///   - line: Line in given source code file.
 ///   Filled automatically based on compile time constants.
 /// - Returns: Function throwing always the same ``Unimplemented`` error when executed.
-public func unimplementedAsyncThrowing<A1, A2, R>() -> (A1, A2) async throws -> R {
+public func unimplementedAsyncThrowing<A1, A2, R>(
+	_ message: StaticString = "Unimplemented",
+	file: StaticString = #fileID,
+	line: UInt = #line
+) -> (A1, A2) async throws -> R {
 	{ _, _ in
-		throw Unimplemented.error()
+		throw
+			Unimplemented
+			.error(
+				message: message,
+				file: file,
+				line: line
+			)
 	}
 }
 
@@ -352,12 +524,25 @@ public func unimplemented<A1, A2, A3, R>(
 /// Terminates process with ``Unimplemented`` error as the cause when the function becomes executed.
 ///
 /// - Parameters:
+///   - message: Message associated with this error.
+///   Default value is "Unimplemented".
+///   - file: Source code file identifier.
+///   Filled automatically based on compile time constants.
+///   - line: Line in given source code file.
 ///   Filled automatically based on compile time constants.
 /// - Returns: Placeholder function which terminates the process with ``Unimplemented`` error when executed.
-public func unimplementedAsync<A1, A2, A3, R>() -> (A1, A2, A3) async -> R {
+public func unimplementedAsync<A1, A2, A3, R>(
+	_ message: StaticString = "Unimplemented",
+	file: StaticString = #fileID,
+	line: UInt = #line
+) -> (A1, A2, A3) async -> R {
 	{ _, _, _ in
 		Unimplemented
-			.error()
+			.error(
+				message: message,
+				file: file,
+				line: line
+			)
 			.asFatalError()
 	}
 }
@@ -365,26 +550,50 @@ public func unimplementedAsync<A1, A2, A3, R>() -> (A1, A2, A3) async -> R {
 /// Convenient placeholder for unimplemented function.
 ///
 /// Placeholder for a function indicating unimplemented throwing part of code.
-/// Terminates process with ``Unimplemented`` error as the cause when the function becomes executed.
+/// Throw ``Unimplemented`` error as the cause.
 ///
 /// - Parameters:
+///   - message: Message associated with this error.
+///   Default value is "Unimplemented".
+///   - file: Source code file identifier.
+///   Filled automatically based on compile time constants.
+///   - line: Line in given source code file.
 ///   Filled automatically based on compile time constants.
 /// - Returns: Function throwing always the same ``Unimplemented`` error when executed.
-public func unimplementedThrowing<A1, A2, A3, R>() -> (A1, A2, A3) throws -> R {
+public func unimplementedThrowing<A1, A2, A3, R>(
+	_ message: StaticString = "Unimplemented",
+	file: StaticString = #fileID,
+	line: UInt = #line
+) -> (A1, A2, A3) throws -> R {
 	{ _, _, _ in
-		throw Unimplemented.error()
+		throw
+			Unimplemented
+			.error(
+				message: message,
+				file: file,
+				line: line
+			)
 	}
 }
 
 /// Convenient placeholder for unimplemented function.
 ///
 /// Placeholder for a function indicating unimplemented async throwing part of code.
-/// Terminates process with ``Unimplemented`` error as the cause when the function becomes executed.
+/// Throw ``Unimplemented`` error as the cause.
 ///
 /// - Parameters:
+///   - message: Message associated with this error.
+///   Default value is "Unimplemented".
+///   - file: Source code file identifier.
+///   Filled automatically based on compile time constants.
+///   - line: Line in given source code file.
 ///   Filled automatically based on compile time constants.
 /// - Returns: Function throwing always the same ``Unimplemented`` error when executed.
-public func unimplementedAsyncThrowing<A1, A2, A3, R>() -> (A1, A2, A3) async throws -> R {
+public func unimplementedAsyncThrowing<A1, A2, A3, R>(
+	_ message: StaticString = "Unimplemented",
+	file: StaticString = #fileID,
+	line: UInt = #line
+) -> (A1, A2, A3) async throws -> R {
 	{ _, _, _ in
 		throw Unimplemented.error()
 	}
@@ -425,12 +634,25 @@ public func unimplemented<A1, A2, A3, A4, R>(
 /// Terminates process with ``Unimplemented`` error as the cause when the function becomes executed.
 ///
 /// - Parameters:
+///   - message: Message associated with this error.
+///   Default value is "Unimplemented".
+///   - file: Source code file identifier.
+///   Filled automatically based on compile time constants.
+///   - line: Line in given source code file.
 ///   Filled automatically based on compile time constants.
 /// - Returns: Placeholder function which terminates the process with ``Unimplemented`` error when executed.
-public func unimplementedAsync<A1, A2, A3, A4, R>() -> (A1, A2, A3, A4) async -> R {
+public func unimplementedAsync<A1, A2, A3, A4, R>(
+	_ message: StaticString = "Unimplemented",
+	file: StaticString = #fileID,
+	line: UInt = #line
+) -> (A1, A2, A3, A4) async -> R {
 	{ _, _, _, _ in
 		Unimplemented
-			.error()
+			.error(
+				message: message,
+				file: file,
+				line: line
+			)
 			.asFatalError()
 	}
 }
@@ -438,28 +660,58 @@ public func unimplementedAsync<A1, A2, A3, A4, R>() -> (A1, A2, A3, A4) async ->
 /// Convenient placeholder for unimplemented function.
 ///
 /// Placeholder for a function indicating unimplemented throwing part of code.
-/// Terminates process with ``Unimplemented`` error as the cause when the function becomes executed.
+/// Throw ``Unimplemented`` error as the cause.
 ///
 /// - Parameters:
+///   - message: Message associated with this error.
+///   Default value is "Unimplemented".
+///   - file: Source code file identifier.
+///   Filled automatically based on compile time constants.
+///   - line: Line in given source code file.
 ///   Filled automatically based on compile time constants.
 /// - Returns: Function throwing always the same ``Unimplemented`` error when executed.
-public func unimplementedThrowing<A1, A2, A3, A4, R>() -> (A1, A2, A3, A4) throws -> R {
+public func unimplementedThrowing<A1, A2, A3, A4, R>(
+	_ message: StaticString = "Unimplemented",
+	file: StaticString = #fileID,
+	line: UInt = #line
+) -> (A1, A2, A3, A4) throws -> R {
 	{ _, _, _, _ in
-		throw Unimplemented.error()
+		throw
+			Unimplemented
+			.error(
+				message: message,
+				file: file,
+				line: line
+			)
 	}
 }
 
 /// Convenient placeholder for unimplemented function.
 ///
 /// Placeholder for a function indicating unimplemented async throwing part of code.
-/// Terminates process with ``Unimplemented`` error as the cause when the function becomes executed.
+/// Throw ``Unimplemented`` error as the cause.
 ///
 /// - Parameters:
+///   - message: Message associated with this error.
+///   Default value is "Unimplemented".
+///   - file: Source code file identifier.
+///   Filled automatically based on compile time constants.
+///   - line: Line in given source code file.
 ///   Filled automatically based on compile time constants.
 /// - Returns: Function throwing always the same ``Unimplemented`` error when executed.
-public func unimplementedAsyncThrowing<A1, A2, A3, A4, R>() -> (A1, A2, A3, A4) async throws -> R {
+public func unimplementedAsyncThrowing<A1, A2, A3, A4, R>(
+	_ message: StaticString = "Unimplemented",
+	file: StaticString = #fileID,
+	line: UInt = #line
+) -> (A1, A2, A3, A4) async throws -> R {
 	{ _, _, _, _ in
-		throw Unimplemented.error()
+		throw
+			Unimplemented
+			.error(
+				message: message,
+				file: file,
+				line: line
+			)
 	}
 }
 
@@ -498,12 +750,25 @@ public func unimplemented<A1, A2, A3, A4, A5, R>(
 /// Terminates process with ``Unimplemented`` error as the cause when the function becomes executed.
 ///
 /// - Parameters:
+///   - message: Message associated with this error.
+///   Default value is "Unimplemented".
+///   - file: Source code file identifier.
+///   Filled automatically based on compile time constants.
+///   - line: Line in given source code file.
 ///   Filled automatically based on compile time constants.
 /// - Returns: Placeholder function which terminates the process with ``Unimplemented`` error when executed.
-public func unimplementedAsync<A1, A2, A3, A4, A5, R>() -> (A1, A2, A3, A4, A5) async -> R {
+public func unimplementedAsync<A1, A2, A3, A4, A5, R>(
+	_ message: StaticString = "Unimplemented",
+	file: StaticString = #fileID,
+	line: UInt = #line
+) -> (A1, A2, A3, A4, A5) async -> R {
 	{ _, _, _, _, _ in
 		Unimplemented
-			.error()
+			.error(
+				message: message,
+				file: file,
+				line: line
+			)
 			.asFatalError()
 	}
 }
@@ -511,28 +776,58 @@ public func unimplementedAsync<A1, A2, A3, A4, A5, R>() -> (A1, A2, A3, A4, A5) 
 /// Convenient placeholder for unimplemented function.
 ///
 /// Placeholder for a function indicating unimplemented throwing part of code.
-/// Terminates process with ``Unimplemented`` error as the cause when the function becomes executed.
+/// Throw ``Unimplemented`` error as the cause.
 ///
 /// - Parameters:
+///   - message: Message associated with this error.
+///   Default value is "Unimplemented".
+///   - file: Source code file identifier.
+///   Filled automatically based on compile time constants.
+///   - line: Line in given source code file.
 ///   Filled automatically based on compile time constants.
 /// - Returns: Function throwing always the same ``Unimplemented`` error when executed.
-public func unimplementedThrowing<A1, A2, A3, A4, A5, R>() -> (A1, A2, A3, A4, A5) throws -> R {
+public func unimplementedThrowing<A1, A2, A3, A4, A5, R>(
+	_ message: StaticString = "Unimplemented",
+	file: StaticString = #fileID,
+	line: UInt = #line
+) -> (A1, A2, A3, A4, A5) throws -> R {
 	{ _, _, _, _, _ in
-		throw Unimplemented.error()
+		throw
+			Unimplemented
+			.error(
+				message: message,
+				file: file,
+				line: line
+			)
 	}
 }
 
 /// Convenient placeholder for unimplemented function.
 ///
 /// Placeholder for a function indicating unimplemented async throwing part of code.
-/// Terminates process with ``Unimplemented`` error as the cause when the function becomes executed.
+/// Throw ``Unimplemented`` error as the cause.
 ///
 /// - Parameters:
+///   - message: Message associated with this error.
+///   Default value is "Unimplemented".
+///   - file: Source code file identifier.
+///   Filled automatically based on compile time constants.
+///   - line: Line in given source code file.
 ///   Filled automatically based on compile time constants.
 /// - Returns: Function throwing always the same ``Unimplemented`` error when executed.
-public func unimplementedAsyncThrowing<A1, A2, A3, A4, A5, R>() -> (A1, A2, A3, A4, A5) async throws -> R {
+public func unimplementedAsyncThrowing<A1, A2, A3, A4, A5, R>(
+	_ message: StaticString = "Unimplemented",
+	file: StaticString = #fileID,
+	line: UInt = #line
+) -> (A1, A2, A3, A4, A5) async throws -> R {
 	{ _, _, _, _, _ in
-		throw Unimplemented.error()
+		throw
+			Unimplemented
+			.error(
+				message: message,
+				file: file,
+				line: line
+			)
 	}
 }
 
@@ -571,12 +866,25 @@ public func unimplemented<A1, A2, A3, A4, A5, A6, R>(
 /// Terminates process with ``Unimplemented`` error as the cause when the function becomes executed.
 ///
 /// - Parameters:
+///   - message: Message associated with this error.
+///   Default value is "Unimplemented".
+///   - file: Source code file identifier.
+///   Filled automatically based on compile time constants.
+///   - line: Line in given source code file.
 ///   Filled automatically based on compile time constants.
 /// - Returns: Placeholder function which terminates the process with ``Unimplemented`` error when executed.
-public func unimplementedAsync<A1, A2, A3, A4, A5, A6, R>() -> (A1, A2, A3, A4, A5, A6) async -> R {
+public func unimplementedAsync<A1, A2, A3, A4, A5, A6, R>(
+	_ message: StaticString = "Unimplemented",
+	file: StaticString = #fileID,
+	line: UInt = #line
+) -> (A1, A2, A3, A4, A5, A6) async -> R {
 	{ _, _, _, _, _, _ in
 		Unimplemented
-			.error()
+			.error(
+				message: message,
+				file: file,
+				line: line
+			)
 			.asFatalError()
 	}
 }
@@ -584,28 +892,58 @@ public func unimplementedAsync<A1, A2, A3, A4, A5, A6, R>() -> (A1, A2, A3, A4, 
 /// Convenient placeholder for unimplemented function.
 ///
 /// Placeholder for a function indicating unimplemented throwing part of code.
-/// Terminates process with ``Unimplemented`` error as the cause when the function becomes executed.
+/// Throw ``Unimplemented`` error as the cause.
 ///
 /// - Parameters:
+///   - message: Message associated with this error.
+///   Default value is "Unimplemented".
+///   - file: Source code file identifier.
+///   Filled automatically based on compile time constants.
+///   - line: Line in given source code file.
 ///   Filled automatically based on compile time constants.
 /// - Returns: Function throwing always the same ``Unimplemented`` error when executed.
-public func unimplementedThrowing<A1, A2, A3, A4, A5, A6, R>() -> (A1, A2, A3, A4, A5, A6) throws -> R {
+public func unimplementedThrowing<A1, A2, A3, A4, A5, A6, R>(
+	_ message: StaticString = "Unimplemented",
+	file: StaticString = #fileID,
+	line: UInt = #line
+) -> (A1, A2, A3, A4, A5, A6) throws -> R {
 	{ _, _, _, _, _, _ in
-		throw Unimplemented.error()
+		throw
+			Unimplemented
+			.error(
+				message: message,
+				file: file,
+				line: line
+			)
 	}
 }
 
 /// Convenient placeholder for unimplemented function.
 ///
 /// Placeholder for a function indicating unimplemented async throwing part of code.
-/// Terminates process with ``Unimplemented`` error as the cause when the function becomes executed.
+/// Throw ``Unimplemented`` error as the cause.
 ///
 /// - Parameters:
+///   - message: Message associated with this error.
+///   Default value is "Unimplemented".
+///   - file: Source code file identifier.
+///   Filled automatically based on compile time constants.
+///   - line: Line in given source code file.
 ///   Filled automatically based on compile time constants.
 /// - Returns: Function throwing always the same ``Unimplemented`` error when executed.
-public func unimplementedAsyncThrowing<A1, A2, A3, A4, A5, A6, R>() -> (A1, A2, A3, A4, A5, A6) async throws -> R {
+public func unimplementedAsyncThrowing<A1, A2, A3, A4, A5, A6, R>(
+	_ message: StaticString = "Unimplemented",
+	file: StaticString = #fileID,
+	line: UInt = #line
+) -> (A1, A2, A3, A4, A5, A6) async throws -> R {
 	{ _, _, _, _, _, _ in
-		throw Unimplemented.error()
+		throw
+			Unimplemented
+			.error(
+				message: message,
+				file: file,
+				line: line
+			)
 	}
 }
 
@@ -644,12 +982,25 @@ public func unimplemented<A1, A2, A3, A4, A5, A6, A7, R>(
 /// Terminates process with ``Unimplemented`` error as the cause when the function becomes executed.
 ///
 /// - Parameters:
+///   - message: Message associated with this error.
+///   Default value is "Unimplemented".
+///   - file: Source code file identifier.
+///   Filled automatically based on compile time constants.
+///   - line: Line in given source code file.
 ///   Filled automatically based on compile time constants.
 /// - Returns: Placeholder function which terminates the process with ``Unimplemented`` error when executed.
-public func unimplementedAsync<A1, A2, A3, A4, A5, A6, A7, R>() -> (A1, A2, A3, A4, A5, A6, A7) async -> R {
+public func unimplementedAsync<A1, A2, A3, A4, A5, A6, A7, R>(
+	_ message: StaticString = "Unimplemented",
+	file: StaticString = #fileID,
+	line: UInt = #line
+) -> (A1, A2, A3, A4, A5, A6, A7) async -> R {
 	{ _, _, _, _, _, _, _ in
 		Unimplemented
-			.error()
+			.error(
+				message: message,
+				file: file,
+				line: line
+			)
 			.asFatalError()
 	}
 }
@@ -657,30 +1008,60 @@ public func unimplementedAsync<A1, A2, A3, A4, A5, A6, A7, R>() -> (A1, A2, A3, 
 /// Convenient placeholder for unimplemented function.
 ///
 /// Placeholder for a function indicating unimplemented throwing part of code.
-/// Terminates process with ``Unimplemented`` error as the cause when the function becomes executed.
+/// Throw ``Unimplemented`` error as the cause.
 ///
 /// - Parameters:
+///   - message: Message associated with this error.
+///   Default value is "Unimplemented".
+///   - file: Source code file identifier.
+///   Filled automatically based on compile time constants.
+///   - line: Line in given source code file.
 ///   Filled automatically based on compile time constants.
 /// - Returns: Function throwing always the same ``Unimplemented`` error when executed.
-public func unimplementedThrowing<A1, A2, A3, A4, A5, A6, A7, R>() -> (A1, A2, A3, A4, A5, A6, A7) throws -> R {
+public func unimplementedThrowing<A1, A2, A3, A4, A5, A6, A7, R>(
+	_ message: StaticString = "Unimplemented",
+	file: StaticString = #fileID,
+	line: UInt = #line
+) -> (A1, A2, A3, A4, A5, A6, A7) throws -> R {
 	{ _, _, _, _, _, _, _ in
-		throw Unimplemented.error()
+		throw
+			Unimplemented
+			.error(
+				message: message,
+				file: file,
+				line: line
+			)
 	}
 }
 
 /// Convenient placeholder for unimplemented function.
 ///
 /// Placeholder for a function indicating unimplemented async throwing part of code.
-/// Terminates process with ``Unimplemented`` error as the cause when the function becomes executed.
+/// Throw ``Unimplemented`` error as the cause.
 ///
 /// - Parameters:
+///   - message: Message associated with this error.
+///   Default value is "Unimplemented".
+///   - file: Source code file identifier.
+///   Filled automatically based on compile time constants.
+///   - line: Line in given source code file.
 ///   Filled automatically based on compile time constants.
 /// - Returns: Function throwing always the same ``Unimplemented`` error when executed.
-public func unimplementedAsyncThrowing<A1, A2, A3, A4, A5, A6, A7, R>() -> (A1, A2, A3, A4, A5, A6, A7) async throws ->
+public func unimplementedAsyncThrowing<A1, A2, A3, A4, A5, A6, A7, R>(
+	_ message: StaticString = "Unimplemented",
+	file: StaticString = #fileID,
+	line: UInt = #line
+) -> (A1, A2, A3, A4, A5, A6, A7) async throws ->
 	R
 {
 	{ _, _, _, _, _, _, _ in
-		throw Unimplemented.error()
+		throw
+			Unimplemented
+			.error(
+				message: message,
+				file: file,
+				line: line
+			)
 	}
 }
 
@@ -719,12 +1100,25 @@ public func unimplemented<A1, A2, A3, A4, A5, A6, A7, A8, R>(
 /// Terminates process with ``Unimplemented`` error as the cause when the function becomes executed.
 ///
 /// - Parameters:
+///   - message: Message associated with this error.
+///   Default value is "Unimplemented".
+///   - file: Source code file identifier.
+///   Filled automatically based on compile time constants.
+///   - line: Line in given source code file.
 ///   Filled automatically based on compile time constants.
 /// - Returns: Placeholder function which terminates the process with ``Unimplemented`` error when executed.
-public func unimplementedAsync<A1, A2, A3, A4, A5, A6, A7, A8, R>() -> (A1, A2, A3, A4, A5, A6, A7, A8) async -> R {
+public func unimplementedAsync<A1, A2, A3, A4, A5, A6, A7, A8, R>(
+	_ message: StaticString = "Unimplemented",
+	file: StaticString = #fileID,
+	line: UInt = #line
+) -> (A1, A2, A3, A4, A5, A6, A7, A8) async -> R {
 	{ _, _, _, _, _, _, _, _ in
 		Unimplemented
-			.error()
+			.error(
+				message: message,
+				file: file,
+				line: line
+			)
 			.asFatalError()
 	}
 }
@@ -732,29 +1126,59 @@ public func unimplementedAsync<A1, A2, A3, A4, A5, A6, A7, A8, R>() -> (A1, A2, 
 /// Convenient placeholder for unimplemented function.
 ///
 /// Placeholder for a function indicating unimplemented throwing part of code.
-/// Terminates process with ``Unimplemented`` error as the cause when the function becomes executed.
+/// Throw ``Unimplemented`` error as the cause.
 ///
 /// - Parameters:
+///   - message: Message associated with this error.
+///   Default value is "Unimplemented".
+///   - file: Source code file identifier.
+///   Filled automatically based on compile time constants.
+///   - line: Line in given source code file.
 ///   Filled automatically based on compile time constants.
 /// - Returns: Function throwing always the same ``Unimplemented`` error when executed.
-public func unimplementedThrowing<A1, A2, A3, A4, A5, A6, A7, A8, R>() -> (A1, A2, A3, A4, A5, A6, A7, A8) throws -> R {
+public func unimplementedThrowing<A1, A2, A3, A4, A5, A6, A7, A8, R>(
+	_ message: StaticString = "Unimplemented",
+	file: StaticString = #fileID,
+	line: UInt = #line
+) -> (A1, A2, A3, A4, A5, A6, A7, A8) throws -> R {
 	{ _, _, _, _, _, _, _, _ in
-		throw Unimplemented.error()
+		throw
+			Unimplemented
+			.error(
+				message: message,
+				file: file,
+				line: line
+			)
 	}
 }
 
 /// Convenient placeholder for unimplemented function.
 ///
 /// Placeholder for a function indicating unimplemented async throwing part of code.
-/// Terminates process with ``Unimplemented`` error as the cause when the function becomes executed.
+/// Throw ``Unimplemented`` error as the cause.
 ///
 /// - Parameters:
+///   - message: Message associated with this error.
+///   Default value is "Unimplemented".
+///   - file: Source code file identifier.
+///   Filled automatically based on compile time constants.
+///   - line: Line in given source code file.
 ///   Filled automatically based on compile time constants.
 /// - Returns: Function throwing always the same ``Unimplemented`` error when executed.
-public func unimplementedAsyncThrowing<A1, A2, A3, A4, A5, A6, A7, A8, R>() -> (A1, A2, A3, A4, A5, A6, A7, A8) async
+public func unimplementedAsyncThrowing<A1, A2, A3, A4, A5, A6, A7, A8, R>(
+	_ message: StaticString = "Unimplemented",
+	file: StaticString = #fileID,
+	line: UInt = #line
+) -> (A1, A2, A3, A4, A5, A6, A7, A8) async
 	throws -> R
 {
 	{ _, _, _, _, _, _, _, _ in
-		throw Unimplemented.error()
+		throw
+			Unimplemented
+			.error(
+				message: message,
+				file: file,
+				line: line
+			)
 	}
 }
