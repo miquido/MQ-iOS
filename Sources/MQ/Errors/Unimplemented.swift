@@ -118,7 +118,7 @@ public func unimplementedAsync<R>(
 
 /// Convenient placeholder for unimplemented function.
 ///
-/// Placeholder for a function indicating unimplemented throwing part of code.
+/// Placeholder for a function indicating unimplemented part of code.
 /// Throws ``Unimplemented`` when executed.
 ///
 /// - Parameters:
@@ -147,7 +147,7 @@ public func unimplementedThrowing<R>(
 
 /// Convenient placeholder for unimplemented function.
 ///
-/// Placeholder for a function indicating unimplemented async throwing part of code.
+/// Placeholder for a function indicating unimplemented part of code.
 /// Throws ``Unimplemented`` when executed.
 ///
 /// - Parameters:
@@ -158,7 +158,7 @@ public func unimplementedThrowing<R>(
 ///   - line: Line in given source code file.
 ///   Filled automatically based on compile time constants.
 /// - Returns: Function throwing ``Unimplemented`` error when executed.
-public func unimplementedAsyncThrow<R>(
+public func unimplementedAsyncThrowing<R>(
 	_ message: StaticString = "Unimplemented",
 	file: StaticString = #fileID,
 	line: UInt = #line
@@ -234,7 +234,7 @@ public func unimplementedAsync<A1, R>(
 
 /// Convenient placeholder for unimplemented function.
 ///
-/// Placeholder for a function indicating unimplemented throwing part of code.
+/// Placeholder for a function indicating unimplemented part of code.
 /// Throws ``Unimplemented`` when executed.
 ///
 /// - Parameters:
@@ -263,7 +263,7 @@ public func unimplementedThrowing<A1, R>(
 
 /// Convenient placeholder for unimplemented function.
 ///
-/// Placeholder for a function indicating unimplemented async throwing part of code.
+/// Placeholder for a function indicating unimplemented part of code.
 /// Throws ``Unimplemented`` when executed.
 ///
 /// - Parameters:
@@ -350,7 +350,7 @@ public func unimplementedAsync<A1, A2, R>(
 
 /// Convenient placeholder for unimplemented function.
 ///
-/// Placeholder for a function indicating unimplemented throwing part of code.
+/// Placeholder for a function indicating unimplemented part of code.
 /// Throws ``Unimplemented`` when executed.
 ///
 /// - Parameters:
@@ -379,7 +379,7 @@ public func unimplementedThrowing<A1, A2, R>(
 
 /// Convenient placeholder for unimplemented function.
 ///
-/// Placeholder for a function indicating unimplemented async throwing part of code.
+/// Placeholder for a function indicating unimplemented part of code.
 /// Throws ``Unimplemented`` when executed.
 ///
 /// - Parameters:
@@ -466,7 +466,7 @@ public func unimplementedAsync<A1, A2, A3, R>(
 
 /// Convenient placeholder for unimplemented function.
 ///
-/// Placeholder for a function indicating unimplemented throwing part of code.
+/// Placeholder for a function indicating unimplemented part of code.
 /// Throws ``Unimplemented`` when executed.
 ///
 /// - Parameters:
@@ -495,7 +495,7 @@ public func unimplementedThrowing<A1, A2, A3, R>(
 
 /// Convenient placeholder for unimplemented function.
 ///
-/// Placeholder for a function indicating unimplemented async throwing part of code.
+/// Placeholder for a function indicating unimplemented part of code.
 /// Throws ``Unimplemented`` when executed.
 ///
 /// - Parameters:
@@ -576,7 +576,7 @@ public func unimplementedAsync<A1, A2, A3, A4, R>(
 
 /// Convenient placeholder for unimplemented function.
 ///
-/// Placeholder for a function indicating unimplemented throwing part of code.
+/// Placeholder for a function indicating unimplemented part of code.
 /// Throws ``Unimplemented`` when executed.
 ///
 /// - Parameters:
@@ -605,7 +605,7 @@ public func unimplementedThrowing<A1, A2, A3, A4, R>(
 
 /// Convenient placeholder for unimplemented function.
 ///
-/// Placeholder for a function indicating unimplemented async throwing part of code.
+/// Placeholder for a function indicating unimplemented part of code.
 /// Throws ``Unimplemented`` when executed.
 ///
 /// - Parameters:
@@ -692,7 +692,7 @@ public func unimplementedAsync<A1, A2, A3, A4, A5, R>(
 
 /// Convenient placeholder for unimplemented function.
 ///
-/// Placeholder for a function indicating unimplemented throwing part of code.
+/// Placeholder for a function indicating unimplemented part of code.
 /// Throws ``Unimplemented`` when executed.
 ///
 /// - Parameters:
@@ -721,7 +721,7 @@ public func unimplementedThrowing<A1, A2, A3, A4, A5, R>(
 
 /// Convenient placeholder for unimplemented function.
 ///
-/// Placeholder for a function indicating unimplemented async throwing part of code.
+/// Placeholder for a function indicating unimplemented part of code.
 /// Throws ``Unimplemented`` when executed.
 ///
 /// - Parameters:
@@ -808,7 +808,7 @@ public func unimplementedAsync<A1, A2, A3, A4, A5, A6, R>(
 
 /// Convenient placeholder for unimplemented function.
 ///
-/// Placeholder for a function indicating unimplemented throwing part of code.
+/// Placeholder for a function indicating unimplemented part of code.
 /// Throws ``Unimplemented`` when executed.
 ///
 /// - Parameters:
@@ -837,7 +837,7 @@ public func unimplementedThrowing<A1, A2, A3, A4, A5, A6, R>(
 
 /// Convenient placeholder for unimplemented function.
 ///
-/// Placeholder for a function indicating unimplemented async throwing part of code.
+/// Placeholder for a function indicating unimplemented part of code.
 /// Throws ``Unimplemented`` when executed.
 ///
 /// - Parameters:
@@ -924,7 +924,7 @@ public func unimplementedAsync<A1, A2, A3, A4, A5, A6, A7, R>(
 
 /// Convenient placeholder for unimplemented function.
 ///
-/// Placeholder for a function indicating unimplemented throwing part of code.
+/// Placeholder for a function indicating unimplemented part of code.
 /// Throws ``Unimplemented`` when executed.
 ///
 /// - Parameters:
@@ -953,7 +953,7 @@ public func unimplementedThrowing<A1, A2, A3, A4, A5, A6, A7, R>(
 
 /// Convenient placeholder for unimplemented function.
 ///
-/// Placeholder for a function indicating unimplemented async throwing part of code.
+/// Placeholder for a function indicating unimplemented part of code.
 /// Throws ``Unimplemented`` when executed.
 ///
 /// - Parameters:
@@ -1042,7 +1042,7 @@ public func unimplementedAsync<A1, A2, A3, A4, A5, A6, A7, A8, R>(
 
 /// Convenient placeholder for unimplemented function.
 ///
-/// Placeholder for a function indicating unimplemented throwing part of code.
+/// Placeholder for a function indicating unimplemented part of code.
 /// Throws ``Unimplemented`` when executed.
 ///
 /// - Parameters:
@@ -1071,7 +1071,7 @@ public func unimplementedThrowing<A1, A2, A3, A4, A5, A6, A7, A8, R>(
 
 /// Convenient placeholder for unimplemented function.
 ///
-/// Placeholder for a function indicating unimplemented async throwing part of code.
+/// Placeholder for a function indicating unimplemented part of code.
 /// Throws ``Unimplemented`` when executed.
 ///
 /// - Parameters:
