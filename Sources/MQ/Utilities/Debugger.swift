@@ -1,5 +1,6 @@
 import Darwin
 
+// swift-format-ignore: AlwaysUseLowerCamelCase
 /// Check if debugger is attached to the process.
 ///
 /// Verify if current process has attached debugger.

@@ -117,3 +117,19 @@ extension SourceCodeMeta: CustomDebugStringConvertible {
 		#endif
 	}
 }
+
+// swift-format-ignore: AllPublicDeclarationsHaveDocumentation
+extension SourceCodeMeta: CustomLeafReflectable {
+
+	public var customMirror: Mirror {
+		.init(
+			self,
+			children: [
+				"message": self.message,
+				"location": self.sourceCodeLocation,
+			],
+			displayStyle: .struct,
+			ancestorRepresentation: .suppressed
+		)
+	}
+}
