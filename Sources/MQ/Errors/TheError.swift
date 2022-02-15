@@ -8,6 +8,11 @@ public protocol TheError: Error, CustomDebugStringConvertible {
 
 	/// Source code metadata context for this error.
 	var context: SourceCodeContext { get set }
+	/// String representation displayable to the end user.
+	///
+	/// Used as default value for ``localizedDescription``.
+	/// Implemented as error type name by default.
+	var displayableMessage: DisplayableString { get }
 }
 
 // swift-format-ignore: AllPublicDeclarationsHaveDocumentation
@@ -15,6 +20,18 @@ extension TheError /* CustomDebugStringConvertible */ {
 
 	public var debugDescription: String {
 		"\(Self.self)\n\(self.context.debugDescription)"
+	}
+}
+
+// swift-format-ignore: AllPublicDeclarationsHaveDocumentation
+extension TheError {
+
+	public var displayableMessage: DisplayableString {
+		"\(Self.self)"
+	}
+
+	public var localizedDescription: String {
+		self.displayableMessage.string
 	}
 }
 
@@ -113,5 +130,51 @@ extension TheError {
 		var copy: Self = self
 		copy.append(context)
 		return copy
+	}
+
+	/// Associate any dynamic value with given key for the last ``SourceCodeMeta``
+	/// in ``SourceCodeContext`` of this error.
+	///
+	/// This method can be used to provide additional diagnostics.
+	/// It does nothing in release builds.
+	///
+	/// - Parameters:
+	///   - value: Any value to be associated with given key with the last ``SourceCodeMeta``
+	///   in ``SourceCodeContext`` of this error.
+	///   Replaces previous value for the same key if it already exists in last ``SourceCodeMeta``.
+	///   - key: Key used to identify provided value.
+	public mutating func set(
+		_ value: @autoclosure () -> Any,
+		for key: StaticString
+	) {
+		#if DEBUG
+			self.context.set(value(), for: key)
+		#endif
+	}
+
+	/// Make a copy of this error and associate any dynamic value with given key
+	/// for the last ``SourceCodeMeta`` in ``SourceCodeContext`` of this error copy.
+	///
+	/// This method can be used to provide additional diagnostics.
+	/// It does nothing in release builds.
+	///
+	/// - Parameters:
+	///   - value: Any value to be associated with given key with the last ``SourceCodeMeta``
+	///   in ``SourceCodeContext`` of this error copy.
+	///   Replaces previous value for the same key if it already exists in last ``SourceCodeMeta``.
+	///   - key: Key used to identify provided value.
+	/// - Returns: Copy of this error with additional value associated with last
+	///  ``SourceCodeMeta`` in the copy.
+	public func with(
+		_ value: @autoclosure () -> Any,
+		for key: StaticString
+	) -> Self {
+		#if DEBUG
+			var copy: Self = self
+			copy.set(value(), for: key)
+			return copy
+		#else
+			return self
+		#endif
 	}
 }

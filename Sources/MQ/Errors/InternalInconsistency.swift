@@ -7,6 +7,8 @@ public struct InternalInconsistency: TheError {
 	///
 	/// - Parameters:
 	///   - message: Message associated with this error.
+	///   - displayableMessage: Message which can be displayed
+	///   to the end user. Default is "Internal inconsistency error".
 	///   - file: Source code file identifier.
 	///   Filled automatically based on compile time constants.
 	///   - line: Line in given source code file.
@@ -14,6 +16,7 @@ public struct InternalInconsistency: TheError {
 	/// - Returns: New instance of ``InternalInconsistency`` error with given context.
 	public static func error(
 		message: StaticString,
+		displayableMessage: DisplayableString = "Internal inconsistency error",
 		file: StaticString = #fileID,
 		line: UInt = #line
 	) -> Self {
@@ -22,10 +25,13 @@ public struct InternalInconsistency: TheError {
 				message: message,
 				file: file,
 				line: line
-			)
+			),
+			displayableMessage: displayableMessage
 		)
 	}
 
 	/// Source code context of this error.
 	public var context: SourceCodeContext
+	/// String representation displayable to the end user.
+	public var displayableMessage: DisplayableString
 }

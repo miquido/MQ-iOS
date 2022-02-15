@@ -79,13 +79,13 @@ public struct SourceCodeContext {
 	///   Replaces previous value for the same key if it already exists in last ``SourceCodeMeta``.
 	///   - key: Key used to identify provided value.
 	public mutating func set(
-		_ value: Any,
+		_ value: @autoclosure () -> Any,
 		for key: StaticString
 	) {
 		#if DEBUG
 			guard let lastIndex: Array<SourceCodeMeta>.Index = self.contextStack.lastIndex(where: { _ in true })
 			else { return }
-			self.contextStack[lastIndex].set(value, for: key)
+			self.contextStack[lastIndex].set(value(), for: key)
 		#endif
 	}
 
@@ -100,17 +100,70 @@ public struct SourceCodeContext {
 	///   - key: Key used to identify provided value.
 	/// - Returns: Copy of this ``SourceCodeContext`` with additional value associated with last ``SourceCodeMeta`` in the copy.
 	public func with(
-		_ value: Any,
+		_ value: @autoclosure () -> Any,
 		for key: StaticString
 	) -> Self {
 		#if DEBUG
 			var copy: Self = self
-			copy.set(value, for: key)
+			copy.set(value(), for: key)
 			return copy
 		#else
 			return self
 		#endif
 	}
+
+	/// Merge multiple contexts in provided order.
+	///
+	/// Merging contexts allow flattening information from multiple sources
+	/// into single instance. It can be useful when providing error wrappers
+	/// which can append own context metadata to wrapped error while keeping
+	/// all context data flat in single place.
+	///
+	/// Last context content will be placed last on stack
+	/// and its last meta will become current last.
+	///
+	/// - Parameters:
+	///   - head: First context to merge.
+	///   - mid: Second context to merge.
+	///   - tail: Any number of next contexts to merge in provided order.
+	/// - Returns: New instance of ``SourceCodeContext`` with
+	/// merged context stacks according to provided order.
+	public static func merging(
+		_ head: SourceCodeContext,
+		_ mid: SourceCodeContext,
+		_ tail: SourceCodeContext...
+	) -> Self {
+		.merging([head, mid] + tail)
+	}
+
+	/// Merge multiple contexts in provided order.
+	///
+	/// Merging contexts allow flattening information from multiple sources
+	/// into single instance. It can be useful when providing error wrappers
+	/// which can append own context metadata to wrapped error while keeping
+	/// all context data flat in single place.
+	///
+	/// Last context content will be placed last on stack
+	/// and its last meta will become current last.
+	///
+	/// - Parameter contexts: Any number of next contexts to merge in provided order.
+	/// - Returns: New instance of ``SourceCodeContext`` with
+	/// merged context stacks according to provided order.
+	public static func merging(
+		_ contexts: Array<SourceCodeContext>
+	) -> Self {
+		Self(
+			contextStack:
+				contexts
+				.reduce(
+					into: .init(),
+					{ (result: inout Array<SourceCodeMeta>, context: SourceCodeContext) in
+						result.append(contentsOf: context.contextStack)
+					}
+				)
+		)
+	}
+
 }
 
 // swift-format-ignore: AllPublicDeclarationsHaveDocumentation
@@ -120,8 +173,8 @@ extension SourceCodeContext: CustomStringConvertible {
 		self.contextStack
 			.reduce(
 				into: "#SourceCodeContext:\n---",
-				{ result, context in
-					result.append("\n\(context.description)\n---")
+				{ (result: inout String, meta: SourceCodeMeta) in
+					result.append("\n\(meta.description)\n---")
 				}
 			)
 	}
@@ -134,8 +187,8 @@ extension SourceCodeContext: CustomDebugStringConvertible {
 		self.contextStack
 			.reduce(
 				into: "#SourceCodeContext:\n---",
-				{ result, context in
-					result.append("\n\(context.debugDescription)\n---")
+				{ (result: inout String, meta: SourceCodeMeta) in
+					result.append("\n\(meta.debugDescription)\n---")
 				}
 			)
 	}
