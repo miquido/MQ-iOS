@@ -100,7 +100,7 @@ public func alwaysThrowing<A1, V>(
 ///
 /// - Parameter value: Value which will be always returned as a result of prepared function.
 /// - Returns: Function returning always the same value.
-@inlinable
+@inlinable @_disfavoredOverload
 public func always<A1, V>(
 	_ value: @autoclosure @escaping () -> V
 ) -> (inout A1) -> V {
@@ -117,7 +117,7 @@ public func always<A1, V>(
 ///
 /// - Parameter error: Error which will be always thrown as a result of prepared function.
 /// - Returns: Function throwing always the same error.
-@inlinable
+@inlinable @_disfavoredOverload
 public func alwaysThrowing<A1, V>(
 	_ error: @autoclosure @escaping () -> Error
 ) -> (inout A1) throws -> V {

@@ -8,7 +8,7 @@
 @inlinable
 public func noop() { /* noop */  }
 
-/// Convenient placeholder for a function that does nothing
+/// Convenient placeholder for async function that does nothing
 /// or no operation..
 ///
 /// Convenient function placeholder for no operation.
@@ -16,7 +16,7 @@ public func noop() { /* noop */  }
 ///
 /// - Note: Empty methods are striped out in release builds.
 @inlinable
-public func noop() async { /* noop */  }
+public func noopAsync() async { /* noop */  }
 
 /// Convenient placeholder for a function that does nothing.
 ///
@@ -39,12 +39,12 @@ public func noop<A1>(
 /// - Note: Empty methods are striped out in release builds.
 ///
 /// - Parameter _: placeholder
-@inlinable
+@inlinable @_disfavoredOverload
 public func noop<A1>(
 	_: inout A1
 ) { /* noop */  }
 
-/// Convenient placeholder for a function that does nothing.
+/// Convenient placeholder for async function that does nothing.
 ///
 /// Convenient function placeholder for no operation.
 /// Does nothing and has empty implementation.
@@ -53,7 +53,7 @@ public func noop<A1>(
 ///
 /// - Parameter _: placeholder
 @inlinable
-public func noop<A1>(
+public func noopAsync<A1>(
 	_: A1
 ) async { /* noop */  }
 
@@ -73,7 +73,7 @@ public func noop<A1, A2>(
 	_: A2
 ) { /* noop */  }
 
-/// Convenient placeholder for a function that does nothing.
+/// Convenient placeholder for async function that does nothing.
 ///
 /// Convenient function placeholder for no operation.
 /// Does nothing and has empty implementation.
@@ -84,7 +84,7 @@ public func noop<A1, A2>(
 ///   - _: placeholder
 ///   - _: placeholder
 @inlinable
-public func noop<A1, A2>(
+public func noopAsync<A1, A2>(
 	_: A1,
 	_: A2
 ) async { /* noop */  }
@@ -107,7 +107,7 @@ public func noop<A1, A2, A3>(
 	_: A3
 ) { /* noop */  }
 
-/// Convenient placeholder for a function that does nothing.
+/// Convenient placeholder for async function that does nothing.
 ///
 /// Convenient function placeholder for no operation.
 /// Does nothing and has empty implementation.
@@ -119,7 +119,7 @@ public func noop<A1, A2, A3>(
 ///   - _: placeholder
 ///   - _: placeholder
 @inlinable
-public func noop<A1, A2, A3>(
+public func noopAsync<A1, A2, A3>(
 	_: A1,
 	_: A2,
 	_: A3
@@ -145,7 +145,7 @@ public func noop<A1, A2, A3, A4>(
 	_: A4
 ) { /* noop */  }
 
-/// Convenient placeholder for a function that does nothing.
+/// Convenient placeholder for async function that does nothing.
 ///
 /// Convenient function placeholder for no operation.
 /// Does nothing and has empty implementation.
@@ -158,7 +158,7 @@ public func noop<A1, A2, A3, A4>(
 ///   - _: placeholder
 ///   - _: placeholder
 @inlinable
-public func noop<A1, A2, A3, A4>(
+public func noopAsync<A1, A2, A3, A4>(
 	_: A1,
 	_: A2,
 	_: A3,
@@ -187,7 +187,7 @@ public func noop<A1, A2, A3, A4, A5>(
 	_: A5
 ) { /* noop */  }
 
-/// Convenient placeholder for a function that does nothing.
+/// Convenient placeholder for async function that does nothing.
 ///
 /// Convenient function placeholder for no operation.
 /// Does nothing and has empty implementation.
@@ -201,7 +201,7 @@ public func noop<A1, A2, A3, A4, A5>(
 ///   - _: placeholder
 ///   - _: placeholder
 @inlinable
-public func noop<A1, A2, A3, A4, A5>(
+public func noopAsync<A1, A2, A3, A4, A5>(
 	_: A1,
 	_: A2,
 	_: A3,
@@ -233,7 +233,7 @@ public func noop<A1, A2, A3, A4, A5, A6>(
 	_: A6
 ) { /* noop */  }
 
-/// Convenient placeholder for a function that does nothing.
+/// Convenient placeholder for async function that does nothing.
 ///
 /// Convenient function placeholder for no operation.
 /// Does nothing and has empty implementation.
@@ -248,7 +248,7 @@ public func noop<A1, A2, A3, A4, A5, A6>(
 ///   - _: placeholder
 ///   - _: placeholder
 @inlinable
-public func noop<A1, A2, A3, A4, A5, A6>(
+public func noopAsync<A1, A2, A3, A4, A5, A6>(
 	_: A1,
 	_: A2,
 	_: A3,
@@ -283,7 +283,7 @@ public func noop<A1, A2, A3, A4, A5, A6, A7>(
 	_: A7
 ) { /* noop */  }
 
-/// Convenient placeholder for a function that does nothing.
+/// Convenient placeholder for async function that does nothing.
 ///
 /// Convenient function placeholder for no operation.
 /// Does nothing and has empty implementation.
@@ -299,7 +299,7 @@ public func noop<A1, A2, A3, A4, A5, A6, A7>(
 ///   - _: placeholder
 ///   - _: placeholder
 @inlinable
-public func noop<A1, A2, A3, A4, A5, A6, A7>(
+public func noopAsync<A1, A2, A3, A4, A5, A6, A7>(
 	_: A1,
 	_: A2,
 	_: A3,
@@ -337,7 +337,7 @@ public func noop<A1, A2, A3, A4, A5, A6, A7, A8>(
 	_: A8
 ) { /* noop */  }
 
-/// Convenient placeholder for a function that does nothing.
+/// Convenient placeholder for async function that does nothing.
 ///
 /// Convenient function placeholder for no operation.
 /// Does nothing and has empty implementation.
@@ -354,7 +354,7 @@ public func noop<A1, A2, A3, A4, A5, A6, A7, A8>(
 ///   - _: placeholder
 ///   - _: placeholder
 @inlinable
-public func noop<A1, A2, A3, A4, A5, A6, A7, A8>(
+public func noopAsync<A1, A2, A3, A4, A5, A6, A7, A8>(
 	_: A1,
 	_: A2,
 	_: A3,
