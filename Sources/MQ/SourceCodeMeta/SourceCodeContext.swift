@@ -193,3 +193,18 @@ extension SourceCodeContext: CustomDebugStringConvertible {
 			)
 	}
 }
+
+// swift-format-ignore: AllPublicDeclarationsHaveDocumentation
+extension SourceCodeContext: CustomLeafReflectable {
+
+	public var customMirror: Mirror {
+		.init(
+			self,
+			children: [
+				"contextStack": self.contextStack
+			],
+			displayStyle: .struct,
+			ancestorRepresentation: .suppressed
+		)
+	}
+}
