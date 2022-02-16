@@ -10,6 +10,8 @@ public struct Undefined: TheError {
 	/// - Parameters:
 	///   - message: Message associated with this error.
 	///   Default value is "Undefined".
+	///   - displayableMessage: Message which can be displayed
+	///   to the end user. Default is "Undefined error".
 	///   - file: Source code file identifier.
 	///   Filled automatically based on compile time constants.
 	///   - line: Line in given source code file.
@@ -17,6 +19,7 @@ public struct Undefined: TheError {
 	/// - Returns: New instance of ``Undefined`` error with given context.
 	public static func error(
 		message: StaticString = "Undefined",
+		displayableMessage: DisplayableString = "Undefined error",
 		file: StaticString = #fileID,
 		line: UInt = #line
 	) -> Self {
@@ -25,10 +28,13 @@ public struct Undefined: TheError {
 				message: message,
 				file: file,
 				line: line
-			)
+			),
+			displayableMessage: displayableMessage
 		)
 	}
 
 	/// Source code context of this error.
 	public var context: SourceCodeContext
+	/// String representation displayable to the end user.
+	public var displayableMessage: DisplayableString
 }

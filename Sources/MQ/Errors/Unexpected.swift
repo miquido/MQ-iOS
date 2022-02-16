@@ -10,6 +10,8 @@ public struct Unexpected: TheError {
 	/// - Parameters:
 	///   - message: Message associated with this error.
 	///   Default value is "Unexpected".
+	///   - displayableMessage: Message which can be displayed
+	///   to the end user. Default is "Unexpected error".
 	///   - underlyingError: Optional instance of error which was not expected.
 	///   This value will not be collected in release builds.
 	///   - file: Source code file identifier.
@@ -19,6 +21,7 @@ public struct Unexpected: TheError {
 	/// - Returns: New instance of ``Unexpected`` error with given context.
 	public static func error(
 		message: StaticString = "Unexpected",
+		displayableMessage: DisplayableString = "Unexpected error",
 		underlyingError: Error?,
 		file: StaticString = #fileID,
 		line: UInt = #line
@@ -29,10 +32,13 @@ public struct Unexpected: TheError {
 				file: file,
 				line: line
 			)
-			.with(underlyingError as Any, for: "underlyingError")
+			.with(underlyingError as Any, for: "underlyingError"),
+			displayableMessage: displayableMessage
 		)
 	}
 
 	/// Source code context of this error.
 	public var context: SourceCodeContext
+	/// String representation displayable to the end user.
+	public var displayableMessage: DisplayableString
 }

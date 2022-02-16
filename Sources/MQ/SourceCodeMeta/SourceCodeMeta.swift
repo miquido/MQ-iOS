@@ -48,11 +48,11 @@ public struct SourceCodeMeta {
 	///   Replaces previous value for the same key if any.
 	///   - Parameter key: Key used to identify provided value.
 	public mutating func set(
-		_ value: Any,
+		_ value: @autoclosure () -> Any,
 		for key: StaticString
 	) {
 		#if DEBUG
-			self.values[key] = value
+			self.values[key] = value()
 		#endif
 	}
 
@@ -67,12 +67,12 @@ public struct SourceCodeMeta {
 	///   - key: Key used to identify provided value.
 	/// - Returns: Copy of this ``SourceCodeMeta`` with additional associated value.
 	public func with(
-		_ value: Any,
+		_ value: @autoclosure () -> Any,
 		for key: StaticString
 	) -> Self {
 		#if DEBUG
 			var copy: Self = self
-			copy.set(value, for: key)
+			copy.set(value(), for: key)
 			return copy
 		#else
 			return self
