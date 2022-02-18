@@ -172,7 +172,7 @@ extension SourceCodeContext: CustomStringConvertible {
 	public var description: String {
 		self.contextStack
 			.reduce(
-				into: "#SourceCodeContext:\n---",
+				into: "###",
 				{ (result: inout String, meta: SourceCodeMeta) in
 					result.append("\n\(meta.description)\n---")
 				}
@@ -186,7 +186,7 @@ extension SourceCodeContext: CustomDebugStringConvertible {
 	public var debugDescription: String {
 		self.contextStack
 			.reduce(
-				into: "#SourceCodeContext:\n---",
+				into: "###",
 				{ (result: inout String, meta: SourceCodeMeta) in
 					result.append("\n\(meta.debugDescription)\n---")
 				}
