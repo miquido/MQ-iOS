@@ -17,9 +17,9 @@ public struct SourceCodeMeta {
 	///   Filled automatically based on compile time constants.
 	///   - line: Line in given source code file.
 	///   Filled automatically based on compile time constants.
-	/// - Returns: Instance of ``SourceCodeMeta`` for given context.
-	public static func context(
-		message: StaticString,
+	/// - Returns: Instance of ``SourceCodeMeta`` for given message.
+	public static func message(
+		_ message: StaticString,
 		file: StaticString = #fileID,
 		line: UInt = #line
 	) -> Self {
@@ -108,7 +108,12 @@ extension SourceCodeMeta: CustomDebugStringConvertible {
 						.reduce(
 							into: String(),
 							{ (result, value) in
-								result.append("\n - \(value.key): \(value.value)")
+								let formattedValue: String = "\(value.value)"
+									.replacingOccurrences(  // keep indentation
+										of: "\n",
+										with: "\n   "
+									)
+								result.append("\n - \(value.key): \(formattedValue)")
 							}
 						)
 				)
