@@ -5,7 +5,7 @@ import Darwin
 ///
 /// Verify if current process has attached debugger.
 ///
-/// - Returns: `true` if if debugger is attached to the process, `false` otherwise.
+/// - Returns: `true` if debugger is attached to the process, `false` otherwise.
 @inlinable @inline(__always)
 public func isDebuggerAttached() -> Bool {
 	var name: Array<Int32> = [CTL_KERN, KERN_PROC, KERN_PROC_PID, getpid()]
