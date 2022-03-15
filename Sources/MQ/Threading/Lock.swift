@@ -1,4 +1,8 @@
 import struct Darwin.time_t
+import func os.os_unfair_lock_lock
+import struct os.os_unfair_lock_s
+import func os.os_unfair_lock_trylock
+import func os.os_unfair_lock_unlock
 
 /// Abstraction over locking.
 ///
@@ -179,6 +183,53 @@ extension Lock {
 					)
 				},
 				tryAcquire: lock.try,
+				release: lock.unlock
+			)
+		}
+
+		/// Crate an instance of ``Lock`` backed by ``os_unfair_lock`` instance.
+		///
+		/// This method manages internal instance of ``os_unfair_lock``.
+		///
+		/// - Note: This implementation does not support ``acquireBefore`` method.
+		///
+		/// - Returns: Instance of ``Lock`` using ``os_unfair_lock``.
+		public static func osUnfairLock() -> Self {
+
+			final class OSUnfairLock {
+
+				private let pointer: UnsafeMutablePointer<os_unfair_lock_s> = .allocate(capacity: 1)
+
+				fileprivate init() {
+					self.pointer.initialize(to: os_unfair_lock_s())
+				}
+
+				deinit {
+					self.pointer.deinitialize(count: 1)
+					self.pointer.deallocate()
+				}
+
+				fileprivate func lock() {
+					os_unfair_lock_lock(self.pointer)
+				}
+
+				fileprivate func tryLock() -> Bool {
+					os_unfair_lock_trylock(self.pointer)
+				}
+
+				fileprivate func unlock() {
+					os_unfair_lock_unlock(self.pointer)
+				}
+			}
+
+			let lock: OSUnfairLock = .init()
+
+			return Self(
+				acquire: lock.lock,
+				acquireBefore: unimplemented(
+					"acquireBefore is unavailable for osUnfairLock"
+				),
+				tryAcquire: lock.tryLock,
 				release: lock.unlock
 			)
 		}
