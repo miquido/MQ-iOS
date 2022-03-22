@@ -63,7 +63,7 @@ extension SourceCodeLocation: CustomLeafReflectable {
 			children: [
 				"file": self.file,
 				"line": self.line,
-				"column": self.column,
+				"column": self.column as Any,
 			],
 			displayStyle: .struct,
 			ancestorRepresentation: .suppressed
