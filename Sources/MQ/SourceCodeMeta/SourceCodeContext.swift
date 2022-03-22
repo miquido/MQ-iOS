@@ -23,7 +23,7 @@ public struct SourceCodeContext {
 	///   Filled automatically based on compile time constants.
 	///   - line: Line in given source code file.
 	///   Filled automatically based on compile time constants.
-	/// - Returns: Instance of ``SourceCodeContext`` for given context.
+	/// - Returns: Instance of ``SourceCodeContext`` for given message.
 	public static func context(
 		message: StaticString,
 		file: StaticString = #fileID,
@@ -31,8 +31,8 @@ public struct SourceCodeContext {
 	) -> Self {
 		Self(
 			contextStack: [
-				.context(
-					message: message,
+				.message(
+					message,
 					file: file,
 					line: line
 				)
@@ -47,11 +47,11 @@ public struct SourceCodeContext {
 	/// Appending ``SourceCodeMeta`` allows making diagnostics stack similar to stack traces.
 	/// However it is selected by programmer what points in source code will be included.
 	///
-	/// - Parameter context: ``SourceCodeMeta`` to be appended.
+	/// - Parameter meta: ``SourceCodeMeta`` to be appended.
 	public mutating func append(
-		_ context: SourceCodeMeta
+		_ meta: SourceCodeMeta
 	) {
-		self.contextStack.append(context)
+		self.contextStack.append(meta)
 	}
 
 	/// Make a copy of this ``SourceCodeContext`` and append additional ``SourceCodeMeta`` to it.
@@ -59,13 +59,13 @@ public struct SourceCodeContext {
 	/// Appending ``SourceCodeMeta`` allows making diagnostics stack similar to stack traces.
 	/// However it is selected by programmer what points in source code will be included.
 	///
-	/// - Parameter context: ``SourceCodeMeta`` to be appended.
+	/// - Parameter meta: ``SourceCodeMeta`` to be appended.
 	/// - Returns: Copy of this ``SourceCodeContext`` with additional ``SourceCodeMeta`` appended.
 	public func appending(
-		_ context: SourceCodeMeta
+		_ meta: SourceCodeMeta
 	) -> Self {
 		var copy: Self = self
-		copy.append(context)
+		copy.append(meta)
 		return copy
 	}
 
@@ -172,7 +172,7 @@ extension SourceCodeContext: CustomStringConvertible {
 	public var description: String {
 		self.contextStack
 			.reduce(
-				into: "###",
+				into: "---",
 				{ (result: inout String, meta: SourceCodeMeta) in
 					result.append("\n\(meta.description)\n---")
 				}
@@ -186,7 +186,7 @@ extension SourceCodeContext: CustomDebugStringConvertible {
 	public var debugDescription: String {
 		self.contextStack
 			.reduce(
-				into: "###",
+				into: "---",
 				{ (result: inout String, meta: SourceCodeMeta) in
 					result.append("\n\(meta.debugDescription)\n---")
 				}

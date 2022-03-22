@@ -71,16 +71,19 @@ extension TheError {
 	///   Filled automatically based on compile time constants.
 	///   - line: Line in given source code file.
 	///   Filled automatically based on compile time constants.
+	/// - Returns: The same error instance.
+	@discardableResult
 	public func asAssertionFailure(
 		message: @autoclosure () -> String = .init(),
 		file: StaticString = #fileID,
 		line: UInt = #line
-	) {
+	) -> Self {
 		runtimeAssertionFailure(
 			message: "\(message())\n\(self.debugDescription)",
 			file: file,
 			line: line
 		)
+		return self
 	}
 
 	/// Treat this error as a breakpoint in debug builds.
@@ -95,14 +98,17 @@ extension TheError {
 	///   Filled automatically based on compile time constants.
 	///   - line: Line in given source code file.
 	///   Filled automatically based on compile time constants.
+	/// - Returns: The same error instance.
+	@discardableResult
 	public func asBreakpoint(
 		message: @autoclosure () -> String = .init(),
 		file: StaticString = #fileID,
 		line: UInt = #line
-	) {
+	) -> Self {
 		breakpoint(
 			"\(file):\(line) \(message())\n\(self.debugDescription)"
 		)
+		return self
 	}
 
 	/// Append additional ``SourceCodeMeta`` to this error ``context``.
