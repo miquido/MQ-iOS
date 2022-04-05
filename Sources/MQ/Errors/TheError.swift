@@ -31,7 +31,7 @@ extension TheError {
 	}
 
 	public var localizedDescription: String {
-		self.displayableMessage.string
+		self.displayableMessage.resolved
 	}
 }
 

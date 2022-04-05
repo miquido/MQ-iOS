@@ -1,19 +1,34 @@
+import class Foundation.Bundle
+import func Foundation.NSLocalizedString
+
 /// String which can be displayed to the end user.
 public struct DisplayableString {
 
-	private let value: () -> String
+	@Lazy private var value: String
+
+	/// Create instance of ``DisplayableString`` using provided value.
+	///
+	/// - Parameter value: Lazily resolved string value.
+	/// Resolved value will be cached after accessing if for
+	/// the first time and won't be updated after.
+	public init(
+		_ value: @autoclosure @escaping () -> String
+	) {
+		self._value = Lazy(value)
+	}
 }
 
 extension DisplayableString {
 
-	/// Create instance of ``DisplayableString`` using provided value.
-	public init(_ value: @autoclosure @escaping () -> String) {
-		self.value = value
-	}
-
 	/// Resolved string value.
-	public var string: String {
-		self.value()
+	///
+	/// Resolves string if needed and get its value.
+	/// Value will be cached after resolving for the first time.
+	///
+	/// - Note: String value is resolved when accessing ``description``,
+	/// performing equality check or computing hash value.
+	public var resolved: String {
+		self.value
 	}
 }
 
@@ -70,13 +85,70 @@ extension DisplayableString {
 			)
 		}
 	}
+
+	/// Create instance of ``DisplayableString`` using provided value with formatter.
+	///
+	/// - Parameters:
+	///   - value: Value converted to a String using provided formatter.
+	///   - formatter: Function used to convert provided value
+	///   to a String.
+	/// - Returns: Instance of ``DisplayableString`` using provided value and formatter.
+	public static func string<Value>(
+		_ value: Value,
+		formatter: @escaping (Value) -> String
+	) -> Self {
+		.init(formatter(value))
+	}
+
+	/// Create instance of localized ``DisplayableString`` using
+	/// provided localization string key with optional arguments.
+	/// String localization is achieved by using ``NSLocalizedString``.
+	///
+	/// - Parameters:
+	///   - stringLocalizationKey: Localization key used to resolve string.
+	///   - bundle: Bundle containing localized string for provided key.
+	///   Default is main bundle.
+	///   - tableName: Name of localization table. Default is none.
+	///   - formatArguments: Arguments used to prepare final string
+	///   treating resolved, localized string as a format.
+	/// - Returns: Instance of localized ``DisplayableString`` using provided parameters.
+	public static func localized(
+		_ stringLocalizationKey: LocalizationKey,
+		bundle: Bundle = .main,
+		tableName: String? = .none,
+		formatArguments: CVarArg...
+	) -> Self {
+		if formatArguments.isEmpty {
+			return .init(
+				NSLocalizedString(
+					stringLocalizationKey.rawValue,
+					tableName: tableName,
+					bundle: bundle,
+					comment: ""
+				)
+			)
+		}
+		else {
+			return .init(
+				String(
+					format: NSLocalizedString(
+						stringLocalizationKey.rawValue,
+						tableName: tableName,
+						bundle: bundle,
+						comment: ""
+					),
+					formatArguments
+				)
+			)
+		}
+	}
 }
 
 // swift-format-ignore: AllPublicDeclarationsHaveDocumentation
 extension DisplayableString: CustomStringConvertible {
 
 	public var description: String {
-		self.string
+		self.resolved
 	}
 }
 
@@ -84,7 +156,7 @@ extension DisplayableString: CustomStringConvertible {
 extension DisplayableString: CustomDebugStringConvertible {
 
 	public var debugDescription: String {
-		self.string
+		self.resolved
 	}
 }
 
@@ -103,7 +175,188 @@ extension DisplayableString: CustomLeafReflectable {
 // swift-format-ignore: AllPublicDeclarationsHaveDocumentation
 extension DisplayableString: ExpressibleByStringInterpolation {
 
-	public init(stringLiteral: String) {
+	public init(
+		stringLiteral: String
+	) {
 		self.init(stringLiteral)
+	}
+
+	public init(
+		stringInterpolation: StringInterpolation
+	) {
+		self.init(stringInterpolation.resolved())
+	}
+}
+
+extension DisplayableString {
+
+	/// Represents a string literal with interpolations.
+	///
+	/// Do not create an instance of this type directly.
+	/// It is used by the compiler when you create
+	/// a ``DisplayableString`` using string interpolation.
+	///
+	/// You can extend it with custom interpolation by defining
+	/// ` mutating func appendInterpolation(args...)` methods
+	/// in the extension of``StringInterpolation``.
+	///
+	/// See ``StringInterpolationProtocol`` for details.
+	public struct StringInterpolation: StringInterpolationProtocol {
+
+		private var parts: Array<() -> String>
+
+		// swift-format-ignore: ValidateDocumentationComments
+		/// Create new interpolation with predefined capacity.
+		///
+		/// Do not call this initializer directly. It is used by the compiler when
+		/// interpreting string interpolations.
+		public init(
+			literalCapacity: Int,
+			interpolationCount: Int
+		) {
+			self.parts = .init()
+			self.parts.reserveCapacity(literalCapacity + interpolationCount)
+		}
+
+		fileprivate func resolved() -> String {
+			self.parts
+				.reduce(
+					into: "",
+					{ result, part in
+						result.append(part())
+					}
+				)
+		}
+
+		/// Append string literal.
+		///
+		/// - Parameter literal: Literal string value that will be appended.
+		public mutating func appendLiteral(
+			_ literal: String
+		) {
+			self.parts
+				.append(
+					always(literal)
+				)
+		}
+
+		/// Append any value converted to its string representation.
+		///
+		/// - Parameter any: Any value that will be converted to a string.
+		public mutating func appendInterpolation<Value>(
+			_ any: Value
+		) {
+			self.parts
+				.append(
+					always(
+						// fallback to stdlib interpolation
+						// since it is using publicly inaccessible methods for
+						// providing valid conversions for any type
+						"\(any)"
+					)
+				)
+
+		}
+
+		/// Append formatted string.
+		///
+		/// - Parameters:
+		///   - format: String used as a format for provided arguments.
+		///   - head: First argument used to prepare final string.
+		///   - tail: Rest of argument used to prepare final string.
+		public mutating func appendInterpolation(
+			format: String,
+			arguments head: CVarArg,
+			_ tail: CVarArg...
+		) {
+			self.parts
+				.append(
+					always(
+						String(
+							format: format,
+							[head] + tail
+						)
+					)
+				)
+		}
+
+		/// Append any value with given formatter.
+		///
+		/// - Parameters:
+		///   - value: Value converted to a String using provided formatter.
+		///   - formatter: Function used to convert provided value
+		///   to a String.
+		public mutating func appendInterpolation<Value>(
+			_ value: Value,
+			formatter: @escaping (Value) -> String
+		) {
+			self.parts
+				.append(
+					always(formatter(value))
+				)
+		}
+
+		/// Append localized string with optional formatting.
+		///
+		/// - Parameters:
+		///   - stringLocalizationKey: Localization key used to resolve string.
+		///   - bundle: Bundle containing localized string for provided key.
+		///   Default is main bundle.
+		///   - tableName: Name of localization table. Default is none.
+		///   - formatArguments: Arguments used to prepare final string
+		///   treating resolved, localized string as a format.
+		public mutating func appendInterpolation(
+			localized stringLocalizationKey: LocalizationKey,
+			fromBundle bundle: Bundle = .main,
+			table tableName: String? = .none,
+			formatArguments: CVarArg...
+		) {
+			if formatArguments.isEmpty {
+				self.parts
+					.append(
+						always(
+							NSLocalizedString(
+								stringLocalizationKey.rawValue,
+								tableName: tableName,
+								bundle: bundle,
+								comment: ""
+							)
+						)
+					)
+			}
+			else {
+				self.parts
+					.append(
+						always(
+							String(
+								format: NSLocalizedString(
+									stringLocalizationKey.rawValue,
+									tableName: tableName,
+									bundle: bundle,
+									comment: ""
+								),
+								formatArguments
+							)
+						)
+					)
+			}
+		}
+	}
+}
+
+// swift-format-ignore: AllPublicDeclarationsHaveDocumentation
+extension DisplayableString: Hashable {
+
+	public static func == (
+		_ lhs: DisplayableString,
+		_ rhs: DisplayableString
+	) -> Bool {
+		lhs.resolved == rhs.resolved
+	}
+
+	public func hash(
+		into hasher: inout Hasher
+	) {
+		hasher.combine(self.resolved)
 	}
 }
