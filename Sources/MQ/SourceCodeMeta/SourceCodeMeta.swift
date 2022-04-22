@@ -47,8 +47,8 @@ public struct SourceCodeMeta {
 	///   - value: Any value to be associated with given key.
 	///   Replaces previous value for the same key if any.
 	///   - Parameter key: Key used to identify provided value.
-	public mutating func set(
-		_ value: @autoclosure () -> Any,
+	public mutating func set<Value>(
+		_ value: @autoclosure () -> Value,
 		for key: StaticString
 	) {
 		#if DEBUG
@@ -66,8 +66,8 @@ public struct SourceCodeMeta {
 	///   Replaces previous value for the same key if any.
 	///   - key: Key used to identify provided value.
 	/// - Returns: Copy of this ``SourceCodeMeta`` with additional associated value.
-	public func with(
-		_ value: @autoclosure () -> Any,
+	public func with<Value>(
+		_ value: @autoclosure () -> Value,
 		for key: StaticString
 	) -> Self {
 		#if DEBUG
