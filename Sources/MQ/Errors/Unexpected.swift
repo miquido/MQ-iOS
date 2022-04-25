@@ -32,7 +32,7 @@ public struct Unexpected: TheError {
 				file: file,
 				line: line
 			)
-			.with(underlyingError as Any, for: "underlyingError"),
+			.with(underlyingError, for: "underlyingError"),
 			displayableMessage: displayableMessage
 		)
 	}

@@ -78,8 +78,8 @@ public struct SourceCodeContext {
 	///   - value: Any value to be associated with given key with the last ``SourceCodeMeta`` in this ``SourceCodeContext``.
 	///   Replaces previous value for the same key if it already exists in last ``SourceCodeMeta``.
 	///   - key: Key used to identify provided value.
-	public mutating func set(
-		_ value: @autoclosure () -> Any,
+	public mutating func set<Value>(
+		_ value: @autoclosure () -> Value,
 		for key: StaticString
 	) {
 		#if DEBUG
@@ -99,8 +99,8 @@ public struct SourceCodeContext {
 	///   Replaces previous value for the same key if it already exists in last ``SourceCodeMeta``.
 	///   - key: Key used to identify provided value.
 	/// - Returns: Copy of this ``SourceCodeContext`` with additional value associated with last ``SourceCodeMeta`` in the copy.
-	public func with(
-		_ value: @autoclosure () -> Any,
+	public func with<Value>(
+		_ value: @autoclosure () -> Value,
 		for key: StaticString
 	) -> Self {
 		#if DEBUG
