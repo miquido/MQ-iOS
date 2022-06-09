@@ -17,8 +17,12 @@ public struct DisplayableString: Sendable {
 	/// - Parameter value: Lazily resolved string value.
 	/// Resolved value will be cached after accessing if for
 	/// the first time and won't be updated after.
-	/// - Note: resolving of value should be quick operation
-	/// and has to not block the thread.
+	///
+	/// - Note: `value` is captured using autoclosure
+	/// to be lazily eveluated when needed. It should be
+	/// avoided to make time consuming operations
+	/// and thread blocking when resolving value
+	/// to avoid unexpected behaviour.
 	public init(
 		_ value: @autoclosure @escaping @Sendable () -> String
 	) {
@@ -112,7 +116,7 @@ extension DisplayableString {
 	///   to a String.
 	/// - Returns: Instance of ``DisplayableString`` using provided value and formatter.
 	public static func string<Value>(
-		_ value: Value,
+		from value: Value,
 		formatter: @escaping (Value) -> String
 	) -> Self {
 		.init(formatter(value))
@@ -125,14 +129,13 @@ extension DisplayableString {
 	/// - Parameters:
 	///   - stringLocalizationKey: Localization key used to resolve string.
 	///   - bundle: Bundle containing localized string for provided key.
-	///   Default is main bundle.
 	///   - tableName: Name of localization table. Default is none.
 	///   - formatArguments: Arguments used to prepare final string
 	///   treating resolved, localized string as a format.
 	/// - Returns: Instance of localized ``DisplayableString`` using provided parameters.
 	public static func localized(
 		_ stringLocalizationKey: LocalizationKey,
-		bundle: Bundle = .main,
+		bundle: Bundle,
 		tableName: String? = .none,
 		formatArguments: CVarArg...
 	) -> Self {
@@ -229,11 +232,10 @@ extension DisplayableString {
 		/// Do not call this initializer directly. It is used by the compiler when
 		/// interpreting string interpolations.
 		public init(
-			literalCapacity: Int,
-			interpolationCount: Int
+			literalCapacity _: Int,
+			interpolationCount _: Int
 		) {
 			self.parts = .init()
-			self.parts.reserveCapacity(literalCapacity + interpolationCount)
 		}
 
 		fileprivate func resolved() -> String {
@@ -319,13 +321,12 @@ extension DisplayableString {
 		/// - Parameters:
 		///   - stringLocalizationKey: Localization key used to resolve string.
 		///   - bundle: Bundle containing localized string for provided key.
-		///   Default is main bundle.
 		///   - tableName: Name of localization table. Default is none.
 		///   - formatArguments: Arguments used to prepare final string
 		///   treating resolved, localized string as a format.
 		public mutating func appendInterpolation(
 			localized stringLocalizationKey: LocalizationKey,
-			fromBundle bundle: Bundle = .main,
+			bundle: Bundle,
 			table tableName: String? = .none,
 			formatArguments: CVarArg...
 		) {
