@@ -6,7 +6,7 @@
 ///
 /// - Parameter value: Value forwarded.
 /// - Returns: Value provided as an argument without any changes.
-public func id<Value>(
+@Sendable public func id<Value>(
 	_ value: Value
 ) -> Value {
 	value

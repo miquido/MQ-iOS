@@ -4,7 +4,7 @@
 /// Collected data should be used only for diagnostics purposes.
 ///
 /// - warning: ``SourceCodeMeta`` is not intended to provide any data across application.
-public struct SourceCodeMeta {
+public struct SourceCodeMeta: Sendable {
 
 	/// Create ``SourceCodeMeta`` for further diagnostics using given source code location.
 	///
@@ -35,7 +35,7 @@ public struct SourceCodeMeta {
 	private let message: StaticString
 	private let sourceCodeLocation: SourceCodeLocation
 	#if DEBUG
-		private var values: Dictionary<StaticString, Any> = .init()
+		private let debugValues: CriticalSection<Dictionary<StaticString, Any>> = .init(.init())
 	#endif
 
 	/// Associate any dynamic value with given key for this ``SourceCodeMeta``.
@@ -52,7 +52,9 @@ public struct SourceCodeMeta {
 		for key: StaticString
 	) {
 		#if DEBUG
-			self.values[key] = value()
+			self.debugValues.access { (values: inout Dictionary<StaticString, Any>) -> Void in
+				values[key] = value()
+			}
 		#endif
 	}
 
@@ -104,7 +106,8 @@ extension SourceCodeMeta: CustomDebugStringConvertible {
 		#if DEBUG
 			self.description
 				.appending(
-					self.values
+					self.debugValues
+						.access(\Dictionary<StaticString, Any>.self)
 						.reduce(
 							into: String(),
 							{ (result, value) in

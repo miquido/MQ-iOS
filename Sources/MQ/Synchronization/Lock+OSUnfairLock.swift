@@ -28,15 +28,15 @@ extension Lock {
 				self.pointer.deallocate()
 			}
 
-			@inline(__always) fileprivate func lock() {
+			@inline(__always) @Sendable fileprivate func lock() {
 				os_unfair_lock_lock(self.pointer)
 			}
 
-			@inline(__always) fileprivate func tryLock() -> Bool {
+			@inline(__always) @Sendable fileprivate func tryLock() -> Bool {
 				os_unfair_lock_trylock(self.pointer)
 			}
 
-			@inline(__always) fileprivate func unlock() {
+			@inline(__always) @Sendable fileprivate func unlock() {
 				os_unfair_lock_unlock(self.pointer)
 			}
 		}

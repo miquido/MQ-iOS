@@ -13,7 +13,7 @@
 /// Collected data should be used only for diagnostics purposes.
 ///
 /// - warning: ``SourceCodeContext`` is not intended to provide any data across application.
-public struct SourceCodeContext {
+public struct SourceCodeContext: Sendable {
 
 	/// Create ``SourceCodeMeta`` info for further diagnostics using given source code location.
 	///

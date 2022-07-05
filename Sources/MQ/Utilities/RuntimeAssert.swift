@@ -18,7 +18,7 @@ public var runtimeAssertionMethod: RuntimeAssertionMethod? = { condition, messag
 /// Type of ``runtimeAssertionMethod``.
 ///
 /// Used to replace runtime assertion implementation.
-public typealias RuntimeAssertionMethod = (
+public typealias RuntimeAssertionMethod = @Sendable (
 	_ condition: () -> Bool,
 	_ message: String,
 	_ file: StaticString,

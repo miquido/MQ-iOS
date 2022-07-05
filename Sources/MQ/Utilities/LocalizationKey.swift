@@ -6,7 +6,7 @@
 /// You can define application or library constants
 /// by defining static properties inside ``LocalizationKey``
 /// extensions.
-public struct LocalizationKey {
+public struct LocalizationKey: Sendable {
 
 	internal var rawValue: String
 }

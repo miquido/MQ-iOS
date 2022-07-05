@@ -2,15 +2,15 @@
 ///
 /// ``Lock`` interface can be used as an abstraction over any locking mechanism.
 /// Its specific behavior depends on concrete implementation of a lock.
-@frozen public struct Lock {
+@frozen public struct Lock: Sendable {
 
 	// Acquire the lock waiting indefinetly if needed.
-	@usableFromInline internal let acquire: () -> Void
+	@usableFromInline internal let acquire: @Sendable () -> Void
 	// Try acquire the lock if able.
 	// Returns `true` if acquiring lock succeed and `false` otherwise.
-	@usableFromInline internal let tryAcquire: () -> Bool
+	@usableFromInline internal let tryAcquire: @Sendable () -> Bool
 	// Release the lock if able.
-	@usableFromInline internal let release: () -> Void
+	@usableFromInline internal let release: @Sendable () -> Void
 
 	/// Initialize lock using provided method implementations.
 	///
@@ -29,9 +29,9 @@
 	///   - release: Function used to release the lock aka unlock.
 	///   It should have no effect when lock was not acquired and unlock otherwhise.
 	public init(
-		acquire: @escaping () -> Void,
-		tryAcquire: @escaping () -> Bool,
-		release: @escaping () -> Void
+		acquire: @escaping @Sendable () -> Void,
+		tryAcquire: @escaping @Sendable () -> Bool,
+		release: @escaping @Sendable () -> Void
 	) {
 		self.acquire = acquire
 		self.tryAcquire = tryAcquire
@@ -46,7 +46,7 @@ extension Lock {
 	/// This method call will block current thread until lock becomes acquired.
 	///
 	/// - warning: This method will never timeout. It will wait for acquiring the lock indefinetly.
-	@inlinable public func lock() {
+	@inlinable @Sendable public func lock() {
 		self.acquire()
 	}
 
@@ -56,7 +56,7 @@ extension Lock {
 	/// It passes without waiting if it was not able to acquire the lock at the moment of call.
 	///
 	/// - Returns: `true` if acquiring lock succeed and `false` otherwise.
-	@inlinable public func tryLock() -> Bool {
+	@inlinable @Sendable public func tryLock() -> Bool {
 		self.tryAcquire()
 	}
 
@@ -65,7 +65,7 @@ extension Lock {
 	/// Release this lock if it has been previously acquired.
 	/// It will unlock execution in one of points waiting for acquire.
 	/// Exact behaviour depends on concrete implementation of a lock.
-	@inlinable public func unlock() {
+	@inlinable @Sendable public func unlock() {
 		self.release()
 	}
 }
@@ -79,7 +79,7 @@ extension Lock {
 	///
 	/// - warning: Nested invocation may cause deadlock.
 	/// Ensure that used lock implementation is recursive or avoid recursive usage.
-	@inlinable public func withLock<Result>(
+	@inlinable @Sendable public func withLock<Result>(
 		_ execute: () throws -> Result
 	) rethrows -> Result {
 		self.lock()

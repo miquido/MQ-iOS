@@ -6,7 +6,7 @@
 ///
 /// - Note: Empty methods are striped out in release builds.
 @inlinable
-public func noop() { /* noop */  }
+@Sendable public func noop() { /* noop */  }
 
 /// Convenient placeholder for a function that does nothing.
 ///
@@ -17,7 +17,7 @@ public func noop() { /* noop */  }
 ///
 /// - Parameter _: placeholder
 @inlinable
-public func noop<A1>(
+@Sendable public func noop<A1>(
 	_: A1
 ) { /* noop */  }
 
@@ -30,7 +30,7 @@ public func noop<A1>(
 ///
 /// - Parameter _: placeholder
 @inlinable @_disfavoredOverload
-public func noop<A1>(
+@Sendable public func noop<A1>(
 	_: inout A1
 ) { /* noop */  }
 
@@ -45,7 +45,7 @@ public func noop<A1>(
 ///   - _: placeholder
 ///   - _: placeholder
 @inlinable
-public func noop<A1, A2>(
+@Sendable public func noop<A1, A2>(
 	_: A1,
 	_: A2
 ) { /* noop */  }
@@ -62,7 +62,7 @@ public func noop<A1, A2>(
 ///   - _: placeholder
 ///   - _: placeholder
 @inlinable
-public func noop<A1, A2, A3>(
+@Sendable public func noop<A1, A2, A3>(
 	_: A1,
 	_: A2,
 	_: A3
@@ -81,7 +81,7 @@ public func noop<A1, A2, A3>(
 ///   - _: placeholder
 ///   - _: placeholder
 @inlinable
-public func noop<A1, A2, A3, A4>(
+@Sendable public func noop<A1, A2, A3, A4>(
 	_: A1,
 	_: A2,
 	_: A3,
@@ -102,7 +102,7 @@ public func noop<A1, A2, A3, A4>(
 ///   - _: placeholder
 ///   - _: placeholder
 @inlinable
-public func noop<A1, A2, A3, A4, A5>(
+@Sendable public func noop<A1, A2, A3, A4, A5>(
 	_: A1,
 	_: A2,
 	_: A3,
@@ -125,7 +125,7 @@ public func noop<A1, A2, A3, A4, A5>(
 ///   - _: placeholder
 ///   - _: placeholder
 @inlinable
-public func noop<A1, A2, A3, A4, A5, A6>(
+@Sendable public func noop<A1, A2, A3, A4, A5, A6>(
 	_: A1,
 	_: A2,
 	_: A3,
@@ -150,7 +150,7 @@ public func noop<A1, A2, A3, A4, A5, A6>(
 ///   - _: placeholder
 ///   - _: placeholder
 @inlinable
-public func noop<A1, A2, A3, A4, A5, A6, A7>(
+@Sendable public func noop<A1, A2, A3, A4, A5, A6, A7>(
 	_: A1,
 	_: A2,
 	_: A3,
@@ -177,7 +177,7 @@ public func noop<A1, A2, A3, A4, A5, A6, A7>(
 ///   - _: placeholder
 ///   - _: placeholder
 @inlinable
-public func noop<A1, A2, A3, A4, A5, A6, A7, A8>(
+@Sendable public func noop<A1, A2, A3, A4, A5, A6, A7, A8>(
 	_: A1,
 	_: A2,
 	_: A3,

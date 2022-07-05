@@ -13,7 +13,7 @@ import func libkern.atomic_flag_test_and_set
 /// high level data synchronization over long running tasks.
 /// Access method should return as quickly as possible
 /// to avoid any potential issues.
-public struct CriticalSection<State> {
+public struct CriticalSection<State>: @unchecked Sendable {
 
 	@usableFromInline internal let memory: Memory
 
@@ -89,4 +89,4 @@ extension CriticalSection {
 	}
 }
 
-extension CriticalSection: @unchecked Sendable {}
+extension CriticalSection {}
