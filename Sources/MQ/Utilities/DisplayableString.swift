@@ -2,19 +2,27 @@ import class Foundation.Bundle
 import func Foundation.NSLocalizedString
 
 /// String which can be displayed to the end user.
-public struct DisplayableString {
+public struct DisplayableString: Sendable {
 
-	@Lazy private var value: String
+	private enum State {
+
+		case pending(@Sendable () -> String)
+		case resolved(String)
+	}
+
+	private let value: CriticalSection<State>
 
 	/// Create instance of ``DisplayableString`` using provided value.
 	///
 	/// - Parameter value: Lazily resolved string value.
 	/// Resolved value will be cached after accessing if for
 	/// the first time and won't be updated after.
+	/// - Note: resolving of value should be quick operation
+	/// and has to not block the thread.
 	public init(
-		_ value: @autoclosure @escaping () -> String
+		_ value: @autoclosure @escaping @Sendable () -> String
 	) {
-		self._value = Lazy(value)
+		self.value = .init(.pending(value))
 	}
 }
 
@@ -28,7 +36,17 @@ extension DisplayableString {
 	/// - Note: String value is resolved when accessing ``description``,
 	/// performing equality check or computing hash value.
 	public var resolved: String {
-		self.value
+		self.value.access { (state: inout State) -> String in
+			switch state {
+			case let .resolved(string):
+				return string
+
+			case let .pending(resolve):
+				let string: String = resolve()
+				state = .resolved(string)
+				return string
+			}
+		}
 	}
 }
 

@@ -3,52 +3,73 @@ import XCTest
 
 final class LockTests: XCTestCase {
 
+	final class FakeSendableState: @unchecked Sendable {
+
+		var result: Void? = .none
+	}
+
+	var fakeSendableState: FakeSendableState!
+
+	override func setUp() {
+		super.setUp()
+		self.fakeSendableState = .init()
+	}
+
+	override func tearDown() {
+		self.fakeSendableState = .none
+		super.tearDown()
+	}
+
 	func test_init_doesNotModifyLockState() {
-		var result: Void?
 		let _: Lock = .init(
-			acquire: { result = void },
+			acquire: {
+				self.fakeSendableState.result = void
+			},
 			tryAcquire: {
-				result = void
+				self.fakeSendableState.result = void
 				return false
 			},
-			release: { result = void }
+			release: {
+				self.fakeSendableState.result = void
+			}
 		)
 
-		XCTAssertNil(result)
+		XCTAssertNil(self.fakeSendableState.result)
 	}
 
 	func test_lock_callsAcquire() {
-		var result: Void?
 		let lock: Lock = .init(
-			acquire: { result = void },
+			acquire: {
+				self.fakeSendableState.result = void
+			},
 			tryAcquire: unimplemented(),
 			release: unimplemented()
 		)
 
 		lock.lock()
 
-		XCTAssertNotNil(result)
+		XCTAssertNotNil(self.fakeSendableState.result)
 	}
 
 	func test_unlock_callsRelease() {
-		var result: Void?
 		let lock: Lock = .init(
 			acquire: unimplemented(),
 			tryAcquire: unimplemented(),
-			release: { result = void }
+			release: {
+				self.fakeSendableState.result = void
+			}
 		)
 
 		lock.unlock()
 
-		XCTAssertNotNil(result)
+		XCTAssertNotNil(self.fakeSendableState.result)
 	}
 
 	func test_trylock_callsTryAcquire() {
-		var result: Void?
 		let lock: Lock = .init(
 			acquire: unimplemented(),
 			tryAcquire: {
-				result = void
+				self.fakeSendableState.result = void
 				return false
 			},
 			release: unimplemented()
@@ -56,7 +77,7 @@ final class LockTests: XCTestCase {
 
 		_ = lock.tryLock()
 
-		XCTAssertNotNil(result)
+		XCTAssertNotNil(self.fakeSendableState.result)
 	}
 
 	func test_trylock_returnsTryAcquireResult() {
@@ -73,32 +94,34 @@ final class LockTests: XCTestCase {
 	}
 
 	func test_withLock_acquiresLockBeforeExecutingTask() {
-		var result: Void?
 		let lock: Lock = .init(
-			acquire: { result = void },
+			acquire: {
+				self.fakeSendableState.result = void
+			},
 			tryAcquire: unimplemented(),
 			release: noop
 		)
 
 		lock
 			.withLock {
-				XCTAssertNotNil(result)
+				XCTAssertNotNil(self.fakeSendableState.result)
 			}
 	}
 
 	func test_withLock_acquiresLockAfterExecutingTask() {
-		var result: Void?
 		let lock: Lock = .init(
 			acquire: noop,
 			tryAcquire: unimplemented(),
-			release: { result = void }
+			release: {
+				self.fakeSendableState.result = void
+			}
 		)
 
 		lock
 			.withLock {
-				XCTAssertNil(result)
+				XCTAssertNil(self.fakeSendableState.result)
 			}
 
-		XCTAssertNotNil(result)
+		XCTAssertNotNil(self.fakeSendableState.result)
 	}
 }

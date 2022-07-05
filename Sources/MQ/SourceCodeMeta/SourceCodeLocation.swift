@@ -4,7 +4,7 @@
 /// Collected data should be used only for diagnostics purposes.
 ///
 /// - warning: ``SourceCodeLocation`` is not intended to provide any data across application.
-public struct SourceCodeLocation {
+public struct SourceCodeLocation: Sendable {
 
 	/// Create instance of ``SourceCodeLocation`` pointing at given location in source code.
 	///

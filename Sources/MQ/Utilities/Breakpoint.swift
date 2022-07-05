@@ -8,8 +8,8 @@ import Darwin
 /// - Parameter message: Message to be printed on stderr when hitting breakpoint.
 /// Default is empty.
 @inlinable @inline(__always)
-public func breakpoint(
-	_ message: @autoclosure () -> String = .init()
+@Sendable public func breakpoint(
+	_ message: @autoclosure @Sendable () -> String = .init()
 ) {
 	#if DEBUG
 		guard isDebuggerAttached()
