@@ -83,6 +83,28 @@ public struct SourceCodeMeta: Sendable {
 }
 
 // swift-format-ignore: AllPublicDeclarationsHaveDocumentation
+extension SourceCodeMeta: Hashable {
+
+	#if DEBUG  // ignore debug values
+
+		public static func == (
+			_ lhs: SourceCodeMeta,
+			_ rhs: SourceCodeMeta
+		) -> Bool {
+			lhs.sourceCodeLocation == rhs.sourceCodeLocation
+				&& lhs.message == rhs.message
+		}
+
+		public func hash(
+			into hasher: inout Hasher
+		) {
+			hasher.combine(self.sourceCodeLocation)
+			hasher.combine(self.message)
+		}
+	#endif  // use default implementation in release
+}
+
+// swift-format-ignore: AllPublicDeclarationsHaveDocumentation
 extension SourceCodeMeta: CustomStringConvertible {
 
 	public var description: String {
