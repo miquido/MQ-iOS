@@ -33,7 +33,7 @@ public struct Unidentified: TheError {
 			)
 			.with(underlyingError, for: "underlyingError"),
 			displayableMessage: displayableMessage,
-			underlyingError: underlyingError
+			underlyingError: (underlyingError as? Unidentified)?.underlyingError ?? underlyingError
 		)
 	}
 
