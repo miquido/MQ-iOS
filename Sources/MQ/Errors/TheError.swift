@@ -88,7 +88,7 @@ extension TheError {
 
 	/// Treat this error as a breakpoint in debug builds.
 	///
-	/// Trigger a breakpoint with this errror as a cause.
+	/// Trigger a breakpoint with this error as a cause.
 	/// It has no effect on release builds and debug builds without debugger attached.
 	///
 	/// - Parameters:
@@ -107,6 +107,36 @@ extension TheError {
 	) -> Self {
 		breakpoint(
 			"\(file):\(line) \(message())\n\(self.debugDescription)"
+		)
+		return self
+	}
+
+	/// Treat this error as a runtime warning in debug builds.
+	///
+	/// Show a runtime warning with this error as a cause.
+	/// It has no effect on release builds.
+	///
+	/// - Parameters:
+	///   - message: Optional, additional message associated with runtime warning message.
+	///   Default is empty.
+	///   - file: Source code file identifier.
+	///   Filled automatically based on compile time constants.
+	///   - line: Line in given source code file.
+	///   Filled automatically based on compile time constants.
+	/// - Returns: The same error instance.
+	@discardableResult
+	public func asRuntimeWarning(
+		message: @autoclosure () -> StaticString = .init(),
+		file: StaticString = #fileID,
+		line: UInt = #line
+	) -> Self {
+		runtimeWarning(
+			"%@\n%@",
+			[
+				message().asString,
+				self.context
+					.debugDescription,
+			]
 		)
 		return self
 	}

@@ -163,8 +163,9 @@ public struct SourceCodeContext: Sendable {
 				)
 		)
 	}
-
 }
+
+extension SourceCodeContext: Hashable {}
 
 // swift-format-ignore: AllPublicDeclarationsHaveDocumentation
 extension SourceCodeContext: CustomStringConvertible {
