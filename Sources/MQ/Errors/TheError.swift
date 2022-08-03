@@ -6,12 +6,28 @@
 /// It also adds convenient methods for treating errors as fatal and assertion failures.
 public protocol TheError: Error, CustomStringConvertible, CustomDebugStringConvertible {
 
+	/// Group assigned to this error type.
+	///
+	/// Access ``TheErrorGroup`` associated
+	/// with this error. It can be used
+	/// to quickly identify error domains or
+	/// group errors by any other meaning.
+	/// Default group for all errors is ``TheErrorGroup.default``.
+	/// You can assign any group to an error
+	/// by overriding ``TheError.group`` implementation.
+	static var group: TheErrorGroup { get }
+
 	/// Source code metadata context for this error.
+	/// It is used to derive default implementations
+	/// of ``Hashable`` and ``Equatable`` protocols.
 	var context: SourceCodeContext { get set }
 	/// String representation displayable to the end user.
 	///
 	/// Used as default value for ``localizedDescription``.
-	/// Implemented as error type name by default.
+	/// Default implementation fetches message from
+	/// ``TheErrorDisplayableMessages``.
+	/// It is used to derive default implementations
+	/// of ``Hashable`` and ``Equatable`` protocols.
 	var displayableMessage: DisplayableString { get }
 }
 
@@ -84,8 +100,12 @@ extension TheError /* CustomDebugStringConvertible */ {
 // swift-format-ignore: AllPublicDeclarationsHaveDocumentation
 extension TheError {
 
+	public static var group: TheErrorGroup {
+		.default
+	}
+
 	public var displayableMessage: DisplayableString {
-		"\(Self.self)"
+		TheErrorDisplayableMessages.message(for: Self.self)
 	}
 
 	public var localizedDescription: String {
@@ -93,7 +113,62 @@ extension TheError {
 	}
 }
 
+// swift-format-ignore: AllPublicDeclarationsHaveDocumentation
+extension TheError /* Equatable */ {
+
+	public static func == (
+		_ lhs: Self,
+		_ rhs: Self
+	) -> Bool {
+		lhs.context == rhs.context
+			&& lhs.displayableMessage == rhs.displayableMessage
+	}
+}
+
+// swift-format-ignore: AllPublicDeclarationsHaveDocumentation
+extension TheError /* Hashable */ {
+
+	public func hash(
+		into hasher: inout Hasher
+	) {
+		hasher.combine(Self.id)
+		hasher.combine(self.context)
+		hasher.combine(self.displayableMessage)
+	}
+}
+
+// swift-format-ignore: AllPublicDeclarationsHaveDocumentation
 extension TheError {
+
+	public static func ~= <OtherError>(
+		_ lhs: Self,
+		_ rhs: OtherError.Type
+	) -> Bool
+	where OtherError: TheError {
+		Self.id == OtherError.id
+	}
+
+	public static func ~= (
+		_ lhs: Self,
+		_ rhs: TheErrorGroup
+	) -> Bool {
+		Self.group == rhs
+	}
+}
+
+extension TheError {
+
+	/// Unique id of this error type.
+	///
+	/// Access ``TheErrorID`` associated
+	/// with this error. It can be used
+	/// to quickly identify errors or store it
+	/// in collections requiring ``Hashable`` conformance.
+	/// It is used to derive default implementations
+	/// of ``Hashable`` and ``Equatable`` protocols.
+	public static var id: TheErrorID {
+		.init(Self.self)
+	}
 
 	/// Terminate process with this error as the cause.
 	///

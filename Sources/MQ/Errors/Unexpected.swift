@@ -21,7 +21,7 @@ public struct Unexpected: TheError {
 	/// - Returns: New instance of ``Unexpected`` error with given context.
 	public static func error(
 		message: StaticString = "Unexpected",
-		displayableMessage: DisplayableString = "Unexpected error",
+		displayableMessage: DisplayableString = TheErrorDisplayableMessages.message(for: Self.self),
 		underlyingError: Error?,
 		file: StaticString = #fileID,
 		line: UInt = #line
@@ -42,3 +42,5 @@ public struct Unexpected: TheError {
 	/// String representation displayable to the end user.
 	public var displayableMessage: DisplayableString
 }
+
+extension Unexpected: Hashable {}

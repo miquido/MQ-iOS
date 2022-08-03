@@ -15,6 +15,7 @@ public struct Unimplemented: TheError {
 	/// - Returns: New instance of ``Unimplemented`` error with given context.
 	public static func error(
 		message: StaticString = "Unimplemented",
+		displayableMessage: DisplayableString = TheErrorDisplayableMessages.message(for: Self.self),
 		file: StaticString = #fileID,
 		line: UInt = #line
 	) -> Self {
@@ -23,13 +24,18 @@ public struct Unimplemented: TheError {
 				message: message,
 				file: file,
 				line: line
-			)
+			),
+			displayableMessage: displayableMessage
 		)
 	}
 
 	/// Source code context of this error.
 	public var context: SourceCodeContext
+	/// String representation displayable to the end user.
+	public var displayableMessage: DisplayableString
 }
+
+extension Unimplemented: Hashable {}
 
 /// Convenient placeholder for unimplemented part of code.
 ///

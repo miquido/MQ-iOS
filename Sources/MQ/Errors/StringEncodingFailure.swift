@@ -22,6 +22,7 @@ public struct StringEncodingFailure: TheError {
 		for string: String,
 		encoding: String.Encoding,
 		message: StaticString = "StringEncodingFailure",
+		displayableMessage: DisplayableString = TheErrorDisplayableMessages.message(for: Self.self),
 		file: StaticString = #fileID,
 		line: UInt = #line
 	) -> Self {
@@ -32,10 +33,15 @@ public struct StringEncodingFailure: TheError {
 				line: line
 			)
 			.with(string, for: "string")
-			.with(encoding, for: "encoding")
+			.with(encoding, for: "encoding"),
+			displayableMessage: displayableMessage
 		)
 	}
 
 	/// Source code context of this error.
 	public var context: SourceCodeContext
+	/// String representation displayable to the end user.
+	public var displayableMessage: DisplayableString
 }
+
+extension StringEncodingFailure: Hashable {}
