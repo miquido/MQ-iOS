@@ -1,8 +1,8 @@
 /// ``TheError`` for unexpected errors.
 ///
-/// ``Unexpected`` error can occur when some unexpected failiure occurs.
-/// It is ment to be used as a default error for cases where the error is not expected
-/// or as a fallback for cases where occuring error is not matching expected criteria.
+/// ``Unexpected`` error can occur when some unexpected failure occurs.
+/// It is meant to be used as a default error for cases where the error is not expected
+/// or as a fallback for cases where occurring error is not matching expected criteria.
 public struct Unexpected: TheError {
 
 	/// Create instance of ``Unexpected`` error.

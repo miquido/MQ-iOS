@@ -42,7 +42,7 @@ extension SourceCodeLocation: Hashable {}
 extension SourceCodeLocation: CustomStringConvertible {
 
 	public var description: String {
-		"\(self.file)@\(self.line)\(self.column.map { ":\($0)" } ?? "")"
+		"\(self.file):\(self.line)\(self.column.map { ":\($0)" } ?? "")"
 	}
 }
 
