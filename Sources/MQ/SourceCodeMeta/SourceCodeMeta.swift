@@ -138,13 +138,42 @@ extension SourceCodeMeta: CustomDebugStringConvertible {
 										of: "\n",
 										with: "\n   "
 									)
-								result.append("\n - \(value.key): \(formattedValue)")
+								result.append("\n • \(value.key): \(formattedValue)")
 							}
 						)
 				)
 		#else
 			self.description
 		#endif
+	}
+
+	internal var errorDebugDescription: String {
+		var description: String = " 📍 \(self.sourceCodeLocation.description)"
+
+		if !self.message.isEmpty {
+			description
+				.append("\n⎜ ✉️ \(self.message.asString) ")
+		}  // else noop
+
+		#if DEBUG
+			description
+				.append(
+					self.debugValues
+						.access(\Dictionary<StaticString, Any>.self)
+						.reduce(
+							into: String(),
+							{ (result, element) in
+								let formattedValue: String = .init(reflecting: element.value)
+									.replacingOccurrences(  // keep indentation
+										of: "\n",
+										with: "\n⎜ ⮑ "
+									)
+								result.append("\n⎜ 🧩 \(element.key): \(formattedValue)")
+							}
+						)
+				)
+		#endif
+		return description
 	}
 }
 

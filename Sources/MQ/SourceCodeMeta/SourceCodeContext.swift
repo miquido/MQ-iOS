@@ -193,6 +193,16 @@ extension SourceCodeContext: CustomDebugStringConvertible {
 				}
 			)
 	}
+
+	internal var errorDebugDescription: String {
+		self.contextStack
+			.reduce(
+				into: "",
+				{ (result: inout String, meta: SourceCodeMeta) in
+					result.append("\n⎜\(meta.errorDebugDescription)\n⎜")
+				}
+			)
+	}
 }
 
 // swift-format-ignore: AllPublicDeclarationsHaveDocumentation

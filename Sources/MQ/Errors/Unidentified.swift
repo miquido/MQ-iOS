@@ -1,8 +1,10 @@
 /// ``TheError`` for unidentified errors.
 ///
 /// ``Unidentified`` error can occur when failure occurs but it is not handled or identified properly.
-/// It is ment to be used as a fallback convertion from base ``Error`` inferface to ``TheError``
-/// where convertion to concrete instance of ``TheError`` is not possible.
+/// It is meant to be used as a fallback conversion from base ``Error`` interface to ``TheError``
+/// where conversion to a concrete instance of ``TheError`` is not possible.
+/// Context of wrapped error will be prepended to the ``Unidentified`` context in order
+/// to keep track of actual error in error description with non debug builds.
 public struct Unidentified: TheError {
 
 	/// Create instance of ``Unidentified`` error.
@@ -26,12 +28,20 @@ public struct Unidentified: TheError {
 		line: UInt = #line
 	) -> Self {
 		Self(
-			context: .context(
-				message: message,
-				file: file,
-				line: line
-			)
-			.with(underlyingError, for: "underlyingError"),
+			context: (underlyingError as? TheError)?
+				.context
+				.appending(
+					.message(
+						message,
+						file: file,
+						line: line
+					)
+				)
+				?? .context(
+					message: message,
+					file: file,
+					line: line
+				),
 			displayableMessage: displayableMessage,
 			underlyingError: (underlyingError as? Unidentified)?.underlyingError ?? underlyingError
 		)

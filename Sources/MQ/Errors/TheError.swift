@@ -4,7 +4,7 @@
 ///
 /// ``TheError`` provides additional source code metadata for better diagnostics.
 /// It also adds convenient methods for treating errors as fatal and assertion failures.
-public protocol TheError: Error, CustomDebugStringConvertible {
+public protocol TheError: Error, CustomStringConvertible, CustomDebugStringConvertible {
 
 	/// Source code metadata context for this error.
 	var context: SourceCodeContext { get set }
@@ -16,10 +16,68 @@ public protocol TheError: Error, CustomDebugStringConvertible {
 }
 
 // swift-format-ignore: AllPublicDeclarationsHaveDocumentation
+extension TheError /* CustomStringConvertible */ {
+
+	public var description: String {
+		"""
+		⎡\(Self.self)
+		⎜\(self.context.description.replacingOccurrences(of: "\n", with: "\n⎜"))
+		⎣\(Self.self)
+		"""
+	}
+}
+
+// swift-format-ignore: AllPublicDeclarationsHaveDocumentation
 extension TheError /* CustomDebugStringConvertible */ {
 
 	public var debugDescription: String {
-		"\(Self.self)\n\(self.context.debugDescription)"
+		let propertiesDescription: String = self.propertiesDebugDescription
+		let propertiesDescriptionEmpty: Bool = propertiesDescription.isEmpty
+
+		return """
+
+			⎡ ⚠️ \(Self.self)
+			⎜ 📺 \(self.displayableMessageDebugDescription)\(propertiesDescriptionEmpty ? "" : "\n⎜ 📦 Properties: \(propertiesDescription)")
+			⎜ 🧵 Context: \(self.context.errorDebugDescription)
+			⎣ ⚠️ \(Self.self)
+			"""
+	}
+
+	private var displayableMessageDebugDescription: String {
+		self.displayableMessage
+			.resolved
+			.replacingOccurrences(  // keep indentation
+				of: "\n",
+				with: "\n⎜ ⮑ "
+			)
+	}
+	private var propertiesDebugDescription: String {
+		Mirror(reflecting: self)
+			.children  // ignoring "displayStyle"
+			.reduce(into: String()) { result, child in
+				let formattedLabel: String
+				if let label: String = child.label {
+					// `context` is part of debug description anyway
+					// `displayableMessage` has own section in description
+					guard label != "context", label != "displayableMessage"
+					else { return }  // skip property
+					formattedLabel = "\n⎜ 📎 \(label): "
+				}
+				else {
+					formattedLabel = "\n⎜ 📎 "
+				}
+
+				let formattedValue: String = .init(
+					reflecting: child.value
+				)
+				.replacingOccurrences(  // keep indentation
+					of: "\n",
+					with: "\n⎜ ⮑ "
+				)
+
+				result
+					.append("\(formattedLabel)\(formattedValue)")
+			}
 	}
 }
 
