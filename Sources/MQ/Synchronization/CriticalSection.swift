@@ -13,10 +13,12 @@ import func os.os_unfair_lock_unlock
 /// high level data synchronization over long running tasks.
 /// Access method should return as quickly as possible
 /// to avoid any potential issues.
-public struct CriticalSection<State>: @unchecked Sendable
+public final class CriticalSection<State>: @unchecked Sendable
 where State: Sendable {
 
-	@usableFromInline internal let memory: Memory
+  @usableFromInline internal let statePointer: UnsafeMutablePointer<State>
+  @usableFromInline internal let lockPointer: UnsafeMutablePointer<os_unfair_lock>
+  private let cleanup: @Sendable (State) -> Void
 
 	/// Initialize ``CriticalSection`` with given initial state.
 	///
@@ -27,11 +29,20 @@ where State: Sendable {
 		_ state: State,
 		cleanup: @escaping @Sendable (State) -> Void = { _ in }
 	) {
-		self.memory = .init(
-			state,
-			cleanup: cleanup
-		)
+    self.statePointer = .allocate(capacity: 1)
+    self.statePointer.initialize(to: state)
+    self.lockPointer = .allocate(capacity: 1)
+    self.lockPointer.initialize(to: os_unfair_lock())
+    self.cleanup = cleanup
 	}
+
+  deinit {
+    self.cleanup(self.statePointer.pointee)
+    self.statePointer.deinitialize(count: 1)
+    self.statePointer.deallocate()
+    self.lockPointer.deinitialize(count: 1)
+    self.lockPointer.deallocate()
+  }
 
 	/// Access a property from ``CriticalSection`` state.
 	///
@@ -44,12 +55,12 @@ where State: Sendable {
 	/// inside ``CriticalSection`` state.
 	/// - Returns: Value associated with requested key path.
 	@_disfavoredOverload
-	@inlinable @_transparent @Sendable public func access<Value>(
+  @inlinable @Sendable public func access<Value>(
 		_ keyPath: KeyPath<State, Value>
 	) -> Value {
-		os_unfair_lock_lock(self.memory.lockPointer)
-		defer { os_unfair_lock_unlock(self.memory.lockPointer) }
-		return self.memory.statePointer.pointee[keyPath: keyPath]
+		os_unfair_lock_lock(self.lockPointer)
+		defer { os_unfair_lock_unlock(self.lockPointer) }
+		return self.statePointer.pointee[keyPath: keyPath]
 	}
 
 	/// Assign property value in ``CriticalSection`` state.
@@ -63,13 +74,13 @@ where State: Sendable {
 	///   - keyPath: Key path used to access a property
 	/// inside ``CriticalSection`` state.
 	///   value: Value assigned under requested key path.
-	@inlinable @_transparent @Sendable public func assign<Value>(
+  @inlinable @Sendable public func assign<Value>(
 		_ keyPath: WritableKeyPath<State, Value>,
 		_ value: Value
 	) {
-		os_unfair_lock_lock(self.memory.lockPointer)
-		defer { os_unfair_lock_unlock(self.memory.lockPointer) }
-		self.memory.statePointer.pointee[keyPath: keyPath] = value
+		os_unfair_lock_lock(self.lockPointer)
+		defer { os_unfair_lock_unlock(self.lockPointer) }
+		self.statePointer.pointee[keyPath: keyPath] = value
 	}
 
 	/// Gain exclusive acccess to ``CriticalSection`` memory.
@@ -82,43 +93,11 @@ where State: Sendable {
 	/// Value returned from this function will be used as a result
 	/// of access to ``CriticalSection`` memory.
 	/// - Returns: Value returned from provided access function.
-	@inlinable @_transparent @Sendable public func access<Value>(
+  @inlinable @Sendable public func access<Value>(
 		_ access: @Sendable (inout State) throws -> Value
 	) rethrows -> Value {
-		os_unfair_lock_lock(self.memory.lockPointer)
-		defer { os_unfair_lock_unlock(self.memory.lockPointer) }
-		return try access(&self.memory.statePointer.pointee)
+		os_unfair_lock_lock(self.lockPointer)
+		defer { os_unfair_lock_unlock(self.lockPointer) }
+		return try access(&self.statePointer.pointee)
 	}
 }
-
-extension CriticalSection {
-
-	@usableFromInline internal final class Memory {
-
-		@usableFromInline internal let statePointer: UnsafeMutablePointer<State>
-		@usableFromInline internal let lockPointer: UnsafeMutablePointer<os_unfair_lock>
-
-		private let cleanup: @Sendable (State) -> Void
-
-		fileprivate init(
-			_ state: State,
-			cleanup: @escaping @Sendable (State) -> Void
-		) {
-			self.statePointer = .allocate(capacity: 1)
-			self.statePointer.initialize(to: state)
-			self.lockPointer = .allocate(capacity: 1)
-			self.lockPointer.initialize(to: os_unfair_lock())
-			self.cleanup = cleanup
-		}
-
-		deinit {
-			self.cleanup(self.statePointer.pointee)
-			self.statePointer.deinitialize(count: 1)
-			self.statePointer.deallocate()
-			self.lockPointer.deinitialize(count: 1)
-			self.lockPointer.deallocate()
-		}
-	}
-}
-
-extension CriticalSection {}
