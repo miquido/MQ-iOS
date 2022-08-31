@@ -16,7 +16,7 @@ public struct InternalInconsistency: TheError {
 	/// - Returns: New instance of ``InternalInconsistency`` error with given context.
 	public static func error(
 		message: StaticString,
-		displayableMessage: DisplayableString = "Internal inconsistency error",
+		displayableMessage: DisplayableString = TheErrorDisplayableMessages.message(for: Self.self),
 		file: StaticString = #fileID,
 		line: UInt = #line
 	) -> Self {
@@ -35,3 +35,5 @@ public struct InternalInconsistency: TheError {
 	/// String representation displayable to the end user.
 	public var displayableMessage: DisplayableString
 }
+
+extension InternalInconsistency: Hashable {}

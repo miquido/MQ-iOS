@@ -16,9 +16,9 @@ import func os.os_unfair_lock_unlock
 public final class CriticalSection<State>: @unchecked Sendable
 where State: Sendable {
 
-  @usableFromInline internal let statePointer: UnsafeMutablePointer<State>
-  @usableFromInline internal let lockPointer: UnsafeMutablePointer<os_unfair_lock>
-  private let cleanup: @Sendable (State) -> Void
+	@usableFromInline internal let statePointer: UnsafeMutablePointer<State>
+	@usableFromInline internal let lockPointer: UnsafeMutablePointer<os_unfair_lock>
+	private let cleanup: @Sendable (State) -> Void
 
 	/// Initialize ``CriticalSection`` with given initial state.
 	///
@@ -29,20 +29,20 @@ where State: Sendable {
 		_ state: State,
 		cleanup: @escaping @Sendable (State) -> Void = { _ in }
 	) {
-    self.statePointer = .allocate(capacity: 1)
-    self.statePointer.initialize(to: state)
-    self.lockPointer = .allocate(capacity: 1)
-    self.lockPointer.initialize(to: os_unfair_lock())
-    self.cleanup = cleanup
+		self.statePointer = .allocate(capacity: 1)
+		self.statePointer.initialize(to: state)
+		self.lockPointer = .allocate(capacity: 1)
+		self.lockPointer.initialize(to: os_unfair_lock())
+		self.cleanup = cleanup
 	}
 
-  deinit {
-    self.cleanup(self.statePointer.pointee)
-    self.statePointer.deinitialize(count: 1)
-    self.statePointer.deallocate()
-    self.lockPointer.deinitialize(count: 1)
-    self.lockPointer.deallocate()
-  }
+	deinit {
+		self.cleanup(self.statePointer.pointee)
+		self.statePointer.deinitialize(count: 1)
+		self.statePointer.deallocate()
+		self.lockPointer.deinitialize(count: 1)
+		self.lockPointer.deallocate()
+	}
 
 	/// Access a property from ``CriticalSection`` state.
 	///
@@ -55,7 +55,7 @@ where State: Sendable {
 	/// inside ``CriticalSection`` state.
 	/// - Returns: Value associated with requested key path.
 	@_disfavoredOverload
-  @inlinable @Sendable public func access<Value>(
+	@inlinable @Sendable public func access<Value>(
 		_ keyPath: KeyPath<State, Value>
 	) -> Value {
 		os_unfair_lock_lock(self.lockPointer)
@@ -74,7 +74,7 @@ where State: Sendable {
 	///   - keyPath: Key path used to access a property
 	/// inside ``CriticalSection`` state.
 	///   value: Value assigned under requested key path.
-  @inlinable @Sendable public func assign<Value>(
+	@inlinable @Sendable public func assign<Value>(
 		_ keyPath: WritableKeyPath<State, Value>,
 		_ value: Value
 	) {
@@ -93,7 +93,7 @@ where State: Sendable {
 	/// Value returned from this function will be used as a result
 	/// of access to ``CriticalSection`` memory.
 	/// - Returns: Value returned from provided access function.
-  @inlinable @Sendable public func access<Value>(
+	@inlinable @Sendable public func access<Value>(
 		_ access: @Sendable (inout State) throws -> Value
 	) rethrows -> Value {
 		os_unfair_lock_lock(self.lockPointer)

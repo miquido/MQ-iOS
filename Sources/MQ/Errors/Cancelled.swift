@@ -18,7 +18,7 @@ public struct Cancelled: TheError {
 	/// - Returns: New instance of ``Cancelled`` error with given context.
 	public static func error(
 		message: StaticString = "Cancelled",
-		displayableMessage: DisplayableString = "Cancelled",
+		displayableMessage: DisplayableString = TheErrorDisplayableMessages.message(for: Self.self),
 		file: StaticString = #fileID,
 		line: UInt = #line
 	) -> Self {
@@ -37,3 +37,5 @@ public struct Cancelled: TheError {
 	/// String representation displayable to the end user.
 	public var displayableMessage: DisplayableString
 }
+
+extension Cancelled: Hashable {}

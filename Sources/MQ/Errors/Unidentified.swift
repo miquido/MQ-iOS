@@ -22,7 +22,7 @@ public struct Unidentified: TheError {
 	/// - Returns: New instance of ``Unidentified`` error with given context.
 	public static func error(
 		message: StaticString = "Unidentified",
-		displayableMessage: DisplayableString = "Unidentified error",
+		displayableMessage: DisplayableString = TheErrorDisplayableMessages.message(for: Self.self),
 		underlyingError: Error,
 		file: StaticString = #fileID,
 		line: UInt = #line
@@ -55,6 +55,8 @@ public struct Unidentified: TheError {
 	public var underlyingError: Error
 }
 
+extension Unidentified: Hashable {}
+
 extension Error {
 
 	/// Convert the error to ``Unidentified`` error.
@@ -73,7 +75,7 @@ extension Error {
 	/// - Returns: New instance of ``Unidentified`` error with given context.
 	public func asUnidentified(
 		message: StaticString = "Unidentified",
-		displayableMessage: DisplayableString = "Unidentified error",
+		displayableMessage: DisplayableString = TheErrorDisplayableMessages.message(for: Unidentified.self),
 		file: StaticString = #fileID,
 		line: UInt = #line
 	) -> Unidentified {

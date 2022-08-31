@@ -19,7 +19,7 @@ public struct Undefined: TheError {
 	/// - Returns: New instance of ``Undefined`` error with given context.
 	public static func error(
 		message: StaticString = "Undefined",
-		displayableMessage: DisplayableString = "Undefined error",
+		displayableMessage: DisplayableString = TheErrorDisplayableMessages.message(for: Self.self),
 		file: StaticString = #fileID,
 		line: UInt = #line
 	) -> Self {
@@ -38,3 +38,5 @@ public struct Undefined: TheError {
 	/// String representation displayable to the end user.
 	public var displayableMessage: DisplayableString
 }
+
+extension Undefined: Hashable {}
