@@ -8,7 +8,7 @@ public struct InternalInconsistency: TheError {
 	/// - Parameters:
 	///   - message: Message associated with this error.
 	///   - displayableMessage: Message which can be displayed
-	///   to the end user. Default is "Internal inconsistency error".
+	///   to the end user. Default value is based on ``TheErrorDisplayableMessages``.
 	///   - file: Source code file identifier.
 	///   Filled automatically based on compile time constants.
 	///   - line: Line in given source code file.

@@ -22,7 +22,7 @@
 	// swift-format-ignore: AllPublicDeclarationsHaveDocumentation
 	public var wrappedValue: IID { self }
 
-	/// Create new instance of IID
+	/// Create new instance of IID.
 	public init() {}
 }
 

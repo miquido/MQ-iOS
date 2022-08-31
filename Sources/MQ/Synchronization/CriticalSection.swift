@@ -22,7 +22,7 @@ where State: Sendable {
 
 	/// Initialize ``CriticalSection`` with given initial state.
 	///
-	/// - Properties:
+	/// - Parameters:
 	///   - state: Initial state.
 	///   - cleanup: Code executed on deallocation.
 	public init(

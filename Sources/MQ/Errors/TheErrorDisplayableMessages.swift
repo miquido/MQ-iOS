@@ -1,3 +1,5 @@
+/// Container for displayable error messages.
+///
 /// ``TheErrorDisplayableMessages`` is a container
 /// holding default ``DisplayableMessage`` for errors
 /// based on the error type.
@@ -29,8 +31,11 @@ public enum TheErrorDisplayableMessages {
 	/// In orded to customize messages use
 	/// ``TheErrorDisplayableMessages.setMessage(_:for:)`` or
 	/// ``TheErrorDisplayableMessages.setMessage(_:forGroup:)``.
+	///
+	/// - Parameter errorType: Type of the error used to request
+	/// displayable message.
 	@inlinable @Sendable public static func message<ErrorType>(
-		for _: ErrorType.Type
+		for errorType: ErrorType.Type
 	) -> DisplayableString
 	where ErrorType: TheError {
 		self.storage.access { (messages: inout Dictionary<AnyHashable, DisplayableString>) -> DisplayableString in
@@ -63,13 +68,18 @@ public enum TheErrorDisplayableMessages {
 	/// Message can be set only once and only
 	/// if it was not requested before.
 	///
+	/// - Parameters:
+	///   - message: Message to be assigned to the error type.
+	///   - errorType: Type of the error which will
+	///   be associated with the message.
+	///
 	/// - Note: Assigned message will be cached
 	/// and reused. Make sure that it does not
 	/// provide dynamic value that is expected
 	/// to be changing over time.
 	@inlinable @Sendable public static func setMessage<ErrorType>(
 		_ message: DisplayableString,
-		for _: ErrorType.Type
+		for errorType: ErrorType.Type
 	) where ErrorType: TheError {
 		self.storage.access { (messages: inout Dictionary<AnyHashable, DisplayableString>) -> Void in
 			runtimeAssert(
@@ -88,6 +98,11 @@ public enum TheErrorDisplayableMessages {
 	/// to use customized message.
 	/// Message can be set only once.
 	///
+	/// - Parameters:
+	///   - message: Message to be assigned to the error group identifier.
+	///   - groupIdentifier: Group identifier which will be
+	///   associated with the message.
+	///
 	/// - Note: Assigned message will be cached
 	/// and reused. Make sure that it does not
 	/// provide dynamic value that is expected
@@ -105,12 +120,14 @@ public enum TheErrorDisplayableMessages {
 		}
 	}
 
-	/// Set the default message for errors.
+	/// Set the default message for all errors.
 	///
 	/// Associate message with the default error group.
 	/// If default message is not set error type will be
 	/// used as the message.
 	/// Message can be set only once.
+	///
+	/// - Parameter message: Message to be assigned as default message for all errors.
 	///
 	/// - Note: Assigned message will be cached
 	/// and reused. Make sure that it does not

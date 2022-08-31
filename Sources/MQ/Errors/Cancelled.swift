@@ -10,7 +10,7 @@ public struct Cancelled: TheError {
 	///   - message: Message associated with this error.
 	///   Default value is "Cancelled".
 	///   - displayableMessage: Message which can be displayed
-	///   to the end user. Default is "Cancelled".
+	///   to the end user. Default value is based on ``TheErrorDisplayableMessages``.
 	///   - file: Source code file identifier.
 	///   Filled automatically based on compile time constants.
 	///   - line: Line in given source code file.
