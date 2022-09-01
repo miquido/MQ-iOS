@@ -13,6 +13,8 @@ public struct StringEncodingFailure: TheError {
 	///   This value will not be collected in release builds.
 	///   - message: Message associated with this error.
 	///   Default value is "StringEncodingFailure".
+	///   - displayableMessage: Custom message that could be
+	///   displayed to the end user. Default value is based on ``TheErrorDisplayableMessages``.
 	///   - file: Source code file identifier.
 	///   Filled automatically based on compile time constants.
 	///   - line: Line in given source code file.

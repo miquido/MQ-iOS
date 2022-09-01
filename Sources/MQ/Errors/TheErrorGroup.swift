@@ -1,3 +1,13 @@
+/// Group of errors.
+///
+/// ``TheErrorGroup`` is a structure used to tag
+/// errors to allow easier grouping and hadling
+/// of similar or related errors.
+///
+/// - Note: ``TheErrorGroup`` can be defined using
+/// more than one identifier. Order of identifiers
+/// mattrers. It is used i.e. to find matching
+/// messages from ``TheErrorDisplayableMessages``.
 public struct TheErrorGroup {
 
 	private var identifiers: Array<Identifier>
@@ -5,6 +15,7 @@ public struct TheErrorGroup {
 
 extension TheErrorGroup {
 
+	/// Identifier of error group.
 	public struct Identifier {
 
 		private let identifier: StaticString
@@ -13,6 +24,7 @@ extension TheErrorGroup {
 
 extension TheErrorGroup.Identifier: Hashable {}
 
+// swift-format-ignore: AllPublicDeclarationsHaveDocumentation
 extension TheErrorGroup.Identifier: ExpressibleByStringLiteral {
 
 	public init(
@@ -24,6 +36,7 @@ extension TheErrorGroup.Identifier: ExpressibleByStringLiteral {
 
 extension TheErrorGroup: Hashable {}
 
+// swift-format-ignore: AllPublicDeclarationsHaveDocumentation
 extension TheErrorGroup: ExpressibleByStringLiteral {
 
 	public init(
@@ -33,6 +46,7 @@ extension TheErrorGroup: ExpressibleByStringLiteral {
 	}
 }
 
+// swift-format-ignore: AllPublicDeclarationsHaveDocumentation
 extension TheErrorGroup: ExpressibleByArrayLiteral {
 
 	public init(
@@ -44,7 +58,13 @@ extension TheErrorGroup: ExpressibleByArrayLiteral {
 
 extension TheErrorGroup {
 
+	/// Default error group.
+	///
+	/// All errors are implicitly matching this group.
 	public static let `default`: Self = .init()
+}
+
+extension TheErrorGroup {
 
 	@usableFromInline internal func firstMatchingIdentifier(
 		_ matches: (Identifier) -> Bool
