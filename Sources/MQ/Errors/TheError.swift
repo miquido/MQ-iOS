@@ -29,6 +29,22 @@ public protocol TheError: Error, CustomStringConvertible, CustomDebugStringConve
 	/// It is used to derive default implementations
 	/// of ``Hashable`` and ``Equatable`` protocols.
 	var displayableMessage: DisplayableString { get }
+
+	/// Function checking equality of errors.
+	///
+	/// This function can be used to check if two errors
+	/// are equal. Default implementation verifies only
+	/// displayable messages of errors. You can override
+	/// it to prepare more accurate equality check for
+	/// custom error types. Simplest implementation is to
+	/// cast argument value to Self type and check required
+	/// properties equality.
+	///
+	/// - Parameter other: Other error to verify equality.
+	/// - Returns: `true` if errors are equal or `false` otherwise.
+	func isEqual(
+		to other: Error
+	) -> Bool
 }
 
 // swift-format-ignore: AllPublicDeclarationsHaveDocumentation
@@ -111,29 +127,16 @@ extension TheError {
 	public var localizedDescription: String {
 		self.displayableMessage.resolved
 	}
-}
 
-// swift-format-ignore: AllPublicDeclarationsHaveDocumentation
-extension TheError /* Equatable */ {
-
-	public static func == (
-		_ lhs: Self,
-		_ rhs: Self
+	public func isEqual(
+		to other: Error
 	) -> Bool {
-		lhs.context == rhs.context
-			&& lhs.displayableMessage == rhs.displayableMessage
-	}
-}
-
-// swift-format-ignore: AllPublicDeclarationsHaveDocumentation
-extension TheError /* Hashable */ {
-
-	public func hash(
-		into hasher: inout Hasher
-	) {
-		hasher.combine(Self.id)
-		hasher.combine(self.context)
-		hasher.combine(self.displayableMessage)
+		if let typed: Self = other as? Self {
+			return self.displayableMessage == typed.displayableMessage
+		}
+		else {
+			return false
+		}
 	}
 }
 
@@ -195,7 +198,7 @@ extension TheError {
 	///
 	/// Assertion failure will be executed by using ``runtimeAssertionFailure`` method.
 	/// Its actual result depends on current ``runtimeAssertionMethod`` implementation.
-	/// Default behaviour will result in crash in debug builds and have no effect on release builds.
+	/// Default behavior will result in crash in debug builds and have no effect on release builds.
 	///
 	/// - Parameters:
 	///   - message: Optional, additional message associated with process termination.
