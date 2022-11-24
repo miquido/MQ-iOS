@@ -55,8 +55,6 @@ public struct Unidentified: TheError {
 	public var underlyingError: Error
 }
 
-extension Unidentified: Hashable {}
-
 extension Error {
 
 	/// Convert the error to ``Unidentified`` error.
