@@ -45,5 +45,3 @@ public struct StringEncodingFailure: TheError {
 	/// String representation displayable to the end user.
 	public var displayableMessage: DisplayableString
 }
-
-extension StringEncodingFailure: Hashable {}

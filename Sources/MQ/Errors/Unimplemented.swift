@@ -35,8 +35,6 @@ public struct Unimplemented: TheError {
 	public var displayableMessage: DisplayableString
 }
 
-extension Unimplemented: Hashable {}
-
 /// Convenient placeholder for unimplemented part of code.
 ///
 /// Placeholder for indicating unimplemented part of code.
@@ -77,7 +75,7 @@ public func unimplemented(
 ///   - line: Line in given source code file.
 ///   Filled automatically based on compile time constants.
 /// - Returns: Placeholder function which terminates the process with ``Unimplemented`` error when executed.
-public func unimplemented<R>(
+public func unimplemented0<R>(
 	_ message: StaticString = "Unimplemented",
 	file: StaticString = #fileID,
 	line: UInt = #line
@@ -106,7 +104,7 @@ public func unimplemented<R>(
 ///   - line: Line in given source code file.
 ///   Filled automatically based on compile time constants.
 /// - Returns: Function throwing ``Unimplemented`` error when executed.
-public func unimplementedThrowing<R>(
+public func unimplemented0Throwing<R>(
 	_ message: StaticString = "Unimplemented",
 	file: StaticString = #fileID,
 	line: UInt = #line
@@ -135,7 +133,7 @@ public func unimplementedThrowing<R>(
 ///   - line: Line in given source code file.
 ///   Filled automatically based on compile time constants.
 /// - Returns: Placeholder function which terminates the process with ``Unimplemented`` error when executed.
-public func unimplemented<A1, R>(
+public func unimplemented1<A1, R>(
 	_ message: StaticString = "Unimplemented",
 	file: StaticString = #fileID,
 	line: UInt = #line
@@ -164,7 +162,7 @@ public func unimplemented<A1, R>(
 ///   - line: Line in given source code file.
 ///   Filled automatically based on compile time constants.
 /// - Returns: Function throwing ``Unimplemented`` error when executed.
-public func unimplementedThrowing<A1, R>(
+public func unimplemented1Throwing<A1, R>(
 	_ message: StaticString = "Unimplemented",
 	file: StaticString = #fileID,
 	line: UInt = #line
@@ -193,7 +191,7 @@ public func unimplementedThrowing<A1, R>(
 ///   - line: Line in given source code file.
 ///   Filled automatically based on compile time constants.
 /// - Returns: Placeholder function which terminates the process with ``Unimplemented`` error when executed.
-public func unimplemented<A1, A2, R>(
+public func unimplemented2<A1, A2, R>(
 	_ message: StaticString = "Unimplemented",
 	file: StaticString = #fileID,
 	line: UInt = #line
@@ -222,7 +220,7 @@ public func unimplemented<A1, A2, R>(
 ///   - line: Line in given source code file.
 ///   Filled automatically based on compile time constants.
 /// - Returns: Function throwing ``Unimplemented`` error when executed.
-public func unimplementedThrowing<A1, A2, R>(
+public func unimplemented2Throwing<A1, A2, R>(
 	_ message: StaticString = "Unimplemented",
 	file: StaticString = #fileID,
 	line: UInt = #line
@@ -251,7 +249,7 @@ public func unimplementedThrowing<A1, A2, R>(
 ///   - line: Line in given source code file.
 ///   Filled automatically based on compile time constants.
 /// - Returns: Placeholder function which terminates the process with ``Unimplemented`` error when executed.
-public func unimplemented<A1, A2, A3, R>(
+public func unimplemented3<A1, A2, A3, R>(
 	_ message: StaticString = "Unimplemented",
 	file: StaticString = #fileID,
 	line: UInt = #line
@@ -280,7 +278,7 @@ public func unimplemented<A1, A2, A3, R>(
 ///   - line: Line in given source code file.
 ///   Filled automatically based on compile time constants.
 /// - Returns: Function throwing ``Unimplemented`` error when executed.
-public func unimplementedThrowing<A1, A2, A3, R>(
+public func unimplemented3Throwing<A1, A2, A3, R>(
 	_ message: StaticString = "Unimplemented",
 	file: StaticString = #fileID,
 	line: UInt = #line
@@ -309,7 +307,7 @@ public func unimplementedThrowing<A1, A2, A3, R>(
 ///   - line: Line in given source code file.
 ///   Filled automatically based on compile time constants.
 /// - Returns: Placeholder function which terminates the process with ``Unimplemented`` error when executed.
-public func unimplemented<A1, A2, A3, A4, R>(
+public func unimplemented4<A1, A2, A3, A4, R>(
 	_ message: StaticString = "Unimplemented",
 	file: StaticString = #fileID,
 	line: UInt = #line
@@ -338,7 +336,7 @@ public func unimplemented<A1, A2, A3, A4, R>(
 ///   - line: Line in given source code file.
 ///   Filled automatically based on compile time constants.
 /// - Returns: Function throwing ``Unimplemented`` error when executed.
-public func unimplementedThrowing<A1, A2, A3, A4, R>(
+public func unimplemented4Throwing<A1, A2, A3, A4, R>(
 	_ message: StaticString = "Unimplemented",
 	file: StaticString = #fileID,
 	line: UInt = #line
@@ -367,7 +365,7 @@ public func unimplementedThrowing<A1, A2, A3, A4, R>(
 ///   - line: Line in given source code file.
 ///   Filled automatically based on compile time constants.
 /// - Returns: Placeholder function which terminates the process with ``Unimplemented`` error when executed.
-public func unimplemented<A1, A2, A3, A4, A5, R>(
+public func unimplemented5<A1, A2, A3, A4, A5, R>(
 	_ message: StaticString = "Unimplemented",
 	file: StaticString = #fileID,
 	line: UInt = #line
@@ -396,7 +394,7 @@ public func unimplemented<A1, A2, A3, A4, A5, R>(
 ///   - line: Line in given source code file.
 ///   Filled automatically based on compile time constants.
 /// - Returns: Function throwing ``Unimplemented`` error when executed.
-public func unimplementedThrowing<A1, A2, A3, A4, A5, R>(
+public func unimplemented5Throwing<A1, A2, A3, A4, A5, R>(
 	_ message: StaticString = "Unimplemented",
 	file: StaticString = #fileID,
 	line: UInt = #line
@@ -425,7 +423,7 @@ public func unimplementedThrowing<A1, A2, A3, A4, A5, R>(
 ///   - line: Line in given source code file.
 ///   Filled automatically based on compile time constants.
 /// - Returns: Placeholder function which terminates the process with ``Unimplemented`` error when executed.
-public func unimplemented<A1, A2, A3, A4, A5, A6, R>(
+public func unimplemented6<A1, A2, A3, A4, A5, A6, R>(
 	_ message: StaticString = "Unimplemented",
 	file: StaticString = #fileID,
 	line: UInt = #line
@@ -454,7 +452,7 @@ public func unimplemented<A1, A2, A3, A4, A5, A6, R>(
 ///   - line: Line in given source code file.
 ///   Filled automatically based on compile time constants.
 /// - Returns: Function throwing ``Unimplemented`` error when executed.
-public func unimplementedThrowing<A1, A2, A3, A4, A5, A6, R>(
+public func unimplemented6Throwing<A1, A2, A3, A4, A5, A6, R>(
 	_ message: StaticString = "Unimplemented",
 	file: StaticString = #fileID,
 	line: UInt = #line
@@ -483,7 +481,7 @@ public func unimplementedThrowing<A1, A2, A3, A4, A5, A6, R>(
 ///   - line: Line in given source code file.
 ///   Filled automatically based on compile time constants.
 /// - Returns: Placeholder function which terminates the process with ``Unimplemented`` error when executed.
-public func unimplemented<A1, A2, A3, A4, A5, A6, A7, R>(
+public func unimplemented7<A1, A2, A3, A4, A5, A6, A7, R>(
 	_ message: StaticString = "Unimplemented",
 	file: StaticString = #fileID,
 	line: UInt = #line
@@ -512,7 +510,7 @@ public func unimplemented<A1, A2, A3, A4, A5, A6, A7, R>(
 ///   - line: Line in given source code file.
 ///   Filled automatically based on compile time constants.
 /// - Returns: Function throwing ``Unimplemented`` error when executed.
-public func unimplementedThrowing<A1, A2, A3, A4, A5, A6, A7, R>(
+public func unimplemented7Throwing<A1, A2, A3, A4, A5, A6, A7, R>(
 	_ message: StaticString = "Unimplemented",
 	file: StaticString = #fileID,
 	line: UInt = #line
@@ -541,7 +539,7 @@ public func unimplementedThrowing<A1, A2, A3, A4, A5, A6, A7, R>(
 ///   - line: Line in given source code file.
 ///   Filled automatically based on compile time constants.
 /// - Returns: Placeholder function which terminates the process with ``Unimplemented`` error when executed.
-public func unimplemented<A1, A2, A3, A4, A5, A6, A7, A8, R>(
+public func unimplemented8<A1, A2, A3, A4, A5, A6, A7, A8, R>(
 	_ message: StaticString = "Unimplemented",
 	file: StaticString = #fileID,
 	line: UInt = #line
@@ -570,7 +568,7 @@ public func unimplemented<A1, A2, A3, A4, A5, A6, A7, A8, R>(
 ///   - line: Line in given source code file.
 ///   Filled automatically based on compile time constants.
 /// - Returns: Function throwing ``Unimplemented`` error when executed.
-public func unimplementedThrowing<A1, A2, A3, A4, A5, A6, A7, A8, R>(
+public func unimplemented8Throwing<A1, A2, A3, A4, A5, A6, A7, A8, R>(
 	_ message: StaticString = "Unimplemented",
 	file: StaticString = #fileID,
 	line: UInt = #line

@@ -42,5 +42,3 @@ public struct Unexpected: TheError {
 	/// String representation displayable to the end user.
 	public var displayableMessage: DisplayableString
 }
-
-extension Unexpected: Hashable {}

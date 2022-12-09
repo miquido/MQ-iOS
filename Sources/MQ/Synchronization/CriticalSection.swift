@@ -83,7 +83,7 @@ where State: Sendable {
 		self.statePointer.pointee[keyPath: keyPath] = value
 	}
 
-	/// Gain exclusive acccess to ``CriticalSection`` memory.
+	/// Gain exclusive access to ``CriticalSection`` memory.
 	///
 	/// Exclusive access to critical section has to be
 	/// as short as possible and cannot be recursive.
