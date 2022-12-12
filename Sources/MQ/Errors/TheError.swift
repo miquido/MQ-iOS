@@ -140,25 +140,6 @@ extension TheError {
 	}
 }
 
-// swift-format-ignore: AllPublicDeclarationsHaveDocumentation
-extension TheError {
-
-	public static func ~= <OtherError>(
-		_ lhs: Self,
-		_ rhs: OtherError.Type
-	) -> Bool
-	where OtherError: TheError {
-		Self.id == OtherError.id
-	}
-
-	public static func ~= (
-		_ lhs: Self,
-		_ rhs: TheErrorGroup
-	) -> Bool {
-		Self.group == rhs
-	}
-}
-
 extension TheError {
 
 	/// Unique id of this error type.
@@ -172,6 +153,14 @@ extension TheError {
 	public static var id: TheErrorID {
 		.init(Self.self)
 	}
+
+	/// Group assigned to this error.
+	///
+	/// Access ``TheErrorGroup`` associated
+	/// with this error. It can be used
+	/// to quickly identify error domains or
+	/// group errors by any other meaning.
+	public var group: TheErrorGroup { Self.group }
 
 	/// Terminate process with this error as the cause.
 	///
