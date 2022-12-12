@@ -4,13 +4,8 @@ import func Foundation.NSLocalizedString
 /// String which can be displayed to the end user.
 public struct DisplayableString: Sendable {
 
-	private enum State {
-
-		case pending(@Sendable () -> String)
-		case resolved(String)
-	}
-
-	private let value: CriticalSection<State>
+	/// Resolved string value to display.
+	public let resolved: String
 
 	/// Create instance of ``DisplayableString`` using provided value.
 	///
@@ -26,31 +21,7 @@ public struct DisplayableString: Sendable {
 	public init(
 		_ value: @autoclosure @escaping @Sendable () -> String
 	) {
-		self.value = .init(.pending(value))
-	}
-}
-
-extension DisplayableString {
-
-	/// Resolved string value.
-	///
-	/// Resolves string if needed and get its value.
-	/// Value will be cached after resolving for the first time.
-	///
-	/// - Note: String value is resolved when accessing ``description``,
-	/// performing equality check or computing hash value.
-	public var resolved: String {
-		self.value.access { (state: inout State) -> String in
-			switch state {
-			case let .resolved(string):
-				return string
-
-			case let .pending(resolve):
-				let string: String = resolve()
-				state = .resolved(string)
-				return string
-			}
-		}
+		self.resolved = value()
 	}
 }
 

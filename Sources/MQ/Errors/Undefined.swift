@@ -38,5 +38,3 @@ public struct Undefined: TheError {
 	/// String representation displayable to the end user.
 	public var displayableMessage: DisplayableString
 }
-
-extension Undefined: Hashable {}

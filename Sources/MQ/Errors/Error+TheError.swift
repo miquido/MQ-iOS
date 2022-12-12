@@ -24,15 +24,6 @@ extension Error {
 		case let theError as TheError:
 			return theError
 
-		case let cancellation as CancellationError:
-			return
-				Cancelled
-				.error(
-					file: file,
-					line: line
-				)
-				.with(cancellation, for: "sourceError")
-
 		case let error:
 			return customConversion(
 				Unidentified

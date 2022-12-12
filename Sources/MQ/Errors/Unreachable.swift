@@ -31,8 +31,6 @@ public struct Unreachable: TheError {
 	public var context: SourceCodeContext
 }
 
-extension Unreachable: Hashable {}
-
 /// Convenient placeholder for unreachable code.
 ///
 /// Placeholder for indicating unreachable part of code.
