@@ -9,15 +9,8 @@ public struct DisplayableString: Sendable {
 
 	/// Create instance of ``DisplayableString`` using provided value.
 	///
-	/// - Parameter value: Lazily resolved string value.
-	/// Resolved value will be cached after accessing if for
-	/// the first time and won't be updated after.
-	///
-	/// - Note: `value` is captured using autoclosure
-	/// to be lazily eveluated when needed. It should be
-	/// avoided to make time consuming operations
-	/// and thread blocking when resolving value
-	/// to avoid unexpected behaviour.
+	/// - Parameter value: String value to be treated
+	/// as displayable to the end user.
 	public init(
 		_ value: @autoclosure @escaping @Sendable () -> String
 	) {
