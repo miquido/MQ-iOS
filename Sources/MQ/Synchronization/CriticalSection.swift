@@ -94,7 +94,7 @@ where State: Sendable {
 	/// of access to ``CriticalSection`` memory.
 	/// - Returns: Value returned from provided access function.
 	@inlinable @Sendable public func access<Value>(
-		_ access: @Sendable (inout State) throws -> Value
+		@_inheritActorContext _ access: @Sendable (inout State) throws -> Value
 	) rethrows -> Value {
 		os_unfair_lock_lock(self.lockPointer)
 		defer { os_unfair_lock_unlock(self.lockPointer) }
