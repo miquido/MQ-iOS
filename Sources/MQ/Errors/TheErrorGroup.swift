@@ -71,4 +71,26 @@ extension TheErrorGroup {
 	) -> Identifier? {
 		self.identifiers.first(where: matches)
 	}
+
+	internal func isSubset(
+		of other: Self
+	) -> Bool {
+		for identifier in self.identifiers {
+			guard other.identifiers.contains(identifier)
+			else { return false }
+		}
+
+		return true
+	}
+}
+
+// swift-format-ignore: AllPublicDeclarationsHaveDocumentation
+extension TheErrorGroup {
+
+	public static func ~= (
+		_ lhs: TheErrorGroup,
+		_ rhs: Error
+	) -> Bool {
+		((rhs as? TheError)?.group).map(lhs.isSubset(of:)) ?? false
+	}
 }
