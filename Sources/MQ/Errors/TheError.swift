@@ -63,19 +63,19 @@ extension TheError /* CustomStringConvertible */ {
 extension TheError /* CustomDebugStringConvertible */ {
 
 	public var debugDescription: String {
-		let propertiesDescription: String = self.propertiesDebugDescription
+		let propertiesDescription: String = self.propertiesPrettyDescription
 		let propertiesDescriptionEmpty: Bool = propertiesDescription.isEmpty
 
 		return """
 
-			⎡ ⚠️ \(Self.self)
-			⎜ 📺 \(self.displayableMessageDebugDescription)\(propertiesDescriptionEmpty ? "" : "\n⎜ 📦 Properties: \(propertiesDescription)")
-			⎜ 🧵 Context: \(self.context.errorDebugDescription)
-			⎣ ⚠️ \(Self.self)
-			"""
+		⎡ ⚠️ \(Self.self)
+		⎜ 📺 \(self.displayableMessagePrettyDescription)\(propertiesDescriptionEmpty ? "" : "\n⎜ 📦 Properties: \(propertiesDescription)")
+		⎜ 🧵 Context: \(self.context.prettyDescription)
+		⎣ ⚠️ \(Self.self)
+		"""
 	}
 
-	private var displayableMessageDebugDescription: String {
+	private var displayableMessagePrettyDescription: String {
 		self.displayableMessage
 			.resolved
 			.replacingOccurrences(  // keep indentation
@@ -83,7 +83,8 @@ extension TheError /* CustomDebugStringConvertible */ {
 				with: "\n⎜ ⮑ "
 			)
 	}
-	private var propertiesDebugDescription: String {
+
+	private var propertiesPrettyDescription: String {
 		Mirror(reflecting: self)
 			.children  // ignoring "displayStyle"
 			.reduce(into: String()) { result, child in
@@ -256,8 +257,9 @@ extension TheError {
 		line: UInt = #line
 	) -> Self {
 		runtimeWarning(
-			"%@\n%@",
+			"%s\n%s\n%s",
 			[
+				String(describing: Self.self),
 				message().asString,
 				self.context
 					.debugDescription,

@@ -42,7 +42,9 @@ extension LocalizationKey: CustomLeafReflectable {
 // swift-format-ignore: AllPublicDeclarationsHaveDocumentation
 extension LocalizationKey: ExpressibleByStringLiteral {
 
-	public init(stringLiteral: String) {
+	public init(
+		stringLiteral: String
+	) {
 		self.init(rawValue: stringLiteral)
 	}
 }

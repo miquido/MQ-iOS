@@ -1,21 +1,23 @@
-/// Source code context metadata that can be collected across the application.
+/// Source code metadata that can be collected across the application.
 ///
-/// ``SourceCodeContext`` can be used to provide additional metadata for the errors or invalid application states.
-/// Debug builds are allowed to collect additional dynamic values for more precise tracking and diagnostic.
+/// ``SourceCodeContext`` can be used to provide additional metadata for extended application diagnostics.
+/// It allows making diagnostics stack similar to stack traces.
+/// However it is selected by programmer what informations are included.
+/// Debug builds are allowed to collect additional dynamic values for more precise tracking and details.
 /// Dynamic values are striped out in release builds to prevent potential security issues.
 /// Only static metadata is collected in release builds.
 ///
-/// ``SourceCodeContext`` consists of stack of ``SourceCodeMeta`` giving informations
-/// pointing to the concrete source code locations. Locations and dynamic values can be appended when passing
+/// ``SourceCodeContext`` consists of stack of ``SourceCodeMeta``
+/// pointing to the concrete source code locations.
+/// Locations and dynamic values can be appended when passing
 /// ``SourceCodeContext`` through method calls in order to add more detailed context.
 ///
-/// ``SourceCodeContext`` should be always avoided in application logic.
-/// Collected data should be used only for diagnostics purposes.
-///
-/// - warning: ``SourceCodeContext`` is not intended to provide any data across application.
+/// ``SourceCodeContext`` should be avoided in application logic.
+/// Collected data is intended to be used
+/// for diagnostics purposes.
 public struct SourceCodeContext: Sendable {
 
-	/// Create ``SourceCodeMeta`` info for further diagnostics using given source code location.
+	/// Create ``SourceCodeMeta`` using given source code location and message.
 	///
 	/// - Parameters:
 	///   - message: Message associated with given source code location.
@@ -23,7 +25,7 @@ public struct SourceCodeContext: Sendable {
 	///   Filled automatically based on compile time constants.
 	///   - line: Line in given source code file.
 	///   Filled automatically based on compile time constants.
-	/// - Returns: Instance of ``SourceCodeContext`` for given message.
+	/// - Returns: Instance of ``SourceCodeContext`` for given message and location.
 	public static func context(
 		message: StaticString,
 		file: StaticString = #fileID,
@@ -175,9 +177,10 @@ extension SourceCodeContext: CustomStringConvertible {
 			.reduce(
 				into: "---",
 				{ (result: inout String, meta: SourceCodeMeta) in
-					result.append("\n\(meta.description)\n---")
+					result.append("\n•\(meta.description)")
 				}
 			)
+			.appending("\n---")
 	}
 }
 
@@ -189,17 +192,18 @@ extension SourceCodeContext: CustomDebugStringConvertible {
 			.reduce(
 				into: "---",
 				{ (result: inout String, meta: SourceCodeMeta) in
-					result.append("\n\(meta.debugDescription)\n---")
+					result.append("\n•\(meta.debugDescription)")
 				}
 			)
+			.appending("\n---")
 	}
 
-	internal var errorDebugDescription: String {
+	internal var prettyDescription: String {
 		self.contextStack
 			.reduce(
 				into: "",
 				{ (result: inout String, meta: SourceCodeMeta) in
-					result.append("\n⎜\(meta.errorDebugDescription)\n⎜")
+					result.append("\n⎜\(meta.prettyDescription)")
 				}
 			)
 	}
@@ -214,8 +218,7 @@ extension SourceCodeContext: CustomLeafReflectable {
 			children: [
 				"contextStack": self.contextStack
 			],
-			displayStyle: .struct,
-			ancestorRepresentation: .suppressed
+			displayStyle: .struct
 		)
 	}
 }

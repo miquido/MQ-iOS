@@ -1,12 +1,13 @@
 /// Source code metadata conected with a location in source code.
 ///
-/// ``SourceCodeMeta`` should be always avoided in application logic.
-/// Collected data should be used only for diagnostics purposes.
-///
-/// - warning: ``SourceCodeMeta`` is not intended to provide any data across application.
+/// ``SourceCodeMeta`` is a structure to collect metadata
+/// and diagnostics across application. It associates
+/// a message and optional debug values with given location is code.
+/// Collected data is intended to be used
+/// for diagnostics purposes.
 public struct SourceCodeMeta: Sendable {
 
-	/// Create ``SourceCodeMeta`` for further diagnostics using given source code location.
+	/// Create ``SourceCodeMeta`` using given source code location.
 	///
 	/// Default location provided is this function call location.
 	/// `file` and `line` arguments should not be provided manually unless it is required.
@@ -17,7 +18,7 @@ public struct SourceCodeMeta: Sendable {
 	///   Filled automatically based on compile time constants.
 	///   - line: Line in given source code file.
 	///   Filled automatically based on compile time constants.
-	/// - Returns: Instance of ``SourceCodeMeta`` for given message.
+	/// - Returns: Instance of ``SourceCodeMeta`` with provided message and location.
 	public static func message(
 		_ message: StaticString,
 		file: StaticString = #fileID,
@@ -25,7 +26,7 @@ public struct SourceCodeMeta: Sendable {
 	) -> Self {
 		Self(
 			message: message,
-			sourceCodeLocation: .here(
+			location: .here(
 				file: file,
 				line: line
 			)
@@ -33,9 +34,9 @@ public struct SourceCodeMeta: Sendable {
 	}
 
 	private let message: StaticString
-	private let sourceCodeLocation: SourceCodeLocation
+	private let location: SourceCodeLocation
 	#if DEBUG
-		private let debugValues: CriticalSection<Dictionary<StaticString, Any>> = .init(.init())
+		private var debugValues: Dictionary<StaticString, Sendable> = .init()
 	#endif
 
 	/// Associate any dynamic value with given key for this ``SourceCodeMeta``.
@@ -50,11 +51,9 @@ public struct SourceCodeMeta: Sendable {
 	public mutating func set<Value>(
 		_ value: @autoclosure () -> Value,
 		for key: StaticString
-	) {
+	) where Value: Sendable {
 		#if DEBUG
-			self.debugValues.access { (values: inout Dictionary<StaticString, Any>) -> Void in
-				values[key] = value()
-			}
+			self.debugValues[key] = value()
 		#endif
 	}
 
@@ -71,7 +70,8 @@ public struct SourceCodeMeta: Sendable {
 	public func with<Value>(
 		_ value: @autoclosure () -> Value,
 		for key: StaticString
-	) -> Self {
+	) -> Self
+	where Value: Sendable {
 		#if DEBUG
 			var copy: Self = self
 			copy.set(value(), for: key)
@@ -91,14 +91,14 @@ extension SourceCodeMeta: Hashable {
 			_ lhs: SourceCodeMeta,
 			_ rhs: SourceCodeMeta
 		) -> Bool {
-			lhs.sourceCodeLocation == rhs.sourceCodeLocation
+			lhs.location == rhs.location
 				&& lhs.message == rhs.message
 		}
 
 		public func hash(
 			into hasher: inout Hasher
 		) {
-			hasher.combine(self.sourceCodeLocation)
+			hasher.combine(self.location)
 			hasher.combine(self.message)
 		}
 	#endif  // use default implementation in release
@@ -108,14 +108,11 @@ extension SourceCodeMeta: Hashable {
 extension SourceCodeMeta: CustomStringConvertible {
 
 	public var description: String {
-		var description: String = "\(self.sourceCodeLocation.description)"
+		var description: String = "\(self.location.description)"
 
 		if !self.message.isEmpty {
-			description.append("\n \" \(self.message.asString) ")
-		}
-		else {
-			noop()
-		}
+			description.append(" - \" \(self.message.asString)")
+		}  // else noop
 
 		return description
 	}
@@ -126,53 +123,56 @@ extension SourceCodeMeta: CustomDebugStringConvertible {
 
 	public var debugDescription: String {
 		#if DEBUG
-			self.description
-				.appending(
-					self.debugValues
-						.access(\Dictionary<StaticString, Any>.self)
-						.reduce(
-							into: String(),
-							{ (result, value) in
-								let formattedValue: String = "\(value.value)"
-									.replacingOccurrences(  // keep indentation
-										of: "\n",
-										with: "\n   "
-									)
-								result.append("\n • \(value.key): \(formattedValue)")
-							}
-						)
-				)
+			var description: String = self.description
+
+			if !self.debugValues.isEmpty {
+				let debugValuesDescription: String = self.debugValues
+					.reduce(
+						into: String(),
+						{ (result, value) in
+							let formattedValue: String = "\(value.value)"
+								.replacingOccurrences(  // keep indentation
+									of: "\n",
+									with: "\n   "
+								)
+							result.append("\n • \(value.key): \(formattedValue)")
+						}
+					)
+				description.append("\n\(debugValuesDescription)")
+			}  // else noop
+
+			return description
 		#else
 			self.description
 		#endif
 	}
 
-	internal var errorDebugDescription: String {
-		var description: String = " 📍 \(self.sourceCodeLocation.description)"
+	internal var prettyDescription: String {
+		var description: String = " 📍 \(self.location.description)"
 
 		if !self.message.isEmpty {
 			description
-				.append("\n⎜ ✉️ \(self.message.asString) ")
+				.append("\n⎜ ✉️ \(self.message.asString.replacingOccurrences(of: "\n", with: "\n⎜ ")) ")
 		}  // else noop
 
 		#if DEBUG
-			description
-				.append(
-					self.debugValues
-						.access(\Dictionary<StaticString, Any>.self)
-						.reduce(
-							into: String(),
-							{ (result, element) in
-								let formattedValue: String = .init(reflecting: element.value)
-									.replacingOccurrences(  // keep indentation
-										of: "\n",
-										with: "\n⎜ ⮑ "
-									)
-								result.append("\n⎜ 🧩 \(element.key): \(formattedValue)")
-							}
-						)
-				)
+			if !self.debugValues.isEmpty {
+				let debugValuesDescription: String = self.debugValues
+					.reduce(
+						into: String(),
+						{ (result, element) in
+							let formattedValue: String = .init(reflecting: element.value)
+								.replacingOccurrences(  // keep indentation
+									of: "\n",
+									with: "\n⎜ ⮑ "
+								)
+							result.append("\n⎜ 🧩 \(element.key): \(formattedValue)")
+						}
+					)
+				description.append("\(debugValuesDescription)")
+			}  // else noop
 		#endif
+
 		return description
 	}
 }
@@ -185,10 +185,9 @@ extension SourceCodeMeta: CustomLeafReflectable {
 			self,
 			children: [
 				"message": self.message,
-				"location": self.sourceCodeLocation,
+				"location": self.location,
 			],
-			displayStyle: .struct,
-			ancestorRepresentation: .suppressed
+			displayStyle: .struct
 		)
 	}
 }

@@ -1,14 +1,14 @@
 /// Location in the source code.
 ///
-/// ``SourceCodeLocation`` should be always avoided in application logic.
-/// Collected data should be used only for diagnostics purposes.
-///
-/// - warning: ``SourceCodeLocation`` is not intended to provide any data across application.
-public struct SourceCodeLocation: Sendable {
+/// ``SourceCodeLocation`` keeps information about location
+/// in the source code. It should be avoided in application logic.
+/// Collected data is intended to be used
+/// for diagnostics purposes.
+public struct SourceCodeLocation {
 
 	/// Create instance of ``SourceCodeLocation`` pointing at given location in source code.
 	///
-	/// Default location provided is this function call location.
+	/// Default location is this function call location.
 	/// `file` and `line` arguments should not be provided manually unless it is required.
 	///
 	/// - Parameters:
@@ -16,7 +16,7 @@ public struct SourceCodeLocation: Sendable {
 	///   Filled automatically based on compile time constants.
 	///   - line: Line in given source code file.
 	///   Filled automatically based on compile time constants.
-	///   - column: Optional column in given line in given source code file.
+	///   - column: Optional column of given line in given source code file.
 	///   Filled automatically based on compile time constants.
 	/// - Returns: Instance of ``SourceCodeLocation`` for given file and line.
 	public static func here(
@@ -35,6 +35,8 @@ public struct SourceCodeLocation: Sendable {
 	private let line: UInt
 	private let column: UInt?
 }
+
+extension SourceCodeLocation: Sendable {}
 
 extension SourceCodeLocation: Hashable {}
 
@@ -65,8 +67,7 @@ extension SourceCodeLocation: CustomLeafReflectable {
 				"line": self.line,
 				"column": self.column as Any,
 			],
-			displayStyle: .struct,
-			ancestorRepresentation: .suppressed
+			displayStyle: .struct
 		)
 	}
 }
