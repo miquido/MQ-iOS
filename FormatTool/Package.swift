@@ -1,4 +1,4 @@
-// swift-tools-version:5.6
+// swift-tools-version:5.7
 import PackageDescription
 
 let package = Package(
@@ -7,7 +7,7 @@ let package = Package(
   dependencies: [
     .package(
       url: "https://github.com/apple/swift-format.git", 
-      exact: "0.50600.1"
+      exact: "0.50700.1"
     ),
   ],
   targets: [

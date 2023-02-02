@@ -13,6 +13,7 @@ import func os.os_unfair_lock_unlock
 /// high level data synchronization over long running tasks.
 /// Access method should return as quickly as possible
 /// to avoid any potential issues.
+/// ``CriticalSection`` cannot be used recurisvely.
 public final class CriticalSection<State>: @unchecked Sendable
 where State: Sendable {
 
@@ -24,7 +25,7 @@ where State: Sendable {
 	///
 	/// - Parameters:
 	///   - state: Initial state.
-	///   - cleanup: Code executed on deallocation.
+	///   - cleanup: Optional code executed on deallocation.
 	public init(
 		_ state: State,
 		cleanup: @escaping @Sendable (State) -> Void = { _ in }

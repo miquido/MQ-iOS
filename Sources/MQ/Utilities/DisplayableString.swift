@@ -12,9 +12,9 @@ public struct DisplayableString: Sendable {
 	/// - Parameter value: String value to be treated
 	/// as displayable to the end user.
 	public init(
-		_ value: @autoclosure @escaping @Sendable () -> String
+		_ value: String
 	) {
-		self.resolved = value()
+		self.resolved = value
 	}
 }
 
@@ -297,20 +297,20 @@ extension DisplayableString {
 			if formatArguments.isEmpty {
 				self.parts
 					.append(
-						always(
+						{
 							NSLocalizedString(
 								stringLocalizationKey.rawValue,
 								tableName: tableName,
 								bundle: bundle,
 								comment: ""
 							)
-						)
+						}
 					)
 			}
 			else {
 				self.parts
 					.append(
-						always(
+						{
 							String(
 								format: NSLocalizedString(
 									stringLocalizationKey.rawValue,
@@ -320,7 +320,7 @@ extension DisplayableString {
 								),
 								formatArguments
 							)
-						)
+						}
 					)
 			}
 		}
