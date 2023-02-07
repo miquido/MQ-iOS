@@ -66,7 +66,7 @@ extension TheErrorGroup {
 
 extension TheErrorGroup {
 
-	@usableFromInline internal func firstMatchingIdentifier(
+	internal func firstMatchingIdentifier(
 		_ matches: (Identifier) -> Bool
 	) -> Identifier? {
 		self.identifiers.first(where: matches)

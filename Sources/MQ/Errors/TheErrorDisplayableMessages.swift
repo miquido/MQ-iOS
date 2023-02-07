@@ -16,7 +16,7 @@
 /// the error type name if no value was set.
 public enum TheErrorDisplayableMessages {
 
-	@usableFromInline internal static let storage: CriticalSection<Dictionary<AnyHashable, DisplayableString>> = .init(
+	fileprivate static let storage: CriticalSection<Dictionary<AnyHashable, DisplayableString>> = .init(
 		.init()
 	)
 
@@ -34,7 +34,7 @@ public enum TheErrorDisplayableMessages {
 	///
 	/// - Parameter errorType: Type of the error used to request
 	/// displayable message.
-	@inlinable @Sendable public static func message<ErrorType>(
+	@Sendable public static func message<ErrorType>(
 		for errorType: ErrorType.Type
 	) -> DisplayableString
 	where ErrorType: TheError {
@@ -77,7 +77,7 @@ public enum TheErrorDisplayableMessages {
 	/// and reused. Make sure that it does not
 	/// provide dynamic value that is expected
 	/// to be changing over time.
-	@inlinable @Sendable public static func setMessage<ErrorType>(
+	@Sendable public static func setMessage<ErrorType>(
 		_ message: DisplayableString,
 		for errorType: ErrorType.Type
 	) where ErrorType: TheError {
@@ -107,7 +107,7 @@ public enum TheErrorDisplayableMessages {
 	/// and reused. Make sure that it does not
 	/// provide dynamic value that is expected
 	/// to be changing over time.
-	@inlinable @Sendable public static func setMessage(
+	@Sendable public static func setMessage(
 		_ message: DisplayableString,
 		forGroup groupIdentifier: TheErrorGroup.Identifier
 	) {
@@ -133,7 +133,7 @@ public enum TheErrorDisplayableMessages {
 	/// and reused. Make sure that it does not
 	/// provide dynamic value that is expected
 	/// to be changing over time.
-	@inlinable @Sendable public static func setDefaultMessage(
+	@Sendable public static func setDefaultMessage(
 		_ message: DisplayableString
 	) {
 		self.storage.access { (messages: inout Dictionary<AnyHashable, DisplayableString>) -> Void in

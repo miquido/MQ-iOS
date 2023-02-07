@@ -19,6 +19,7 @@ public struct SourceCodeMeta: Sendable {
 	///   - line: Line in given source code file.
 	///   Filled automatically based on compile time constants.
 	/// - Returns: Instance of ``SourceCodeMeta`` with provided message and location.
+	@_transparent
 	public static func message(
 		_ message: StaticString,
 		file: StaticString = #fileID,
@@ -26,7 +27,7 @@ public struct SourceCodeMeta: Sendable {
 	) -> Self {
 		Self(
 			message: message,
-			location: .here(
+			location: .init(
 				file: file,
 				line: line
 			)
@@ -36,7 +37,27 @@ public struct SourceCodeMeta: Sendable {
 	private let message: StaticString
 	private let location: SourceCodeLocation
 	#if DEBUG
-		private var debugValues: Dictionary<StaticString, Sendable> = .init()
+		private var debugValues: Dictionary<StaticString, Sendable>
+	#endif
+
+	#if DEBUG
+		@usableFromInline internal init(
+			message: StaticString,
+			location: SourceCodeLocation,
+			debugValues: Dictionary<StaticString, Sendable> = .init()
+		) {
+			self.message = message
+			self.location = location
+			self.debugValues = debugValues
+		}
+	#else
+		@usableFromInline internal init(
+			message: StaticString,
+			location: SourceCodeLocation
+		) {
+			self.message = message
+			self.location = location
+		}
 	#endif
 
 	/// Associate any dynamic value with given key for this ``SourceCodeMeta``.

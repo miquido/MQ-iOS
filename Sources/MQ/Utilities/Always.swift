@@ -6,7 +6,7 @@
 ///
 /// - Parameter value: Value which will be always returned as a result of prepared function.
 /// - Returns: Function returning always the same value.
-@inlinable
+@_transparent
 public func always<V>(
 	_ value: @autoclosure @escaping @Sendable () -> V
 ) -> @Sendable () -> V {
@@ -21,7 +21,7 @@ public func always<V>(
 ///
 /// - Parameter error: Error which will be always thrown as a result of prepared function.
 /// - Returns: Function throwing always the same error.
-@inlinable
+@_transparent
 public func alwaysThrowing<V>(
 	_ error: @autoclosure @escaping @Sendable () -> Error
 ) -> @Sendable () throws -> V {
@@ -36,7 +36,7 @@ public func alwaysThrowing<V>(
 ///
 /// - Parameter value: Value which will be always returned as a result of prepared function.
 /// - Returns: Function returning always the same value.
-@inlinable
+@_transparent
 public func always<A1, V>(
 	_ value: @autoclosure @escaping @Sendable () -> V
 ) -> @Sendable (A1) -> V {
@@ -53,7 +53,7 @@ public func always<A1, V>(
 ///
 /// - Parameter error: Error which will be always thrown as a result of prepared function.
 /// - Returns: Function throwing always the same error.
-@inlinable
+@_transparent
 public func alwaysThrowing<A1, V>(
 	_ error: @autoclosure @escaping @Sendable () -> Error
 ) -> @Sendable (A1) throws -> V {
@@ -70,7 +70,7 @@ public func alwaysThrowing<A1, V>(
 ///
 /// - Parameter value: Value which will be always returned as a result of prepared function.
 /// - Returns: Function returning always the same value.
-@inlinable @_disfavoredOverload
+@_transparent @_disfavoredOverload
 public func always<A1, V>(
 	_ value: @autoclosure @escaping @Sendable () -> V
 ) -> @Sendable (inout A1) -> V {
@@ -87,7 +87,7 @@ public func always<A1, V>(
 ///
 /// - Parameter error: Error which will be always thrown as a result of prepared function.
 /// - Returns: Function throwing always the same error.
-@inlinable @_disfavoredOverload
+@_transparent @_disfavoredOverload
 public func alwaysThrowing<A1, V>(
 	_ error: @autoclosure @escaping @Sendable () -> Error
 ) -> @Sendable (inout A1) throws -> V {
@@ -104,7 +104,7 @@ public func alwaysThrowing<A1, V>(
 ///
 /// - Parameter value: Value which will be always returned as a result of prepared function.
 /// - Returns: Function returning always the same value.
-@inlinable
+@_transparent
 public func always<A1, A2, V>(
 	_ value: @autoclosure @escaping @Sendable () -> V
 ) -> @Sendable (A1, A2) -> V {
@@ -121,7 +121,7 @@ public func always<A1, A2, V>(
 ///
 /// - Parameter error: Error which will be always thrown as a result of prepared function.
 /// - Returns: Function throwing always the same error.
-@inlinable
+@_transparent
 public func alwaysThrowing<A1, A2, V>(
 	_ error: @autoclosure @escaping @Sendable () -> Error
 ) -> @Sendable (A1, A2) throws -> V {
@@ -138,7 +138,7 @@ public func alwaysThrowing<A1, A2, V>(
 ///
 /// - Parameter value: Value which will be always returned as a result of prepared function.
 /// - Returns: Function returning always the same value.
-@inlinable
+@_transparent
 public func always<A1, A2, A3, V>(
 	_ value: @autoclosure @escaping @Sendable () -> V
 ) -> @Sendable (A1, A2, A3) -> V {
@@ -155,7 +155,7 @@ public func always<A1, A2, A3, V>(
 ///
 /// - Parameter error: Error which will be always thrown as a result of prepared function.
 /// - Returns: Function throwing always the same error.
-@inlinable
+@_transparent
 public func alwaysThrowing<A1, A2, A3, V>(
 	_ error: @autoclosure @escaping @Sendable () -> Error
 ) -> @Sendable (A1, A2, A3) throws -> V {
@@ -172,7 +172,7 @@ public func alwaysThrowing<A1, A2, A3, V>(
 ///
 /// - Parameter value: Value which will be always returned as a result of prepared function.
 /// - Returns: Function returning always the same value.
-@inlinable
+@_transparent
 public func always<A1, A2, A3, A4, V>(
 	_ value: @autoclosure @escaping @Sendable () -> V
 ) -> @Sendable (A1, A2, A3, A4) -> V {
@@ -189,7 +189,7 @@ public func always<A1, A2, A3, A4, V>(
 ///
 /// - Parameter error: Error which will be always thrown as a result of prepared function.
 /// - Returns: Function throwing always the same error.
-@inlinable
+@_transparent
 public func alwaysThrowing<A1, A2, A3, A4, V>(
 	_ error: @autoclosure @escaping @Sendable () -> Error
 ) -> @Sendable (A1, A2, A3, A4) throws -> V {
@@ -206,7 +206,7 @@ public func alwaysThrowing<A1, A2, A3, A4, V>(
 ///
 /// - Parameter value: Value which will be always returned as a result of prepared function.
 /// - Returns: Function returning always the same value.
-@inlinable
+@_transparent
 public func always<A1, A2, A3, A4, A5, V>(
 	_ value: @autoclosure @escaping @Sendable () -> V
 ) -> @Sendable (A1, A2, A3, A4, A5) -> V {
@@ -223,7 +223,7 @@ public func always<A1, A2, A3, A4, A5, V>(
 ///
 /// - Parameter error: Error which will be always thrown as a result of prepared function.
 /// - Returns: Function throwing always the same error.
-@inlinable
+@_transparent
 public func alwaysThrowing<A1, A2, A3, A4, A5, V>(
 	_ error: @autoclosure @escaping @Sendable () -> Error
 ) -> @Sendable (A1, A2, A3, A4, A5) throws -> V {
@@ -240,7 +240,7 @@ public func alwaysThrowing<A1, A2, A3, A4, A5, V>(
 ///
 /// - Parameter value: Value which will be always returned as a result of prepared function.
 /// - Returns: Function returning always the same value.
-@inlinable
+@_transparent
 public func always<A1, A2, A3, A4, A5, A6, V>(
 	_ value: @autoclosure @escaping @Sendable () -> V
 ) -> @Sendable (A1, A2, A3, A4, A5, A6) -> V {
@@ -257,7 +257,7 @@ public func always<A1, A2, A3, A4, A5, A6, V>(
 ///
 /// - Parameter error: Error which will be always thrown as a result of prepared function.
 /// - Returns: Function throwing always the same error.
-@inlinable
+@_transparent
 public func alwaysThrowing<A1, A2, A3, A4, A5, A6, V>(
 	_ error: @autoclosure @escaping @Sendable () -> Error
 ) -> @Sendable (A1, A2, A3, A4, A5, A6) throws -> V {
@@ -274,7 +274,7 @@ public func alwaysThrowing<A1, A2, A3, A4, A5, A6, V>(
 ///
 /// - Parameter value: Value which will be always returned as a result of prepared function.
 /// - Returns: Function returning always the same value.
-@inlinable
+@_transparent
 public func always<A1, A2, A3, A4, A5, A6, A7, V>(
 	_ value: @autoclosure @escaping @Sendable () -> V
 ) -> @Sendable (A1, A2, A3, A4, A5, A6, A7) -> V {
@@ -291,7 +291,7 @@ public func always<A1, A2, A3, A4, A5, A6, A7, V>(
 ///
 /// - Parameter error: Error which will be always thrown as a result of prepared function.
 /// - Returns: Function throwing always the same error.
-@inlinable
+@_transparent
 public func alwaysThrowing<A1, A2, A3, A4, A5, A6, A7, V>(
 	_ error: @autoclosure @escaping @Sendable () -> Error
 ) -> @Sendable (A1, A2, A3, A4, A5, A6, A7) throws -> V {
@@ -308,7 +308,7 @@ public func alwaysThrowing<A1, A2, A3, A4, A5, A6, A7, V>(
 ///
 /// - Parameter value: Value which will be always returned as a result of prepared function.
 /// - Returns: Function returning always the same value.
-@inlinable
+@_transparent
 public func always<A1, A2, A3, A4, A5, A6, A7, A8, V>(
 	_ value: @autoclosure @escaping @Sendable () -> V
 ) -> @Sendable (A1, A2, A3, A4, A5, A6, A7, A8) -> V {
@@ -325,7 +325,7 @@ public func always<A1, A2, A3, A4, A5, A6, A7, A8, V>(
 ///
 /// - Parameter error: Error which will be always thrown as a result of prepared function.
 /// - Returns: Function throwing always the same error.
-@inlinable
+@_transparent
 public func alwaysThrowing<A1, A2, A3, A4, A5, A6, A7, A8, V>(
 	_ error: @autoclosure @escaping @Sendable () -> Error
 ) -> @Sendable (A1, A2, A3, A4, A5, A6, A7, A8) throws -> V {

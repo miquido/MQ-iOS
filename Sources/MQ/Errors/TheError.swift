@@ -172,7 +172,8 @@ extension TheError {
 	///   Filled automatically based on compile time constants.
 	///   - line: Line in given source code file.
 	///   Filled automatically based on compile time constants.
-	public func asFatalError(
+	@_transparent
+	@Sendable public func asFatalError(
 		message: @autoclosure () -> String = .init(),
 		file: StaticString = #fileID,
 		line: UInt = #line
@@ -188,7 +189,7 @@ extension TheError {
 	///
 	/// Assertion failure will be executed by using ``runtimeAssertionFailure`` method.
 	/// Its actual result depends on current ``runtimeAssertionMethod`` implementation.
-	/// Default behavior will result in crash in debug builds and have no effect on release builds.
+	/// It has no effect on release builds.
 	///
 	/// - Parameters:
 	///   - message: Optional, additional message associated with process termination.
@@ -198,17 +199,19 @@ extension TheError {
 	///   - line: Line in given source code file.
 	///   Filled automatically based on compile time constants.
 	/// - Returns: The same error instance.
-	@discardableResult
-	public func asAssertionFailure(
+	@discardableResult @_transparent
+	@Sendable public func asAssertionFailure(
 		message: @autoclosure () -> String = .init(),
 		file: StaticString = #fileID,
 		line: UInt = #line
 	) -> Self {
+		#if DEBUG
 		runtimeAssertionFailure(
 			message: "\(message())\n\(self.debugDescription)",
 			file: file,
 			line: line
 		)
+		#endif
 		return self
 	}
 
@@ -225,15 +228,17 @@ extension TheError {
 	///   - line: Line in given source code file.
 	///   Filled automatically based on compile time constants.
 	/// - Returns: The same error instance.
-	@discardableResult
-	public func asBreakpoint(
+	@discardableResult @_transparent
+	@Sendable public func asBreakpoint(
 		message: @autoclosure () -> String = .init(),
 		file: StaticString = #fileID,
 		line: UInt = #line
 	) -> Self {
+		#if DEBUG
 		breakpoint(
 			"\(file):\(line) \(message())\n\(self.debugDescription)"
 		)
+		#endif
 		return self
 	}
 
@@ -250,12 +255,13 @@ extension TheError {
 	///   - line: Line in given source code file.
 	///   Filled automatically based on compile time constants.
 	/// - Returns: The same error instance.
-	@discardableResult
-	public func asRuntimeWarning(
+	@discardableResult @_transparent
+	@Sendable public func asRuntimeWarning(
 		message: @autoclosure () -> StaticString = .init(),
 		file: StaticString = #fileID,
 		line: UInt = #line
 	) -> Self {
+		#if DEBUG
 		runtimeWarning(
 			"%s\n%s\n%s",
 			[
@@ -265,6 +271,22 @@ extension TheError {
 					.debugDescription,
 			]
 		)
+		#endif
+		return self
+	}
+
+	/// Log this error using ``OSDiagnostics.shared``.
+	///
+	/// Log this error using default logger
+	/// which is ``OSDiagnostics.shared`` instance.
+	/// It has no effect on release builds.
+	///
+	/// - Returns: The same error instance.
+	@discardableResult @_transparent
+	@Sendable public func log() -> Self {
+		#if DEBUG
+			OSDiagnostics.shared.log(self)
+		#endif
 		return self
 	}
 
@@ -274,6 +296,7 @@ extension TheError {
 	/// However it is selected by programmer what points in source code will be included.
 	///
 	/// - Parameter context: ``SourceCodeMeta`` to be appended.
+	@inlinable @inline(__always)
 	public mutating func append(
 		_ context: SourceCodeMeta
 	) {
@@ -287,7 +310,8 @@ extension TheError {
 	///
 	/// - Parameter context: ``SourceCodeMeta`` to be appended.
 	/// - Returns: Copy of this error with additional ``SourceCodeMeta`` appended to its ``context``.
-	public func appending(
+	@inlinable @inline(__always)
+	@Sendable public func appending(
 		_ context: SourceCodeMeta
 	) -> Self {
 		var copy: Self = self
@@ -306,6 +330,7 @@ extension TheError {
 	///   in ``SourceCodeContext`` of this error.
 	///   Replaces previous value for the same key if it already exists in last ``SourceCodeMeta``.
 	///   - key: Key used to identify provided value.
+	@_transparent
 	public mutating func set<Value>(
 		_ value: @autoclosure () -> Value,
 		for key: StaticString
@@ -328,7 +353,8 @@ extension TheError {
 	///   - key: Key used to identify provided value.
 	/// - Returns: Copy of this error with additional value associated with last
 	///  ``SourceCodeMeta`` in the copy.
-	public func with<Value>(
+	@_transparent
+	@Sendable public func with<Value>(
 		_ value: @autoclosure () -> Value,
 		for key: StaticString
 	) -> Self {

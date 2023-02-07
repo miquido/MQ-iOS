@@ -15,7 +15,8 @@ extension Error {
 	///   - customConversion: Optional custom conversion of errors from ``Unidentified``.
 	///   Default implementation returns received ``Unidentified`` without any changes.
 	/// - Returns: Error converted to ``TheError``.
-	public func asTheError(
+	@inlinable @inline(__always)
+	@Sendable public func asTheError(
 		file: StaticString = #fileID,
 		line: UInt = #line,
 		customConversion: (Unidentified) -> TheError = { $0 }

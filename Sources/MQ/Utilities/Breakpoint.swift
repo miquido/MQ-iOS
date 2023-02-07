@@ -7,7 +7,7 @@ import Darwin
 ///
 /// - Parameter message: Message to be printed on stderr when hitting breakpoint.
 /// Default is empty.
-@inlinable @inline(__always)
+@_transparent
 @Sendable public func breakpoint(
 	_ message: @autoclosure @Sendable () -> String = .init()
 ) {

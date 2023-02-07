@@ -5,7 +5,7 @@
 /// Does nothing and has empty implementation.
 ///
 /// - Note: Empty methods are striped out in release builds.
-@inlinable
+@_transparent
 @Sendable public func noop() { /* noop */  }
 
 /// Convenient placeholder for a function that does nothing.
@@ -16,7 +16,7 @@
 /// - Note: Empty methods are striped out in release builds.
 ///
 /// - Parameter _: placeholder
-@inlinable
+@_transparent
 @Sendable public func noop<A1>(
 	_: A1
 ) { /* noop */  }
@@ -29,7 +29,7 @@
 /// - Note: Empty methods are striped out in release builds.
 ///
 /// - Parameter _: placeholder
-@inlinable @_disfavoredOverload
+@_transparent @_disfavoredOverload
 @Sendable public func noop<A1>(
 	_: inout A1
 ) { /* noop */  }
@@ -44,7 +44,7 @@
 /// - Parameters:
 ///   - _: placeholder
 ///   - _: placeholder
-@inlinable
+@_transparent
 @Sendable public func noop<A1, A2>(
 	_: A1,
 	_: A2
@@ -61,7 +61,7 @@
 ///   - _: placeholder
 ///   - _: placeholder
 ///   - _: placeholder
-@inlinable
+@_transparent
 @Sendable public func noop<A1, A2, A3>(
 	_: A1,
 	_: A2,
@@ -80,7 +80,7 @@
 ///   - _: placeholder
 ///   - _: placeholder
 ///   - _: placeholder
-@inlinable
+@_transparent
 @Sendable public func noop<A1, A2, A3, A4>(
 	_: A1,
 	_: A2,
@@ -101,7 +101,7 @@
 ///   - _: placeholder
 ///   - _: placeholder
 ///   - _: placeholder
-@inlinable
+@_transparent
 @Sendable public func noop<A1, A2, A3, A4, A5>(
 	_: A1,
 	_: A2,
@@ -124,7 +124,7 @@
 ///   - _: placeholder
 ///   - _: placeholder
 ///   - _: placeholder
-@inlinable
+@_transparent
 @Sendable public func noop<A1, A2, A3, A4, A5, A6>(
 	_: A1,
 	_: A2,
@@ -149,7 +149,7 @@
 ///   - _: placeholder
 ///   - _: placeholder
 ///   - _: placeholder
-@inlinable
+@_transparent
 @Sendable public func noop<A1, A2, A3, A4, A5, A6, A7>(
 	_: A1,
 	_: A2,
@@ -176,7 +176,7 @@
 ///   - _: placeholder
 ///   - _: placeholder
 ///   - _: placeholder
-@inlinable
+@_transparent
 @Sendable public func noop<A1, A2, A3, A4, A5, A6, A7, A8>(
 	_: A1,
 	_: A2,
