@@ -16,8 +16,6 @@
 			self.log = log
 		}
 
-		@_transparent
-		@inline(__always)
 		fileprivate func runtimeWarning(
 			_ message: () -> StaticString,
 			_ args: () -> Array<CVarArg>
@@ -29,7 +27,7 @@
 		}
 	}
 
-	private let handle: RuntimeWarningHandle = .init(
+	private let runtimeWarningHandle: RuntimeWarningHandle = .init(
 		dso: { () -> UnsafeMutableRawPointer in
 			let count: UInt32 = _dyld_image_count()
 			for index: UInt32 in 0..<count {
@@ -64,13 +62,13 @@
 	)
 #endif
 
-@_transparent
 @inline(__always)
+@usableFromInline
 internal func runtimeWarning(
 	_ message: @autoclosure () -> StaticString,
 	_ args: @autoclosure () -> Array<CVarArg> = .init()
 ) {
 	#if DEBUG
-		handle.runtimeWarning(message, args)
+		runtimeWarningHandle.runtimeWarning(message, args)
 	#endif
 }

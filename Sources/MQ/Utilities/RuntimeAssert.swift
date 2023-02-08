@@ -37,6 +37,7 @@ public typealias RuntimeAssertionMethod = @Sendable (
 ///   Filled automatically based on compile time constants.
 ///   - line: Line in given source code file.
 ///   Filled automatically based on compile time constants.
+@_transparent
 public func runtimeAssert(
 	_ condition: @autoclosure () -> Bool,
 	message: String,
@@ -62,6 +63,7 @@ public func runtimeAssert(
 ///   Filled automatically based on compile time constants.
 ///   - line: Line in given source code file.
 ///   Filled automatically based on compile time constants.
+@_transparent
 public func runtimeAssertionFailure(
 	message: String,
 	file: StaticString = #fileID,

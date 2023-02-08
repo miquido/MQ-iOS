@@ -6,6 +6,7 @@
 ///
 /// - Parameter value: Value forwarded.
 /// - Returns: Value provided as an argument without any changes.
+@_transparent
 @Sendable public func id<Value>(
 	_ value: Value
 ) -> Value {

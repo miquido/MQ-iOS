@@ -19,6 +19,7 @@ public struct SourceCodeLocation {
 	///   - column: Optional column of given line in given source code file.
 	///   Filled automatically based on compile time constants.
 	/// - Returns: Instance of ``SourceCodeLocation`` for given file and line.
+	@_transparent
 	public static func here(
 		file: StaticString = #fileID,
 		line: UInt = #line,
@@ -34,6 +35,16 @@ public struct SourceCodeLocation {
 	private let file: StaticString
 	private let line: UInt
 	private let column: UInt?
+
+	@usableFromInline internal init(
+		file: StaticString,
+		line: UInt,
+		column: UInt? = .none
+	) {
+		self.file = file
+		self.line = line
+		self.column = column
+	}
 }
 
 extension SourceCodeLocation: Sendable {}

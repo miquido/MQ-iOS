@@ -43,7 +43,8 @@ public struct Unreachable: TheError {
 ///   - line: Line in given source code file.
 ///   Filled automatically based on compile time constants.
 /// - Returns: Never, function terminates the process.
-public func unreachable(
+@_transparent
+@Sendable public func unreachable(
 	_ message: StaticString,
 	file: StaticString = #fileID,
 	line: UInt = #line

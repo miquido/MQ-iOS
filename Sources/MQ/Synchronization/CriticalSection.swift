@@ -55,8 +55,8 @@ where State: Sendable {
 	/// - Parameter keyPath: Key path used to access a property
 	/// inside ``CriticalSection`` state.
 	/// - Returns: Value associated with requested key path.
-	@_disfavoredOverload
-	@inlinable @Sendable public func access<Value>(
+	@inlinable @inline(__always) @_disfavoredOverload
+	@Sendable public func access<Value>(
 		_ keyPath: KeyPath<State, Value>
 	) -> Value {
 		os_unfair_lock_lock(self.lockPointer)
@@ -75,7 +75,8 @@ where State: Sendable {
 	///   - keyPath: Key path used to access a property
 	/// inside ``CriticalSection`` state.
 	///   value: Value assigned under requested key path.
-	@inlinable @Sendable public func assign<Value>(
+	@inlinable @inline(__always)
+	@Sendable public func assign<Value>(
 		_ keyPath: WritableKeyPath<State, Value>,
 		_ value: Value
 	) {
@@ -94,7 +95,8 @@ where State: Sendable {
 	/// Value returned from this function will be used as a result
 	/// of access to ``CriticalSection`` memory.
 	/// - Returns: Value returned from provided access function.
-	@inlinable @Sendable public func access<Value>(
+	@inlinable @inline(__always)
+	@Sendable public func access<Value>(
 		_ access: @Sendable (inout State) throws -> Value
 	) rethrows -> Value {
 		os_unfair_lock_lock(self.lockPointer)

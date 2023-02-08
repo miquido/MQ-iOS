@@ -26,6 +26,7 @@ public struct SourceCodeContext: Sendable {
 	///   - line: Line in given source code file.
 	///   Filled automatically based on compile time constants.
 	/// - Returns: Instance of ``SourceCodeContext`` for given message and location.
+	@_transparent
 	public static func context(
 		message: StaticString,
 		file: StaticString = #fileID,
@@ -43,6 +44,12 @@ public struct SourceCodeContext: Sendable {
 	}
 
 	private var contextStack: Array<SourceCodeMeta>
+
+	@usableFromInline internal init(
+		contextStack: Array<SourceCodeMeta>
+	) {
+		self.contextStack = contextStack
+	}
 
 	/// Append additional ``SourceCodeMeta`` to this ``SourceCodeContext``.
 	///
