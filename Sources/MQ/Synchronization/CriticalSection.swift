@@ -13,7 +13,7 @@ import func os.os_unfair_lock_unlock
 /// high level data synchronization over long running tasks.
 /// Access method should return as quickly as possible
 /// to avoid any potential issues.
-/// ``CriticalSection`` cannot be used recurisvely.
+/// ``CriticalSection`` cannot be used recursively.
 public final class CriticalSection<State>: @unchecked Sendable
 where State: Sendable {
 
@@ -25,7 +25,7 @@ where State: Sendable {
 	///
 	/// - Parameters:
 	///   - state: Initial state.
-	///   - cleanup: Optional code executed on deallocation.
+	///   - cleanup: Optional function executed on deallocation.
 	public init(
 		_ state: State,
 		cleanup: @escaping @Sendable (State) -> Void = { _ in }
@@ -45,62 +45,126 @@ where State: Sendable {
 		self.lockPointer.deallocate()
 	}
 
-	/// Access a property from ``CriticalSection`` state.
+	/// Access a value from ``CriticalSection``.
 	///
-	/// Retrieve current value of selected property
-	/// from ``CriticalSection`` state.
+	/// Retrieve current value under provided key path
+	/// from ``CriticalSection``.
 	///
-	/// - Note: This method can wait for gathering exclusive access to the memory.
+	/// - Note: This method can wait blocking current thread
+	/// in order to gather exclusive access to the memory.
 	///
-	/// - Parameter keyPath: Key path used to access a property
-	/// inside ``CriticalSection`` state.
-	/// - Returns: Value associated with requested key path.
+	/// - Parameter keyPath: Key path used to access a value
+	/// inside ``CriticalSection``.
+	/// - Returns: Value under provided key path.
 	@inlinable @inline(__always) @_disfavoredOverload
 	@Sendable public func access<Value>(
 		_ keyPath: KeyPath<State, Value>
 	) -> Value {
 		os_unfair_lock_lock(self.lockPointer)
 		defer { os_unfair_lock_unlock(self.lockPointer) }
+
 		return self.statePointer.pointee[keyPath: keyPath]
 	}
 
-	/// Assign property value in ``CriticalSection`` state.
+	/// Assign a value in ``CriticalSection``.
 	///
-	/// Set given value under selected property
-	/// in ``CriticalSection`` state.
+	/// Assign given value under provided key path
+	/// in ``CriticalSection``.
 	///
-	/// - Note: This method can wait for gathering exclusive access to the memory.
+	/// - Note: This method can wait blocking current thread
+	/// in order to gather exclusive access to the memory.
 	///
 	/// - Parameters
-	///   - keyPath: Key path used to access a property
-	/// inside ``CriticalSection`` state.
-	///   value: Value assigned under requested key path.
+	///   - keyPath: Key path used to assign a value
+	/// inside ``CriticalSection``.
+	///   - newValue: Value assigned under provided key path.
 	@inlinable @inline(__always)
 	@Sendable public func assign<Value>(
 		_ keyPath: WritableKeyPath<State, Value>,
-		_ value: Value
+		_ newValue: Value
 	) {
 		os_unfair_lock_lock(self.lockPointer)
 		defer { os_unfair_lock_unlock(self.lockPointer) }
-		self.statePointer.pointee[keyPath: keyPath] = value
+
+		self.statePointer.pointee[keyPath: keyPath] = newValue
 	}
 
-	/// Gain exclusive access to ``CriticalSection`` memory.
+	/// Gain exclusive access to ``CriticalSection``.
 	///
 	/// Exclusive access to critical section has to be
 	/// as short as possible and cannot be recursive.
 	///
+	/// - Note: This method can wait blocking current thread
+	/// in order to gather exclusive access to the memory.
+	///
 	/// - Parameter access: Function executed with exclusive access to
-	/// ``CriticalSection`` memory allowing to mutate it and get its state.
-	/// Value returned from this function will be used as a result
-	/// of access to ``CriticalSection`` memory.
+	/// ``CriticalSection`` allowing to mutate and retrieve its state.
+	/// Value returned from provided function will be used as a
+	/// result of this method call.
 	/// - Returns: Value returned from provided access function.
 	@inlinable @inline(__always)
 	@Sendable public func access<Value>(
-		_ access: @Sendable (inout State) throws -> Value
+		_ access: (inout State) throws -> Value
 	) rethrows -> Value {
 		os_unfair_lock_lock(self.lockPointer)
 		defer { os_unfair_lock_unlock(self.lockPointer) }
+
 		return try access(&self.statePointer.pointee)
+	}
+
+	/// Assign a value in ``CriticalSection``
+	/// while returning current.
+	///
+	/// - Note: This method can wait blocking current thread
+	/// in order to gather exclusive access to the memory.
+	///
+	/// - Parameters
+	///   - keyPath: Key path used to exchange a value
+	/// inside ``CriticalSection``.
+	///   - newValue: Value assigned under provided key path.
+	/// - Returns: Value under provided key path before assignment.
+	@inlinable @inline(__always)
+	@Sendable public func exchange<Value>(
+		_ keyPath: WritableKeyPath<State, Value>,
+		with newValue: Value
+	) -> Value {
+		os_unfair_lock_lock(self.lockPointer)
+		defer { os_unfair_lock_unlock(self.lockPointer) }
+
+		let currentValue: Value = self.statePointer.pointee[keyPath: keyPath]
+		self.statePointer.pointee[keyPath: keyPath] = newValue
+		return currentValue
+	}
+
+	/// Conditionally assign a value in ``CriticalSection``.
+	///
+	/// - Note: This method can wait blocking current thread
+	/// in order to gather exclusive access to the memory.
+	///
+	/// - Parameters
+	///   - keyPath: Key path used to exchange a value
+	/// inside ``CriticalSection`` state.
+	///   - newValue: Value assigned under provided key path.
+	///   - expectedValue: Value required to be present in order
+	///   to perform `newValue` assignment.
+	/// - Returns: `true` if assigned new value, `false` otherwise.
+	@inlinable @inline(__always)
+	@discardableResult @Sendable public func exchange<Value>(
+		_ keyPath: WritableKeyPath<State, Value>,
+		with newValue: Value,
+		when expectedValue: Value
+	) -> Bool
+	where Value: Equatable {
+		os_unfair_lock_lock(self.lockPointer)
+		defer { os_unfair_lock_unlock(self.lockPointer) }
+
+		let currentValue: Value = self.statePointer.pointee[keyPath: keyPath]
+
+		guard currentValue == expectedValue
+		else { return false }
+
+		self.statePointer.pointee[keyPath: keyPath] = newValue
+
+		return true
 	}
 }
