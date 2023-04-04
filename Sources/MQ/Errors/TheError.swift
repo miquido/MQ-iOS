@@ -1,3 +1,5 @@
+import Foundation
+
 /// Common protocol for error instances.
 ///
 /// "One Error to rule them all, One Error to handle them, One Error to bring them all, and on the screen bind them."
