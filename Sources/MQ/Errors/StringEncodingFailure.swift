@@ -1,3 +1,5 @@
+import Foundation
+
 /// ``TheError`` for string encoding failure.
 ///
 /// ``StringEncodingFailure`` error can occur when encoding string fails.
