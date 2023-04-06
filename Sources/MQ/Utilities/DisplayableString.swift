@@ -158,6 +158,12 @@ extension DisplayableString: CustomLeafReflectable {
 }
 
 // swift-format-ignore: AllPublicDeclarationsHaveDocumentation
+extension DisplayableString: DisplayableWithString {
+
+	public var displayableString: DisplayableString { self }
+}
+
+// swift-format-ignore: AllPublicDeclarationsHaveDocumentation
 extension DisplayableString: ExpressibleByStringInterpolation {
 
 	public init(
@@ -239,7 +245,6 @@ extension DisplayableString {
 						"\(any)"
 					)
 				)
-
 		}
 
 		/// Append formatted string.

@@ -38,12 +38,12 @@ public struct StringEncodingFailure: TheError {
 			)
 			.with(string, for: "string")
 			.with(encoding, for: "encoding"),
-			displayableMessage: displayableMessage
+			displayableString: displayableMessage
 		)
 	}
 
 	/// Source code context of this error.
 	public var context: SourceCodeContext
 	/// String representation displayable to the end user.
-	public var displayableMessage: DisplayableString
+	public var displayableString: DisplayableString
 }
