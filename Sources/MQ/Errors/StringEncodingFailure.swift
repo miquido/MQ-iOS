@@ -31,13 +31,14 @@ public struct StringEncodingFailure: TheError {
 		line: UInt = #line
 	) -> Self {
 		Self(
-			context: .context(
-				message: message,
-				file: file,
-				line: line
-			)
-			.with(string, for: "string")
-			.with(encoding, for: "encoding"),
+			context:
+				.context(
+					message: message,
+					file: file,
+					line: line
+				)
+				.with(string, for: "string")
+				.with(encoding, for: "encoding"),
 			displayableString: displayableMessage
 		)
 	}

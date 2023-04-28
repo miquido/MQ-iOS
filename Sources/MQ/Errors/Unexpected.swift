@@ -27,12 +27,13 @@ public struct Unexpected: TheError {
 		line: UInt = #line
 	) -> Self {
 		Self(
-			context: .context(
-				message: message,
-				file: file,
-				line: line
-			)
-			.with(underlyingError, for: "underlyingError"),
+			context:
+				.context(
+					message: message,
+					file: file,
+					line: line
+				)
+				.with(underlyingError, for: "underlyingError"),
 			displayableString: displayableMessage
 		)
 	}

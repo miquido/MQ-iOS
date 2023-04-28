@@ -3,7 +3,7 @@ import OSLog
 import class Foundation.NSProcessInfo
 
 #if os(iOS)
-	import class UIKit.UIDevice
+import class UIKit.UIDevice
 #endif
 
 /// Application diagnostics.
@@ -27,18 +27,19 @@ public struct OSDiagnostics {
 
 	@usableFromInline internal init() {
 		#if os(iOS)
-			self.device = UIDevice.current.model
+		self.device = UIDevice.current.model
 		#elseif os(watchOS)
-			self.device = "Apple Watch"
+		self.device = "Apple Watch"
 		#elseif os(tvOS)
-			self.device = "Apple TV"
+		self.device = "Apple TV"
 		#else
-			self.device = "Mac"
+		self.device = "Mac"
 		#endif
 		self.system = ProcessInfo.processInfo.operatingSystemVersionString
 
 		let infoDictionary: Dictionary<String, Any> = Bundle.main.infoDictionary ?? .init()
-		self.application = "\(infoDictionary["CFBundleName"] as? String ?? "Application") \(infoDictionary["CFBundleShortVersionString"] as? String ?? "?.?.?")"
+		self.application =
+			"\(infoDictionary["CFBundleName"] as? String ?? "Application") \(infoDictionary["CFBundleShortVersionString"] as? String ?? "?.?.?")"
 		self.bundleIdentifier = infoDictionary["CFBundleIdentifier"] as? String
 
 		self.logger = .init(
@@ -80,9 +81,9 @@ extension OSDiagnostics {
 		_ error: TheError
 	) {
 		#if DEBUG
-			print(error.debugDescription)
+		print(error.debugDescription)
 		#else
-			self.logger.error("\(error.description, privacy: .auto)")
+		self.logger.error("\(error.description, privacy: .auto)")
 		#endif
 	}
 
@@ -97,7 +98,7 @@ extension OSDiagnostics {
 		debug something: Something
 	) {
 		#if DEBUG
-			print(something)
+		print(something)
 		#endif
 	}
 
@@ -116,7 +117,7 @@ extension OSDiagnostics {
 	///  Default is current system time zone.
 	/// - Returns: Diagnostics informations array.
 	@Sendable public func diagnosticsInfo(
-		timeInterval: TimeInterval = 60 * 60, // one hour
+		timeInterval: TimeInterval = 60 * 60,  // one hour
 		dateFormat: String = "YYYY-MM-dd HH:mm:ss",
 		dateOffsetFromGMT: Int = TimeZone.current.secondsFromGMT()
 	) -> Array<String> {
