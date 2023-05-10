@@ -31,7 +31,20 @@ public protocol TheError: Error, CustomStringConvertible, CustomDebugStringConve
 	/// It is used to derive default implementations
 	/// of ``Hashable`` and ``Equatable`` protocols.
 	var displayableString: DisplayableString { get }
-
+	/// ``merge`` adds contents of provided error to this error.
+	///
+	/// When merging, composite should take all informations
+	/// that it can handle and update self with new data.
+	/// It is intended to change or add error details
+	/// when i.e. catching other error while trying to keep
+	/// diagnostics data in place.
+	///
+	/// - Parameter other: Other error to be merged into this one.
+	mutating func merge(
+		with other: TheError,
+		file: StaticString,
+		line: UInt
+	)
 	/// Function checking equality of errors.
 	///
 	/// This function can be used to check if two errors
@@ -123,6 +136,61 @@ extension TheError /* DisplayableWithString */ {
 		TheErrorDisplayableMessages.message(for: Self.self)
 	}
 }
+
+extension TheError {
+
+	/// ``merge`` adds contents of provided error to this error.
+	///
+	/// When merging, composite should take all informations
+	/// that it can handle and update self with new data.
+	/// It is intended to change or add error details
+	/// when i.e. catching other error while trying to keep
+	/// diagnostics data in place.
+	///
+	/// - Parameters:
+	///   - other: Other error to be merged into this one.
+	///   - file: Source code file identifier.
+	///   Filled automatically based on compile time constants.
+	///   - line: Line in given source code file.
+	///   Filled automatically based on compile time constants.
+	public mutating func merge(
+		with other: TheError,
+		file: StaticString = #fileID,
+		line: UInt = #line
+	) {
+		self.context = .merging(self.context, other.context)
+	}
+
+	/// ``merging`` adds contents of provided error to this error copy.
+	///
+	/// When merging, composite should take all informations
+	/// that it can handle and update self with new data.
+	/// It is intended to change or add error deatails
+	/// when i.e. catching other error while trying to keep
+	/// diagnostics data in place.
+	///
+	/// - Parameters:
+	///   - other: Other error to be merged into this error copy.
+	///   - file: Source code file identifier.
+	///   Filled automatically based on compile time constants.
+	///   - line: Line in given source code file.
+	///   Filled automatically based on compile time constants.
+	/// - Returns: Copy of this error with error merged.
+	public func merging(
+		with other: TheError,
+		file: StaticString = #fileID,
+		line: UInt = #line
+	) -> TheError {
+		var copy: Self = self
+		copy.merge(
+			with: other,
+			file: file,
+			line: line
+		)
+		return copy
+	}
+}
+
 
 // swift-format-ignore: AllPublicDeclarationsHaveDocumentation
 extension TheError {
