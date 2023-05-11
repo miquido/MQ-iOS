@@ -26,12 +26,12 @@ public struct InternalInconsistency: TheError {
 				file: file,
 				line: line
 			),
-			displayableMessage: displayableMessage
+			displayableString: displayableMessage
 		)
 	}
 
 	/// Source code context of this error.
 	public var context: SourceCodeContext
 	/// String representation displayable to the end user.
-	public var displayableMessage: DisplayableString
+	public var displayableString: DisplayableString
 }

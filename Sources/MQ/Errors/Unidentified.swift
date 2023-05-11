@@ -13,7 +13,7 @@ public struct Unidentified: TheError {
 	///   - message: Message associated with this error.
 	///   Default value is "Unidentified".
 	///   - displayableMessage: Message which can be displayed
-	///   to the end user. Default is "Unidentified error".
+	///   to the end user. Default value is based on ``TheErrorDisplayableMessages``.
 	///   - underlyingError: Underlying, unrecognized error.
 	///   - file: Source code file identifier.
 	///   Filled automatically based on compile time constants.
@@ -42,7 +42,7 @@ public struct Unidentified: TheError {
 					file: file,
 					line: line
 				),
-			displayableMessage: displayableMessage,
+			displayableString: displayableMessage,
 			underlyingError: (underlyingError as? Unidentified)?.underlyingError ?? underlyingError
 		)
 	}
@@ -50,7 +50,7 @@ public struct Unidentified: TheError {
 	/// Source code context of this error.
 	public var context: SourceCodeContext
 	/// String representation displayable to the end user.
-	public var displayableMessage: DisplayableString
+	public var displayableString: DisplayableString
 	/// Underlying, unrecognized error if any.
 	public var underlyingError: Error
 }

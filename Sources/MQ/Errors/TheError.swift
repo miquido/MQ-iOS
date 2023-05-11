@@ -6,7 +6,7 @@ import Foundation
 ///
 /// ``TheError`` provides additional source code metadata for better diagnostics.
 /// It also adds convenient methods for treating errors as fatal and assertion failures.
-public protocol TheError: Error, CustomStringConvertible, CustomDebugStringConvertible {
+public protocol TheError: Error, CustomStringConvertible, CustomDebugStringConvertible, DisplayableWithString {
 
 	/// Group assigned to this error type.
 	///
@@ -30,7 +30,7 @@ public protocol TheError: Error, CustomStringConvertible, CustomDebugStringConve
 	/// ``TheErrorDisplayableMessages``.
 	/// It is used to derive default implementations
 	/// of ``Hashable`` and ``Equatable`` protocols.
-	var displayableMessage: DisplayableString { get }
+	var displayableString: DisplayableString { get }
 
 	/// Function checking equality of errors.
 	///
@@ -71,14 +71,14 @@ extension TheError /* CustomDebugStringConvertible */ {
 		return """
 
 		⎡ ⚠️ \(Self.self)
-		⎜ 📺 \(self.displayableMessagePrettyDescription)\(propertiesDescriptionEmpty ? "" : "\n⎜ 📦 Properties: \(propertiesDescription)")
+		⎜ 📺 \(self.displayableStringPrettyDescription)\(propertiesDescriptionEmpty ? "" : "\n⎜ 📦 Properties: \(propertiesDescription)")
 		⎜ 🧵 Context: \(self.context.prettyDescription)
 		⎣ ⚠️ \(Self.self)
 		"""
 	}
 
-	private var displayableMessagePrettyDescription: String {
-		self.displayableMessage
+	private var displayableStringPrettyDescription: String {
+		self.displayableString
 			.resolved
 			.replacingOccurrences(  // keep indentation
 				of: "\n",
@@ -93,8 +93,8 @@ extension TheError /* CustomDebugStringConvertible */ {
 				let formattedLabel: String
 				if let label: String = child.label {
 					// `context` is part of debug description anyway
-					// `displayableMessage` has own section in description
-					guard label != "context", label != "displayableMessage"
+					// `displayableString` has own section in description
+					guard label != "context", label != "displayableString"
 					else { return }  // skip property
 					formattedLabel = "\n⎜ 📎 \(label): "
 				}
@@ -117,25 +117,29 @@ extension TheError /* CustomDebugStringConvertible */ {
 }
 
 // swift-format-ignore: AllPublicDeclarationsHaveDocumentation
+extension TheError /* DisplayableWithString */ {
+
+	public var displayableString: DisplayableString {
+		TheErrorDisplayableMessages.message(for: Self.self)
+	}
+}
+
+// swift-format-ignore: AllPublicDeclarationsHaveDocumentation
 extension TheError {
 
 	public static var group: TheErrorGroup {
 		.default
 	}
 
-	public var displayableMessage: DisplayableString {
-		TheErrorDisplayableMessages.message(for: Self.self)
-	}
-
 	public var localizedDescription: String {
-		self.displayableMessage.resolved
+		self.displayableString.resolved
 	}
 
 	public func isEqual(
 		to other: Error
 	) -> Bool {
 		if let typed: Self = other as? Self {
-			return self.displayableMessage == typed.displayableMessage
+			return self.displayableString == typed.displayableString
 		}
 		else {
 			return false
@@ -208,11 +212,11 @@ extension TheError {
 		line: UInt = #line
 	) -> Self {
 		#if DEBUG
-		runtimeAssertionFailure(
-			message: "\(message())\n\(self.debugDescription)",
-			file: file,
-			line: line
-		)
+			runtimeAssertionFailure(
+				message: "\(message())\n\(self.debugDescription)",
+				file: file,
+				line: line
+			)
 		#endif
 		return self
 	}
@@ -237,9 +241,9 @@ extension TheError {
 		line: UInt = #line
 	) -> Self {
 		#if DEBUG
-		breakpoint(
-			"\(file):\(line) \(message())\n\(self.debugDescription)"
-		)
+			breakpoint(
+				"\(file):\(line) \(message())\n\(self.debugDescription)"
+			)
 		#endif
 		return self
 	}
@@ -264,15 +268,15 @@ extension TheError {
 		line: UInt = #line
 	) -> Self {
 		#if DEBUG
-		runtimeWarning(
-			"%s\n%s\n%s",
-			[
-				String(describing: Self.self),
-				message().asString,
-				self.context
-					.debugDescription,
-			]
-		)
+			runtimeWarning(
+				"%s\n%s\n%s",
+				[
+					String(describing: Self.self),
+					message().asString,
+					self.context
+						.debugDescription,
+				]
+			)
 		#endif
 		return self
 	}

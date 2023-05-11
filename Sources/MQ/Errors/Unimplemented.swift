@@ -7,7 +7,7 @@ public struct Unimplemented: TheError {
 	///
 	/// - Parameters:
 	///   - message: Message associated with this error.
-	///   Default value is "Unimplemented".
+	///   Default value is based on ``TheErrorDisplayableMessages``.
 	///   - file: Source code file identifier.
 	///   Filled automatically based on compile time constants.
 	///   - line: Line in given source code file.
@@ -25,14 +25,14 @@ public struct Unimplemented: TheError {
 				file: file,
 				line: line
 			),
-			displayableMessage: displayableMessage
+			displayableString: displayableMessage
 		)
 	}
 
 	/// Source code context of this error.
 	public var context: SourceCodeContext
 	/// String representation displayable to the end user.
-	public var displayableMessage: DisplayableString
+	public var displayableString: DisplayableString
 }
 
 /// Convenient placeholder for unimplemented part of code.

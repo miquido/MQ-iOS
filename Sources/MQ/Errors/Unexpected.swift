@@ -11,7 +11,7 @@ public struct Unexpected: TheError {
 	///   - message: Message associated with this error.
 	///   Default value is "Unexpected".
 	///   - displayableMessage: Message which can be displayed
-	///   to the end user. Default is "Unexpected error".
+	///   to the end user. Default value is based on ``TheErrorDisplayableMessages``.
 	///   - underlyingError: Optional instance of error which was not expected.
 	///   This value will not be collected in release builds.
 	///   - file: Source code file identifier.
@@ -33,12 +33,12 @@ public struct Unexpected: TheError {
 				line: line
 			)
 			.with(underlyingError, for: "underlyingError"),
-			displayableMessage: displayableMessage
+			displayableString: displayableMessage
 		)
 	}
 
 	/// Source code context of this error.
 	public var context: SourceCodeContext
 	/// String representation displayable to the end user.
-	public var displayableMessage: DisplayableString
+	public var displayableString: DisplayableString
 }

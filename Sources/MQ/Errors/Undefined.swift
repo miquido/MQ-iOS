@@ -11,7 +11,7 @@ public struct Undefined: TheError {
 	///   - message: Message associated with this error.
 	///   Default value is "Undefined".
 	///   - displayableMessage: Message which can be displayed
-	///   to the end user. Default is "Undefined error".
+	///   to the end user. Default value is based on ``TheErrorDisplayableMessages``.
 	///   - file: Source code file identifier.
 	///   Filled automatically based on compile time constants.
 	///   - line: Line in given source code file.
@@ -29,12 +29,12 @@ public struct Undefined: TheError {
 				file: file,
 				line: line
 			),
-			displayableMessage: displayableMessage
+			displayableString: displayableMessage
 		)
 	}
 
 	/// Source code context of this error.
 	public var context: SourceCodeContext
 	/// String representation displayable to the end user.
-	public var displayableMessage: DisplayableString
+	public var displayableString: DisplayableString
 }
