@@ -15,60 +15,42 @@ public struct OSDiagnostics {
 
 	public static let shared: Self = .init()
 
-	private let deviceModel: String
-	private let systemVersion: String
-	private let appName: String
-	private let appVersion: String
-	private let appBundleIdentifier: String
+	// Basic info about the device.
+	public let device: String
+	// Basic info about the system.
+	public let system: String
+	// Basic info about the application.
+	public let application: String
+	// Application bundle indentifier if any.
+	public let bundleIdentifier: String?
 	@usableFromInline internal let logger: Logger
 
-	/// Create instance of ``OSDiagnostics``
-	/// using OSLog framework to provide logging.
-	public init() {
+	@usableFromInline internal init() {
 		#if os(iOS)
-			self.deviceModel = UIDevice.current.model
+			self.device = UIDevice.current.model
 		#elseif os(watchOS)
-			self.deviceModel = "Apple Watch"
+			self.device = "Apple Watch"
 		#elseif os(tvOS)
-			self.deviceModel = "Apple TV"
+			self.device = "Apple TV"
 		#else
-			self.deviceModel = "Mac"
+			self.device = "Mac"
 		#endif
-		self.systemVersion = ProcessInfo.processInfo.operatingSystemVersionString
+		self.system = ProcessInfo.processInfo.operatingSystemVersionString
 
 		let infoDictionary: Dictionary<String, Any> = Bundle.main.infoDictionary ?? .init()
-		self.appName = infoDictionary["CFBundleName"] as? String ?? "App"
-		self.appVersion = infoDictionary["CFBundleShortVersionString"] as? String ?? "?.?.?"
-		self.appBundleIdentifier = infoDictionary["CFBundleIdentifier"] as? String ?? "com.miquido.unknown"
+		self.application = "\(infoDictionary["CFBundleName"] as? String ?? "Application") \(infoDictionary["CFBundleShortVersionString"] as? String ?? "?.?.?")"
+		self.bundleIdentifier = infoDictionary["CFBundleIdentifier"] as? String
 
 		self.logger = .init(
-			subsystem: self.appBundleIdentifier + ".diagnostics",
+			subsystem: (self.bundleIdentifier ?? "com.miquido") + ".diagnostics",
 			category: "diagnostic"
 		)
 	}
 }
 
+extension OSDiagnostics: @unchecked Sendable {}
+
 extension OSDiagnostics {
-
-	/// Get basic info about the application.
-	///
-	/// Informations about running application
-	/// name and version.
-	///
-	/// - Returns: Basic app info.
-	@Sendable public func appInfo() -> String {
-		"\(self.appName) \(self.appVersion)"
-	}
-
-	/// Get basic info about the device.
-	///
-	/// Informations about current device
-	/// model and system version.
-	///
-	/// - Returns: Basic app info.
-	@Sendable public func deviceInfo() -> String {
-		"\(self.deviceModel) \(self.systemVersion)"
-	}
 
 	/// Log a message.
 	///
@@ -77,7 +59,7 @@ extension OSDiagnostics {
 	/// - Note: Message can be visible in production builds.
 	///
 	/// - Parameter message: Message to be logged.
-	@_transparent
+	@_transparent @inline(__always)
 	@Sendable public func log(
 		_ message: StaticString
 	) {
@@ -93,7 +75,7 @@ extension OSDiagnostics {
 	/// production builds (using OSLog `privacy: auto`).
 	///
 	/// - Parameter message: Message to be logged.
-	@_transparent
+	@_transparent @inline(__always)
 	@Sendable public func log(
 		_ error: TheError
 	) {
@@ -107,16 +89,15 @@ extension OSDiagnostics {
 	/// Log a debug message.
 	///
 	/// Use ``print`` to log any message in debug builds.
-	/// about the error.
 	/// It has no effect on release builds.
 	///
-	/// - Parameter message: Message to be logged.
-	@_transparent
-	@Sendable public func log(
-		debug message: String
+	/// - Parameter something: Something to be logged.
+	@_transparent @inline(__always)
+	@Sendable public func log<Something>(
+		debug something: Something
 	) {
 		#if DEBUG
-			print(message)
+			print(something)
 		#endif
 	}
 
@@ -126,23 +107,34 @@ extension OSDiagnostics {
 	/// diagnostics data and logs. Each diagnostic element
 	/// and log is separate element in result array.
 	///
+	/// Parameters:
+	///  - timeInterval: Time interval in seconds used to fetch logs data.
+	///  Provided logs will be no older that requested. Default is one hour.
+	///  - dateFormat: Date format used to format dates in logs.
+	///  Defaults is "YYYY-MM-dd HH:mm:ss"
+	///  - dateOffsetFromGMT: Time zone offset in seconds used to format dates in logs.
+	///  Default is current system time zone.
 	/// - Returns: Diagnostics informations array.
-	@Sendable public func diagnosticsInfo() -> Array<String> {
-		let environmentInfo: String = "\(self.appName) \(self.appVersion) \(self.deviceModel) iOS \(self.systemVersion)"
+	@Sendable public func diagnosticsInfo(
+		timeInterval: TimeInterval = 60 * 60, // one hour
+		dateFormat: String = "YYYY-MM-dd HH:mm:ss",
+		dateOffsetFromGMT: Int = TimeZone.current.secondsFromGMT()
+	) -> Array<String> {
+		let environmentInfo: String = "\(self.device) OS \(self.system) \(self.application)"
 
 		if #available(iOS 15.0, macOS 12.0, watchOS 8.0, tvOS 15.0, *) {
 			do {
 				let logStore: OSLogStore = try .init(scope: .currentProcessIdentifier)
 				let dateFormatter: DateFormatter = .init()
-				dateFormatter.timeZone = .init(secondsFromGMT: 0)
-				dateFormatter.dateFormat = "YYYY-MM-dd HH:mm:ss"
+				dateFormatter.timeZone = .init(secondsFromGMT: dateOffsetFromGMT)
+				dateFormatter.dateFormat = dateFormat
 				return try [environmentInfo]
 					+ logStore
 					.getEntries(
 						at:
 							logStore
-							.position(  // last hour
-								date: Date(timeIntervalSinceNow: -60 * 60)
+							.position(
+								date: Date(timeIntervalSinceNow: -timeInterval)
 							),
 						matching: NSPredicate(
 							format: "category == %@",
