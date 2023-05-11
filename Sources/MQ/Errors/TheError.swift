@@ -115,13 +115,14 @@ extension TheError /* CustomDebugStringConvertible */ {
 					formattedLabel = "\n⎜ 📎 "
 				}
 
-				let formattedValue: String = .init(
-					reflecting: child.value
-				)
-				.replacingOccurrences(  // keep indentation
-					of: "\n",
-					with: "\n⎜ ⮑ "
-				)
+				let formattedValue: String =
+					.init(
+						reflecting: child.value
+					)
+					.replacingOccurrences(  // keep indentation
+						of: "\n",
+						with: "\n⎜ ⮑ "
+					)
 
 				result
 					.append("\(formattedLabel)\(formattedValue)")
@@ -190,7 +191,6 @@ extension TheError {
 		return copy
 	}
 }
-
 
 // swift-format-ignore: AllPublicDeclarationsHaveDocumentation
 extension TheError {
@@ -280,11 +280,11 @@ extension TheError {
 		line: UInt = #line
 	) -> Self {
 		#if DEBUG
-			runtimeAssertionFailure(
-				message: "\(message())\n\(self.debugDescription)",
-				file: file,
-				line: line
-			)
+		runtimeAssertionFailure(
+			message: "\(message())\n\(self.debugDescription)",
+			file: file,
+			line: line
+		)
 		#endif
 		return self
 	}
@@ -309,9 +309,9 @@ extension TheError {
 		line: UInt = #line
 	) -> Self {
 		#if DEBUG
-			breakpoint(
-				"\(file):\(line) \(message())\n\(self.debugDescription)"
-			)
+		breakpoint(
+			"\(file):\(line) \(message())\n\(self.debugDescription)"
+		)
 		#endif
 		return self
 	}
@@ -336,15 +336,15 @@ extension TheError {
 		line: UInt = #line
 	) -> Self {
 		#if DEBUG
-			runtimeWarning(
-				"%s\n%s\n%s",
-				[
-					String(describing: Self.self),
-					message().asString,
-					self.context
-						.debugDescription,
-				]
-			)
+		runtimeWarning(
+			"%s\n%s\n%s",
+			[
+				String(describing: Self.self),
+				message().asString,
+				self.context
+					.debugDescription,
+			]
+		)
 		#endif
 		return self
 	}
@@ -359,7 +359,7 @@ extension TheError {
 	@discardableResult @_transparent
 	@Sendable public func log() -> Self {
 		#if DEBUG
-			OSDiagnostics.shared.log(self)
+		OSDiagnostics.shared.log(self)
 		#endif
 		return self
 	}
@@ -410,7 +410,7 @@ extension TheError {
 		for key: StaticString
 	) {
 		#if DEBUG
-			self.context.set(value(), for: key)
+		self.context.set(value(), for: key)
 		#endif
 	}
 
@@ -433,11 +433,11 @@ extension TheError {
 		for key: StaticString
 	) -> Self {
 		#if DEBUG
-			var copy: Self = self
-			copy.set(value(), for: key)
-			return copy
+		var copy: Self = self
+		copy.set(value(), for: key)
+		return copy
 		#else
-			return self
+		return self
 		#endif
 	}
 }

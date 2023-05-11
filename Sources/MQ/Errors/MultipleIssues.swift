@@ -23,7 +23,9 @@ public struct MultipleIssues: TheError {
 	/// - Returns: New instance of ``MultipleIssues`` error with given context.
 	public static func error(
 		message: StaticString = "MultipleIssues",
-		displayableMessageExtraction: @escaping (Array<TheError>) -> DisplayableString = { _ in TheErrorDisplayableMessages.message(for: Self.self) },
+		displayableMessageExtraction: @escaping (Array<TheError>) -> DisplayableString = { _ in
+			TheErrorDisplayableMessages.message(for: Self.self)
+		},
 		collecting errors: TheError...,
 		file: StaticString = #fileID,
 		line: UInt = #line

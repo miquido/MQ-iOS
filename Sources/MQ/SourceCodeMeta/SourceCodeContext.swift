@@ -92,9 +92,9 @@ public struct SourceCodeContext: Sendable {
 		for key: StaticString
 	) {
 		#if DEBUG
-			guard let lastIndex: Array<SourceCodeMeta>.Index = self.contextStack.lastIndex(where: { _ in true })
-			else { return }
-			self.contextStack[lastIndex].set(value(), for: key)
+		guard let lastIndex: Array<SourceCodeMeta>.Index = self.contextStack.lastIndex(where: { _ in true })
+		else { return }
+		self.contextStack[lastIndex].set(value(), for: key)
 		#endif
 	}
 
@@ -113,11 +113,11 @@ public struct SourceCodeContext: Sendable {
 		for key: StaticString
 	) -> Self {
 		#if DEBUG
-			var copy: Self = self
-			copy.set(value(), for: key)
-			return copy
+		var copy: Self = self
+		copy.set(value(), for: key)
+		return copy
 		#else
-			return self
+		return self
 		#endif
 	}
 

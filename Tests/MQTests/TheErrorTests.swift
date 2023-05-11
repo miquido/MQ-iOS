@@ -10,7 +10,8 @@ final class TheErrorTests: XCTestCase {
 		)
 
 		error.merge(
-			with: Unimplemented
+			with:
+				Unimplemented
 				.error(
 					file: "other_file",
 					line: 0

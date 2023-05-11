@@ -37,27 +37,27 @@ public struct SourceCodeMeta: Sendable {
 	private let message: StaticString
 	private let location: SourceCodeLocation
 	#if DEBUG
-		private var debugValues: Dictionary<StaticString, Sendable>
+	private var debugValues: Dictionary<StaticString, Sendable>
 	#endif
 
 	#if DEBUG
-		@usableFromInline internal init(
-			message: StaticString,
-			location: SourceCodeLocation,
-			debugValues: Dictionary<StaticString, Sendable> = .init()
-		) {
-			self.message = message
-			self.location = location
-			self.debugValues = debugValues
-		}
+	@usableFromInline internal init(
+		message: StaticString,
+		location: SourceCodeLocation,
+		debugValues: Dictionary<StaticString, Sendable> = .init()
+	) {
+		self.message = message
+		self.location = location
+		self.debugValues = debugValues
+	}
 	#else
-		@usableFromInline internal init(
-			message: StaticString,
-			location: SourceCodeLocation
-		) {
-			self.message = message
-			self.location = location
-		}
+	@usableFromInline internal init(
+		message: StaticString,
+		location: SourceCodeLocation
+	) {
+		self.message = message
+		self.location = location
+	}
 	#endif
 
 	/// Associate any dynamic value with given key for this ``SourceCodeMeta``.
@@ -74,7 +74,7 @@ public struct SourceCodeMeta: Sendable {
 		for key: StaticString
 	) where Value: Sendable {
 		#if DEBUG
-			self.debugValues[key] = value()
+		self.debugValues[key] = value()
 		#endif
 	}
 
@@ -94,11 +94,11 @@ public struct SourceCodeMeta: Sendable {
 	) -> Self
 	where Value: Sendable {
 		#if DEBUG
-			var copy: Self = self
-			copy.set(value(), for: key)
-			return copy
+		var copy: Self = self
+		copy.set(value(), for: key)
+		return copy
 		#else
-			return self
+		return self
 		#endif
 	}
 }
@@ -108,20 +108,20 @@ extension SourceCodeMeta: Hashable {
 
 	#if DEBUG  // ignore debug values
 
-		public static func == (
-			_ lhs: SourceCodeMeta,
-			_ rhs: SourceCodeMeta
-		) -> Bool {
-			lhs.location == rhs.location
-				&& lhs.message == rhs.message
-		}
+	public static func == (
+		_ lhs: SourceCodeMeta,
+		_ rhs: SourceCodeMeta
+	) -> Bool {
+		lhs.location == rhs.location
+			&& lhs.message == rhs.message
+	}
 
-		public func hash(
-			into hasher: inout Hasher
-		) {
-			hasher.combine(self.location)
-			hasher.combine(self.message)
-		}
+	public func hash(
+		into hasher: inout Hasher
+	) {
+		hasher.combine(self.location)
+		hasher.combine(self.message)
+	}
 	#endif  // use default implementation in release
 }
 
@@ -144,27 +144,27 @@ extension SourceCodeMeta: CustomDebugStringConvertible {
 
 	public var debugDescription: String {
 		#if DEBUG
-			var description: String = self.description
+		var description: String = self.description
 
-			if !self.debugValues.isEmpty {
-				let debugValuesDescription: String = self.debugValues
-					.reduce(
-						into: String(),
-						{ (result, value) in
-							let formattedValue: String = "\(value.value)"
-								.replacingOccurrences(  // keep indentation
-									of: "\n",
-									with: "\n   "
-								)
-							result.append("\n • \(value.key): \(formattedValue)")
-						}
-					)
-				description.append("\n\(debugValuesDescription)")
-			}  // else noop
+		if !self.debugValues.isEmpty {
+			let debugValuesDescription: String = self.debugValues
+				.reduce(
+					into: String(),
+					{ (result, value) in
+						let formattedValue: String = "\(value.value)"
+							.replacingOccurrences(  // keep indentation
+								of: "\n",
+								with: "\n   "
+							)
+						result.append("\n • \(value.key): \(formattedValue)")
+					}
+				)
+			description.append("\n\(debugValuesDescription)")
+		}  // else noop
 
-			return description
+		return description
 		#else
-			self.description
+		self.description
 		#endif
 	}
 
@@ -177,21 +177,21 @@ extension SourceCodeMeta: CustomDebugStringConvertible {
 		}  // else noop
 
 		#if DEBUG
-			if !self.debugValues.isEmpty {
-				let debugValuesDescription: String = self.debugValues
-					.reduce(
-						into: String(),
-						{ (result, element) in
-							let formattedValue: String = .init(reflecting: element.value)
-								.replacingOccurrences(  // keep indentation
-									of: "\n",
-									with: "\n⎜ ⮑ "
-								)
-							result.append("\n⎜ 🧩 \(element.key): \(formattedValue)")
-						}
-					)
-				description.append("\(debugValuesDescription)")
-			}  // else noop
+		if !self.debugValues.isEmpty {
+			let debugValuesDescription: String = self.debugValues
+				.reduce(
+					into: String(),
+					{ (result, element) in
+						let formattedValue: String = .init(reflecting: element.value)
+							.replacingOccurrences(  // keep indentation
+								of: "\n",
+								with: "\n⎜ ⮑ "
+							)
+						result.append("\n⎜ 🧩 \(element.key): \(formattedValue)")
+					}
+				)
+			description.append("\(debugValuesDescription)")
+		}  // else noop
 		#endif
 
 		return description

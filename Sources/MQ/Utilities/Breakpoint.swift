@@ -12,10 +12,10 @@ import Darwin
 	_ message: @autoclosure @Sendable () -> String = .init()
 ) {
 	#if DEBUG
-		guard isDebuggerAttached()
-		else { return }  // skip when debugger is not attached
+	guard isDebuggerAttached()
+	else { return }  // skip when debugger is not attached
 
-		fputs(message(), stderr)
-		raise(SIGTRAP)
+	fputs(message(), stderr)
+	raise(SIGTRAP)
 	#endif
 }
