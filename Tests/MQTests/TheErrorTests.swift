@@ -3,7 +3,7 @@ import XCTest
 
 final class TheErrorTests: XCTestCase {
 
-	func test_merge_combinesSourceCodeContext() async throws {
+	func test_merge_combinesSourceCodeContext() {
 		var error: Undefined = .error(
 			file: "file",
 			line: 42
