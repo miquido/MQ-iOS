@@ -353,14 +353,11 @@ extension TheError {
 	///
 	/// Log this error using default logger
 	/// which is ``OSDiagnostics.shared`` instance.
-	/// It has no effect on release builds.
 	///
 	/// - Returns: The same error instance.
 	@discardableResult @_transparent
 	@Sendable public func log() -> Self {
-		#if DEBUG
 		OSDiagnostics.shared.log(self)
-		#endif
 		return self
 	}
 
