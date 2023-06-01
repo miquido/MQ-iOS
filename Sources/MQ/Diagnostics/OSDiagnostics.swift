@@ -73,7 +73,9 @@ extension OSDiagnostics {
 	/// about the error.
 	///
 	/// - Note: Error details should not be visible in
-	/// production builds (using OSLog `privacy: auto`).
+	/// production builds (using OSLog `privacy: .public` with
+	/// CustomStringConvertible.description to provide message in
+	/// release build).
 	///
 	/// - Parameter message: Message to be logged.
 	@_transparent @inline(__always)
@@ -81,9 +83,9 @@ extension OSDiagnostics {
 		_ error: TheError
 	) {
 		#if DEBUG
-		print(error.debugDescription)
+		self.logger.error("ERROR:\(error.debugDescription, privacy: .public)")
 		#else
-		self.logger.error("\(error.description, privacy: .auto)")
+		self.logger.error("ERROR:\n\(error.description, privacy: .public)")
 		#endif
 	}
 
@@ -98,7 +100,10 @@ extension OSDiagnostics {
 		debug something: Something
 	) {
 		#if DEBUG
-		print(something)
+		print(
+			(something as? CustomDebugStringConvertible)?.debugDescription
+			?? something
+		)
 		#endif
 	}
 
