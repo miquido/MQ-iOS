@@ -57,7 +57,7 @@ private let runtimeWarningHandle: RuntimeWarningHandle = .init(
 	}(),
 	log: .init(
 		subsystem: "com.apple.runtime-issues",
-		category: "MQ-RuntimeWarning"
+		category: "runtime-warning"
 	)
 )
 #endif
@@ -65,10 +65,12 @@ private let runtimeWarningHandle: RuntimeWarningHandle = .init(
 @inline(__always)
 @usableFromInline
 internal func runtimeWarning(
-	_ message: @autoclosure () -> StaticString,
+	_ message: @escaping @autoclosure () -> StaticString,
 	_ args: @autoclosure () -> Array<CVarArg> = .init()
 ) {
 	#if DEBUG
 	runtimeWarningHandle.runtimeWarning(message, args)
+	#else
+	Diagnostics.logger.warning("\(message())")
 	#endif
 }

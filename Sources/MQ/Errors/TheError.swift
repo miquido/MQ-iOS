@@ -1,5 +1,7 @@
 import Foundation
 
+import struct OSLog.OSLogMessage
+
 /// Common protocol for error instances.
 ///
 /// "One Error to rule them all, One Error to handle them, One Error to bring them all, and on the screen bind them."
@@ -66,11 +68,12 @@ public protocol TheError: Error, CustomStringConvertible, CustomDebugStringConve
 extension TheError /* CustomStringConvertible */ {
 
 	public var description: String {
-		"""
-		⎡\(Self.self)
-		⎜\(self.context.description.replacingOccurrences(of: "\n", with: "\n⎜"))
-		⎣\(Self.self)
-		"""
+		var description: String = "⎡\(Self.self)"
+		for meta: SourceCodeMeta in self.context.contextStack {
+			let metaDescription: String = meta.description.replacingOccurrences(of: "\n", with: "\n⎜")
+			description.append("\n⎜\(metaDescription)")
+		}
+		return description
 	}
 }
 
@@ -82,7 +85,6 @@ extension TheError /* CustomDebugStringConvertible */ {
 		let propertiesDescriptionEmpty: Bool = propertiesDescription.isEmpty
 
 		return """
-
 		⎡ ⚠️ \(Self.self)
 		⎜ 📺 \(self.displayableStringPrettyDescription)\(propertiesDescriptionEmpty ? "" : "\n⎜ 📦 Properties: \(propertiesDescription)")
 		⎜ 🧵 Context: \(self.context.prettyDescription)
@@ -319,7 +321,8 @@ extension TheError {
 	/// Treat this error as a runtime warning in debug builds.
 	///
 	/// Show a runtime warning with this error as a cause.
-	/// It has no effect on release builds.
+	/// Release builds will use Diagnostics log to log the message
+	/// while ignoring actual error details.
 	///
 	/// - Parameters:
 	///   - message: Optional, additional message associated with runtime warning message.
@@ -331,33 +334,37 @@ extension TheError {
 	/// - Returns: The same error instance.
 	@discardableResult @_transparent
 	@Sendable public func asRuntimeWarning(
-		message: @autoclosure () -> StaticString = .init(),
+		message: @escaping @autoclosure () -> StaticString,
 		file: StaticString = #fileID,
 		line: UInt = #line
 	) -> Self {
 		#if DEBUG
 		runtimeWarning(
-			"%s\n%s\n%s",
+			"%s%s",
 			[
-				String(describing: Self.self),
 				message().asString,
-				self.context
-					.debugDescription,
+				self.debugDescription,
 			]
 		)
+		#else
+		runtimeWarning(message())
 		#endif
 		return self
 	}
 
-	/// Log this error using ``OSDiagnostics.shared``.
+	/// Log this error using ``Diagnostics.shared``.
 	///
 	/// Log this error using default logger
-	/// which is ``OSDiagnostics.shared`` instance.
+	/// which is ``Diagnostics.shared`` instance.
 	///
 	/// - Returns: The same error instance.
 	@discardableResult @_transparent
 	@Sendable public func log() -> Self {
-		OSDiagnostics.shared.log(self)
+		#if DEBUG
+		Diagnostics.shared.logger.error("\n\(self.debugDescription, privacy: .public)")
+		#else
+		Diagnostics.shared.logger.error("\n\(self.description, privacy: .public)")
+		#endif
 		return self
 	}
 
