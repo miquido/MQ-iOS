@@ -43,7 +43,7 @@ public struct SourceCodeContext: Sendable {
 		)
 	}
 
-	private var contextStack: Array<SourceCodeMeta>
+	internal var contextStack: Array<SourceCodeMeta>
 
 	@usableFromInline internal init(
 		contextStack: Array<SourceCodeMeta>
@@ -184,10 +184,9 @@ extension SourceCodeContext: CustomStringConvertible {
 			.reduce(
 				into: "---",
 				{ (result: inout String, meta: SourceCodeMeta) in
-					result.append("\n•\(meta.description)")
+					result.append("\n• \(meta.description)")
 				}
 			)
-			.appending("\n---")
 	}
 }
 
@@ -199,7 +198,7 @@ extension SourceCodeContext: CustomDebugStringConvertible {
 			.reduce(
 				into: "---",
 				{ (result: inout String, meta: SourceCodeMeta) in
-					result.append("\n•\(meta.debugDescription)")
+					result.append("\n• \(meta.debugDescription)")
 				}
 			)
 			.appending("\n---")

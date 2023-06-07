@@ -129,13 +129,12 @@ extension SourceCodeMeta: Hashable {
 extension SourceCodeMeta: CustomStringConvertible {
 
 	public var description: String {
-		var description: String = "\(self.location.description)"
-
-		if !self.message.isEmpty {
-			description.append(" - \" \(self.message.asString)")
-		}  // else noop
-
-		return description
+		if self.message.isEmpty {
+			return "\(self.location.description)"
+		}
+		else {
+			return "\"\(self.message.asString.replacingOccurrences(of: "\n", with: "\n⮑ "))\n@\(self.location.description)"
+		}
 	}
 }
 
