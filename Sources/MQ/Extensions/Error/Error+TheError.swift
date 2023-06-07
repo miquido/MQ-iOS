@@ -25,6 +25,13 @@ extension Error {
 		case let theError as TheError:
 			return theError
 
+		case let convertible as TheErrorConvertible:
+			return convertible
+				.convertToTheError(
+					file: file,
+					line: line
+				)
+
 		case let error:
 			return customConversion(
 				Unidentified
