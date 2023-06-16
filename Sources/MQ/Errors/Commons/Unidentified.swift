@@ -42,7 +42,7 @@ public struct Unidentified: TheError {
 					file: file,
 					line: line
 				),
-			group: group,
+			group: .merging(group, (underlyingError as? TheError)?.group ?? []),
 			underlyingError: (underlyingError as? Unidentified)?.underlyingError ?? underlyingError
 		)
 	}

@@ -34,7 +34,7 @@ public struct Unexpected: TheError {
 					line: line
 				)
 				.with(underlyingError, for: "underlyingError"),
-			group: group
+			group: .merging(group, (underlyingError as? TheError)?.group ?? [])
 		)
 	}
 
