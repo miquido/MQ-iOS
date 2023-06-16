@@ -15,7 +15,10 @@ public struct TheErrorGroup {
 
 extension TheErrorGroup {
 
-	internal static func merging(
+	/// Merge multiple error groups.
+	///
+	/// Note that ordering matters.
+	public static func merging(
 		_ head: TheErrorGroup,
 		_ mid: TheErrorGroup,
 		_ tail: TheErrorGroup...
@@ -23,7 +26,10 @@ extension TheErrorGroup {
 		.merging([head, mid] + tail)
 	}
 
-	internal static func merging(
+	/// Merge multiple error groups.
+	///
+	/// Note that ordering matters.
+	public static func merging(
 		_ groups: Array<TheErrorGroup>
 	) -> Self {
 		var added: Set<TheErrorGroup.Identifier> = .init()
