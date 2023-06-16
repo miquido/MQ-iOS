@@ -4,14 +4,12 @@ import XCTest
 final class TheErrorTests: XCTestCase {
 
 	func test_merge_combinesSourceCodeContext() {
-		var error: Undefined = .error(
-			file: "file",
-			line: 42
-		)
-
-		error.merge(
-			with:
-				Unimplemented
+		let error: MultipleIssues = .error(
+			collecting: Undefined.error(
+				file: "file",
+				line: 42
+			),
+			Unimplemented
 				.error(
 					file: "other_file",
 					line: 0

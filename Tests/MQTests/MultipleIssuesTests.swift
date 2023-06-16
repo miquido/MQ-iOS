@@ -23,14 +23,6 @@ final class MultipleIssuesTests: XCTestCase {
 		XCTAssertTrue(multipleIssues.errors.contains(where: { $0 is Undefined }))
 	}
 
-	func test_merge_doesNotAddErrorToCollection() {
-		var multipleIssues: MultipleIssues = .error()
-
-		multipleIssues.merge(with: Undefined.error())
-
-		XCTAssertTrue(multipleIssues.errors.isEmpty)
-	}
-
 	func test_displayableString_usesProvidedExtractionFunction() {
 		let multipleIssues: MultipleIssues = .error(
 			displayableMessageExtraction: { _ in "MOCK" }

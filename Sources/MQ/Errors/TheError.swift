@@ -16,11 +16,8 @@ public protocol TheError: Error, CustomStringConvertible, CustomDebugStringConve
 	/// with this error instance. It can be used
 	/// to quickly identify error domains or
 	/// group errors by any other meaning.
-	/// Default implementation does not support mutations,
-	/// if you need to mutate it please define stored
-	/// property in your error instance.
 	/// Default group for all errors is ``TheErrorGroup.default``.
-	var group: TheErrorGroup { get set }
+	var group: TheErrorGroup { get }
 
 	/// Source code metadata context for this error.
 	/// It is used to derive default implementations
@@ -34,20 +31,6 @@ public protocol TheError: Error, CustomStringConvertible, CustomDebugStringConve
 	/// It is used to derive default implementations
 	/// of ``Hashable`` and ``Equatable`` protocols.
 	var displayableString: DisplayableString { get }
-	/// ``merge`` adds contents of provided error to this error.
-	///
-	/// When merging, composite should take all informations
-	/// that it can handle and update self with new data.
-	/// It is intended to change or add error details
-	/// when i.e. catching other error while trying to keep
-	/// diagnostics data in place.
-	///
-	/// - Parameter other: Other error to be merged into this one.
-	mutating func merge(
-		with other: TheError,
-		file: StaticString,
-		line: UInt
-	)
 	/// Function checking equality of errors.
 	///
 	/// This function can be used to check if two errors
@@ -143,61 +126,6 @@ extension TheError /* DisplayableWithString */ {
 	}
 }
 
-extension TheError {
-
-	/// ``merge`` adds contents of provided error to this error.
-	///
-	/// When merging, composite should take all informations
-	/// that it can handle and update self with new data.
-	/// It is intended to change or add error details
-	/// when i.e. catching other error while trying to keep
-	/// diagnostics data in place.
-	///
-	/// - Parameters:
-	///   - other: Other error to be merged into this one.
-	///   - file: Source code file identifier.
-	///   Filled automatically based on compile time constants.
-	///   - line: Line in given source code file.
-	///   Filled automatically based on compile time constants.
-	public mutating func merge(
-		with other: TheError,
-		file: StaticString = #fileID,
-		line: UInt = #line
-	) {
-		self.group = .merging(self.group, other.group)
-		self.context = .merging(self.context, other.context)
-	}
-
-	/// ``merging`` adds contents of provided error to this error copy.
-	///
-	/// When merging, composite should take all informations
-	/// that it can handle and update self with new data.
-	/// It is intended to change or add error deatails
-	/// when i.e. catching other error while trying to keep
-	/// diagnostics data in place.
-	///
-	/// - Parameters:
-	///   - other: Other error to be merged into this error copy.
-	///   - file: Source code file identifier.
-	///   Filled automatically based on compile time constants.
-	///   - line: Line in given source code file.
-	///   Filled automatically based on compile time constants.
-	/// - Returns: Copy of this error with error merged.
-	public func merging(
-		with other: TheError,
-		file: StaticString = #fileID,
-		line: UInt = #line
-	) -> TheError {
-		var copy: Self = self
-		copy.merge(
-			with: other,
-			file: file,
-			line: line
-		)
-		return copy
-	}
-}
-
 // swift-format-ignore: AllPublicDeclarationsHaveDocumentation
 extension TheError {
 
@@ -231,21 +159,8 @@ extension TheError {
 		.init(Self.self)
 	}
 
-	public var group: TheErrorGroup {
-		@_transparent @_semantics("constant_evaluable") get {
-			.default
-		}
-		set {
-			Unimplemented
-				.error(
-					message: "Error group assignment is not implemented!"
-				)
-				.with(Self.self, for: "Error type")
-				.asRuntimeWarning(
-					message: "Cannot assign error group without stored property, please define one or avoid mutating it."
-				)
-		}
-	}
+	@_transparent @_semantics("constant_evaluable")
+	public var group: TheErrorGroup { .default }
 
 	/// Terminate process with this error as the cause.
 	///
