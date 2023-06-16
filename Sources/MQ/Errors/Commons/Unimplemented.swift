@@ -93,6 +93,7 @@ public func unimplemented0<R>(
 		Unimplemented
 			.error(
 				message: message,
+				group: group,
 				file: file,
 				line: line
 			)
@@ -126,6 +127,7 @@ public func unimplemented0Throwing<R>(
 			Unimplemented
 			.error(
 				message: message,
+				group: group,
 				file: file,
 				line: line
 			)
@@ -157,6 +159,7 @@ public func unimplemented1<A1, R>(
 		Unimplemented
 			.error(
 				message: message,
+				group: group,
 				file: file,
 				line: line
 			)
@@ -190,6 +193,7 @@ public func unimplemented1Throwing<A1, R>(
 			Unimplemented
 			.error(
 				message: message,
+				group: group,
 				file: file,
 				line: line
 			)
@@ -221,6 +225,7 @@ public func unimplemented2<A1, A2, R>(
 		Unimplemented
 			.error(
 				message: message,
+				group: group,
 				file: file,
 				line: line
 			)
@@ -254,6 +259,7 @@ public func unimplemented2Throwing<A1, A2, R>(
 			Unimplemented
 			.error(
 				message: message,
+				group: group,
 				file: file,
 				line: line
 			)
@@ -285,6 +291,7 @@ public func unimplemented3<A1, A2, A3, R>(
 		Unimplemented
 			.error(
 				message: message,
+				group: group,
 				file: file,
 				line: line
 			)
@@ -318,6 +325,7 @@ public func unimplemented3Throwing<A1, A2, A3, R>(
 			Unimplemented
 			.error(
 				message: message,
+				group: group,
 				file: file,
 				line: line
 			)
@@ -349,6 +357,7 @@ public func unimplemented4<A1, A2, A3, A4, R>(
 		Unimplemented
 			.error(
 				message: message,
+				group: group,
 				file: file,
 				line: line
 			)
@@ -382,6 +391,7 @@ public func unimplemented4Throwing<A1, A2, A3, A4, R>(
 			Unimplemented
 			.error(
 				message: message,
+				group: group,
 				file: file,
 				line: line
 			)
@@ -413,6 +423,7 @@ public func unimplemented5<A1, A2, A3, A4, A5, R>(
 		Unimplemented
 			.error(
 				message: message,
+				group: group,
 				file: file,
 				line: line
 			)
@@ -446,6 +457,7 @@ public func unimplemented5Throwing<A1, A2, A3, A4, A5, R>(
 			Unimplemented
 			.error(
 				message: message,
+				group: group,
 				file: file,
 				line: line
 			)
@@ -477,6 +489,7 @@ public func unimplemented6<A1, A2, A3, A4, A5, A6, R>(
 		Unimplemented
 			.error(
 				message: message,
+				group: group,
 				file: file,
 				line: line
 			)
@@ -510,6 +523,7 @@ public func unimplemented6Throwing<A1, A2, A3, A4, A5, A6, R>(
 			Unimplemented
 			.error(
 				message: message,
+				group: group,
 				file: file,
 				line: line
 			)
@@ -541,6 +555,7 @@ public func unimplemented7<A1, A2, A3, A4, A5, A6, A7, R>(
 		Unimplemented
 			.error(
 				message: message,
+				group: group,
 				file: file,
 				line: line
 			)
@@ -574,6 +589,7 @@ public func unimplemented7Throwing<A1, A2, A3, A4, A5, A6, A7, R>(
 			Unimplemented
 			.error(
 				message: message,
+				group: group,
 				file: file,
 				line: line
 			)
@@ -605,6 +621,7 @@ public func unimplemented8<A1, A2, A3, A4, A5, A6, A7, A8, R>(
 		Unimplemented
 			.error(
 				message: message,
+				group: group,
 				file: file,
 				line: line
 			)
@@ -638,6 +655,7 @@ public func unimplemented8Throwing<A1, A2, A3, A4, A5, A6, A7, A8, R>(
 			Unimplemented
 			.error(
 				message: message,
+				group: group,
 				file: file,
 				line: line
 			)
