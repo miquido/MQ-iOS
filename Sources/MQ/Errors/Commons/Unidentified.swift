@@ -12,8 +12,8 @@ public struct Unidentified: TheError {
 	/// - Parameters:
 	///   - message: Message associated with this error.
 	///   Default value is "Unidentified".
-	///   - displayableMessage: Message which can be displayed
-	///   to the end user. Default value is based on ``TheErrorDisplayableMessages``.
+	///   - group: ``TheErrorGroup`` associated with this error instance.
+	///   Default value is ``TheErrorGroup.default``.
 	///   - underlyingError: Underlying, unrecognized error.
 	///   - file: Source code file identifier.
 	///   Filled automatically based on compile time constants.
@@ -22,7 +22,7 @@ public struct Unidentified: TheError {
 	/// - Returns: New instance of ``Unidentified`` error with given context.
 	public static func error(
 		message: StaticString = "Unidentified",
-		displayableMessage: DisplayableString = TheErrorDisplayableMessages.message(for: Self.self),
+		group: TheErrorGroup = .default,
 		underlyingError: Error,
 		file: StaticString = #fileID,
 		line: UInt = #line
@@ -42,15 +42,15 @@ public struct Unidentified: TheError {
 					file: file,
 					line: line
 				),
-			displayableString: displayableMessage,
+			group: group,
 			underlyingError: (underlyingError as? Unidentified)?.underlyingError ?? underlyingError
 		)
 	}
 
 	/// Source code context of this error.
 	public var context: SourceCodeContext
-	/// String representation displayable to the end user.
-	public var displayableString: DisplayableString
+	/// Error group associated with this error instance.
+	public var group: TheErrorGroup
 	/// Underlying, unrecognized error if any.
 	public var underlyingError: Error
 }
@@ -64,8 +64,8 @@ extension Error {
 	/// - Parameters:
 	///   - message: Message associated with this error conversion.
 	///   Default value is "Unidentified".
-	///   - displayableMessage: Message which can be displayed
-	///   to the end user. Default is "Unidentified error".
+	///   - group: ``TheErrorGroup`` associated with this error instance.
+	///   Default value is ``TheErrorGroup.default``.
 	///   - file: Source code file identifier.
 	///   Filled automatically based on compile time constants.
 	///   - line: Line in given source code file.
@@ -73,13 +73,13 @@ extension Error {
 	/// - Returns: New instance of ``Unidentified`` error with given context.
 	public func asUnidentified(
 		message: StaticString = "Unidentified",
-		displayableMessage: DisplayableString = TheErrorDisplayableMessages.message(for: Unidentified.self),
+		group: TheErrorGroup = .default,
 		file: StaticString = #fileID,
 		line: UInt = #line
 	) -> Unidentified {
 		.error(
 			message: message,
-			displayableMessage: displayableMessage,
+			group: group,
 			underlyingError: self,
 			file: file,
 			line: line

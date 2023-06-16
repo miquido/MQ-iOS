@@ -13,13 +13,14 @@ public protocol TheError: Error, CustomStringConvertible, CustomDebugStringConve
 	/// Group assigned to this error type.
 	///
 	/// Access ``TheErrorGroup`` associated
-	/// with this error. It can be used
+	/// with this error instance. It can be used
 	/// to quickly identify error domains or
 	/// group errors by any other meaning.
+	/// Default implementation does not support mutations,
+	/// if you need to mutate it please define stored
+	/// property in your error instance.
 	/// Default group for all errors is ``TheErrorGroup.default``.
-	/// You can assign any group to an error
-	/// by overriding ``TheError.group`` implementation.
-	static var group: TheErrorGroup { get }
+	var group: TheErrorGroup { get set }
 
 	/// Source code metadata context for this error.
 	/// It is used to derive default implementations
@@ -68,7 +69,7 @@ public protocol TheError: Error, CustomStringConvertible, CustomDebugStringConve
 extension TheError /* CustomStringConvertible */ {
 
 	public var description: String {
-		var description: String = "⎡\(Self.self)"
+		var description: String = "⎡\(Self.self)\(self.group)"
 		for meta: SourceCodeMeta in self.context.contextStack {
 			let metaDescription: String = meta.description.replacingOccurrences(of: "\n", with: "\n⎜")
 			description.append("\n⎜\(metaDescription)")
@@ -85,7 +86,7 @@ extension TheError /* CustomDebugStringConvertible */ {
 		let propertiesDescriptionEmpty: Bool = propertiesDescription.isEmpty
 
 		return """
-		⎡ ⚠️ \(Self.self)
+		⎡ ⚠️ \(Self.self)\(self.group)
 		⎜ 📺 \(self.displayableStringPrettyDescription)\(propertiesDescriptionEmpty ? "" : "\n⎜ 📦 Properties: \(propertiesDescription)")
 		⎜ 🧵 Context: \(self.context.prettyDescription)
 		⎣ ⚠️ \(Self.self)
@@ -109,7 +110,8 @@ extension TheError /* CustomDebugStringConvertible */ {
 				if let label: String = child.label {
 					// `context` is part of debug description anyway
 					// `displayableString` has own section in description
-					guard label != "context", label != "displayableString"
+					// `group` is part of debug description anyway
+					guard label != "context", label != "displayableString", label != "group"
 					else { return }  // skip property
 					formattedLabel = "\n⎜ 📎 \(label): "
 				}
@@ -135,8 +137,9 @@ extension TheError /* CustomDebugStringConvertible */ {
 // swift-format-ignore: AllPublicDeclarationsHaveDocumentation
 extension TheError /* DisplayableWithString */ {
 
+	@_transparent
 	public var displayableString: DisplayableString {
-		TheErrorDisplayableMessages.message(for: Self.self)
+		TheErrorDisplayableMessages.message(for: self)
 	}
 }
 
@@ -161,6 +164,7 @@ extension TheError {
 		file: StaticString = #fileID,
 		line: UInt = #line
 	) {
+		self.group = .merging(self.group, other.group)
 		self.context = .merging(self.context, other.context)
 	}
 
@@ -197,10 +201,6 @@ extension TheError {
 // swift-format-ignore: AllPublicDeclarationsHaveDocumentation
 extension TheError {
 
-	public static var group: TheErrorGroup {
-		.default
-	}
-
 	public var localizedDescription: String {
 		self.displayableString.resolved
 	}
@@ -231,13 +231,21 @@ extension TheError {
 		.init(Self.self)
 	}
 
-	/// Group assigned to this error.
-	///
-	/// Access ``TheErrorGroup`` associated
-	/// with this error. It can be used
-	/// to quickly identify error domains or
-	/// group errors by any other meaning.
-	public var group: TheErrorGroup { Self.group }
+	public var group: TheErrorGroup {
+		@_transparent @_semantics("constant_evaluable") get {
+			.default
+		}
+		set {
+			Unimplemented
+				.error(
+					message: "Error group assignment is not implemented!"
+				)
+				.with(Self.self, for: "Error type")
+				.asRuntimeWarning(
+					message: "Cannot assign error group without stored property, please define one or avoid mutating it."
+				)
+		}
+	}
 
 	/// Terminate process with this error as the cause.
 	///

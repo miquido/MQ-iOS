@@ -35,14 +35,14 @@ public enum TheErrorDisplayableMessages {
 	/// - Parameter errorType: Type of the error used to request
 	/// displayable message.
 	@Sendable public static func message<ErrorType>(
-		for errorType: ErrorType.Type
+		for error: ErrorType
 	) -> DisplayableString
 	where ErrorType: TheError {
 		self.storage.access { (messages: inout Dictionary<AnyHashable, DisplayableString>) -> DisplayableString in
 			if let message: DisplayableString = messages[ErrorType.id] {
 				return message
 			}
-			else if let firstMatchingGroupIdentifier: TheErrorGroup.Identifier = ErrorType.group.firstMatchingIdentifier(
+			else if let firstMatchingGroupIdentifier: TheErrorGroup.Identifier = error.group.firstMatchingIdentifier(
 				messages.keys.contains(_:)
 			),
 				let message: DisplayableString = messages[firstMatchingGroupIdentifier]

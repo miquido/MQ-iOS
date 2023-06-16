@@ -53,8 +53,8 @@ public struct StringEncodingFailure: TheError {
 	///   This value will not be collected in release builds.
 	///   - message: Message associated with this error.
 	///   Default value is "StringEncodingFailure".
-	///   - displayableMessage: Custom message that could be
-	///   displayed to the end user. Default value is based on ``TheErrorDisplayableMessages``.
+	///   - group: ``TheErrorGroup`` associated with this error instance.
+	///   Default value is ``TheErrorGroup.default``.
 	///   - file: Source code file identifier.
 	///   Filled automatically based on compile time constants.
 	///   - line: Line in given source code file.
@@ -64,7 +64,7 @@ public struct StringEncodingFailure: TheError {
 		for string: String,
 		encoding: String.Encoding,
 		message: StaticString = "StringEncodingFailure",
-		displayableMessage: DisplayableString = TheErrorDisplayableMessages.message(for: Self.self),
+		group: TheErrorGroup = .default,
 		file: StaticString = #fileID,
 		line: UInt = #line
 	) -> Self {
@@ -77,14 +77,14 @@ public struct StringEncodingFailure: TheError {
 				)
 				.with(string, for: "string")
 				.with(encoding, for: "encoding"),
-			displayableString: displayableMessage
+			group: group
 		)
 	}
 
 	/// Source code context of this error.
 	public var context: SourceCodeContext
-	/// String representation displayable to the end user.
-	public var displayableString: DisplayableString
+	/// Error group associated with this error instance.
+	public var group: TheErrorGroup
 }
 
 /// ``TheError`` for string decoding failure.
@@ -102,8 +102,8 @@ public struct StringDecodingFailure: TheError {
 	///   This value will not be collected in release builds.
 	///   - message: Message associated with this error.
 	///   Default value is "StringDecodingFailure".
-	///   - displayableMessage: Custom message that could be
-	///   displayed to the end user. Default value is based on ``TheErrorDisplayableMessages``.
+	///   - group: ``TheErrorGroup`` associated with this error instance.
+	///   Default value is ``TheErrorGroup.default``.
 	///   - file: Source code file identifier.
 	///   Filled automatically based on compile time constants.
 	///   - line: Line in given source code file.
@@ -113,7 +113,7 @@ public struct StringDecodingFailure: TheError {
 		for data: Data,
 		encoding: String.Encoding,
 		message: StaticString = "StringDecodingFailure",
-		displayableMessage: DisplayableString = TheErrorDisplayableMessages.message(for: Self.self),
+		group: TheErrorGroup = .default,
 		file: StaticString = #fileID,
 		line: UInt = #line
 	) -> Self {
@@ -126,13 +126,13 @@ public struct StringDecodingFailure: TheError {
 				)
 				.with(data.map { String($0, radix: 16) }, for: "data")
 				.with(encoding, for: "encoding"),
-			displayableString: displayableMessage
+			group: group
 		)
 	}
 
 	/// Source code context of this error.
 	public var context: SourceCodeContext
-	/// String representation displayable to the end user.
-	public var displayableString: DisplayableString
+	/// Error group associated with this error instance.
+	public var group: TheErrorGroup
 }
 

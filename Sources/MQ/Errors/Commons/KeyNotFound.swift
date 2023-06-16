@@ -6,8 +6,8 @@ public struct KeyNotFound<Key>: TheError {
 	/// - Parameters:
 	///   - message: Message associated with this error.
 	///   Default value is "KeyNotFound".
-	///   - displayableMessage: Message which can be displayed
-	///   to the end user. Default value is based on ``TheErrorDisplayableMessages``.
+	///   - group: ``TheErrorGroup`` associated with this error instance.
+	///   Default value is ``TheErrorGroup.default``.
 	///   - key: Missing key.
 	///   - file: Source code file identifier.
 	///   Filled automatically based on compile time constants.
@@ -16,7 +16,7 @@ public struct KeyNotFound<Key>: TheError {
 	/// - Returns: New instance of ``KeyNotFound`` error with given context.
 	public static func error(
 		message: StaticString,
-		displayableMessage: DisplayableString = TheErrorDisplayableMessages.message(for: Self.self),
+		group: TheErrorGroup = .default,
 		key: Key,
 		file: StaticString = #fileID,
 		line: UInt = #line
@@ -27,15 +27,15 @@ public struct KeyNotFound<Key>: TheError {
 				file: file,
 				line: line
 			),
-			displayableString: displayableMessage,
+			group: group,
 			key: key
 		)
 	}
 
 	/// Source code context of this error.
 	public var context: SourceCodeContext
-	/// String representation displayable to the end user.
-	public var displayableString: DisplayableString
+	/// Error group associated with this error instance.
+	public var group: TheErrorGroup
 	/// Missing key.
 	public let key: Key
 }

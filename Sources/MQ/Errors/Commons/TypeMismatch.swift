@@ -6,8 +6,8 @@ public struct TypeMismatch: TheError {
 	/// - Parameters:
 	///   - message: Message associated with this error.
 	///   Default value is "TypeMismatch".
-	///   - displayableMessage: Message which can be displayed
-	///   to the end user. Default value is based on ``TheErrorDisplayableMessages``.
+	///   - group: ``TheErrorGroup`` associated with this error instance.
+	///   Default value is ``TheErrorGroup.default``.
 	///   - file: Source code file identifier.
 	///   Filled automatically based on compile time constants.
 	///   - line: Line in given source code file.
@@ -15,7 +15,7 @@ public struct TypeMismatch: TheError {
 	/// - Returns: New instance of ``TypeMismatch`` error with given context.
 	public static func error(
 		message: StaticString,
-		displayableMessage: DisplayableString = TheErrorDisplayableMessages.message(for: Self.self),
+		group: TheErrorGroup = .default,
 		type: Any.Type,
 		file: StaticString = #fileID,
 		line: UInt = #line
@@ -26,15 +26,15 @@ public struct TypeMismatch: TheError {
 				file: file,
 				line: line
 			),
-			displayableString: displayableMessage,
+			group: group,
 			type: type
 		)
 	}
 
 	/// Source code context of this error.
 	public var context: SourceCodeContext
-	/// String representation displayable to the end user.
-	public var displayableString: DisplayableString
+	/// Error group associated with this error instance.
+	public var group: TheErrorGroup
 	/// Type that was required.
 	public let type: Any.Type
 }
