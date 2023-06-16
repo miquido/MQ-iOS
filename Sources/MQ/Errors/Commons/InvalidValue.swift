@@ -10,8 +10,8 @@ public struct InvalidValue: TheError {
 	/// - Parameters:
 	///   - message: Message associated with this error.
 	///   Should descrive validation rule which was not passing.
-	///   - displayableMessage: Message which can be displayed
-	///   to the end user. Default value is based on ``TheErrorDisplayableMessages``.
+	///   - group: ``TheErrorGroup`` associated with this error instance.
+	///   Default value is ``TheErrorGroup.default``.
 	///   - value: Value which was invalid.
 	///   - file: Source code file identifier.
 	///   Filled automatically based on compile time constants.
@@ -20,7 +20,7 @@ public struct InvalidValue: TheError {
 	/// - Returns: New instance of ``InvalidValue`` error with given context.
 	public static func error<Value>(
 		message: StaticString,
-		displayableMessage: DisplayableString = TheErrorDisplayableMessages.message(for: Self.self),
+		group: TheErrorGroup = .default,
 		value: Value,
 		file: StaticString = #fileID,
 		line: UInt = #line
@@ -31,15 +31,15 @@ public struct InvalidValue: TheError {
 				file: file,
 				line: line
 			),
-			displayableString: displayableMessage,
+			group: group,
 			value: value
 		)
 	}
 
 	/// Source code context of this error.
 	public var context: SourceCodeContext
-	/// String representation displayable to the end user.
-	public var displayableString: DisplayableString
+	/// Error group associated with this error instance.
+	public var group: TheErrorGroup
 	/// Value which was recognized as invalid.
 	public let value: Any
 }

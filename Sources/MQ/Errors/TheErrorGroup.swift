@@ -10,7 +10,38 @@
 /// messages from ``TheErrorDisplayableMessages``.
 public struct TheErrorGroup {
 
-	private var identifiers: Array<Identifier>
+	private let identifiers: Array<Identifier>
+}
+
+extension TheErrorGroup {
+
+	internal static func merging(
+		_ head: TheErrorGroup,
+		_ mid: TheErrorGroup,
+		_ tail: TheErrorGroup...
+	) -> Self {
+		.merging([head, mid] + tail)
+	}
+
+	internal static func merging(
+		_ groups: Array<TheErrorGroup>
+	) -> Self {
+		var added: Set<TheErrorGroup.Identifier> = .init()
+		var result: Array<TheErrorGroup.Identifier> = .init()
+		for identifier in groups.flatMap(\.identifiers) {
+			if added.contains(identifier) {
+				continue // skip duplicates
+			}
+			else {
+				result.append(identifier)
+				added.insert(identifier)
+			}
+		}
+
+		return .init(
+			identifiers: result
+		)
+	}
 }
 
 extension TheErrorGroup {
@@ -18,7 +49,7 @@ extension TheErrorGroup {
 	/// Identifier of error group.
 	public struct Identifier {
 
-		private let identifier: StaticString
+		fileprivate let identifier: StaticString
 	}
 }
 
@@ -85,6 +116,38 @@ extension TheErrorGroup {
 }
 
 // swift-format-ignore: AllPublicDeclarationsHaveDocumentation
+extension TheErrorGroup: CustomStringConvertible {
+
+	public var description: String {
+		self.identifiers.reduce(into: "∙") { (result: inout String, element: Identifier) in
+			result.append("\(element.identifier)∙")
+		}
+	}
+}
+
+// swift-format-ignore: AllPublicDeclarationsHaveDocumentation
+extension TheErrorGroup: CustomDebugStringConvertible {
+
+	public var debugDescription: String {
+		self.description
+	}
+}
+
+// swift-format-ignore: AllPublicDeclarationsHaveDocumentation
+extension TheErrorGroup: CustomLeafReflectable {
+
+	public var customMirror: Mirror {
+		.init(
+			self,
+			children: [
+				"identifiers": self.identifiers.map(\.identifier)
+			],
+			displayStyle: .tuple
+		)
+	}
+}
+
+// swift-format-ignore: AllPublicDeclarationsHaveDocumentation
 extension TheErrorGroup {
 
 	public static func ~= (
@@ -92,5 +155,15 @@ extension TheErrorGroup {
 		_ rhs: Error
 	) -> Bool {
 		((rhs as? TheError)?.group).map(lhs.isSubset(of:)) ?? false
+	}
+}
+
+extension TheErrorGroup.Identifier {
+
+	public static func ~= (
+		_ lhs: TheErrorGroup.Identifier,
+		_ rhs: Error
+	) -> Bool {
+		((rhs as? TheError)?.group)?.identifiers.contains(lhs) ?? false
 	}
 }

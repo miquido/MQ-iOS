@@ -6,8 +6,8 @@ public struct ValueNotFound: TheError {
 	/// - Parameters:
 	///   - message: Message associated with this error.
 	///   Default value is "ValueNotFound".
-	///   - displayableMessage: Message which can be displayed
-	///   to the end user. Default value is based on ``TheErrorDisplayableMessages``.
+	///   - group: ``TheErrorGroup`` associated with this error instance.
+	///   Default value is ``TheErrorGroup.default``.
 	///   - file: Source code file identifier.
 	///   Filled automatically based on compile time constants.
 	///   - line: Line in given source code file.
@@ -15,7 +15,7 @@ public struct ValueNotFound: TheError {
 	/// - Returns: New instance of ``ValueNotFound`` error with given context.
 	public static func error(
 		message: StaticString,
-		displayableMessage: DisplayableString = TheErrorDisplayableMessages.message(for: Self.self),
+		group: TheErrorGroup = .default,
 		type: Any.Type,
 		file: StaticString = #fileID,
 		line: UInt = #line
@@ -26,15 +26,15 @@ public struct ValueNotFound: TheError {
 				file: file,
 				line: line
 			),
-			displayableString: displayableMessage,
+			group: group,
 			type: type
 		)
 	}
 
 	/// Source code context of this error.
 	public var context: SourceCodeContext
-	/// String representation displayable to the end user.
-	public var displayableString: DisplayableString
+	/// Error group associated with this error instance.
+	public var group: TheErrorGroup
 	/// Type of missing value.
 	public let type: Any.Type
 }

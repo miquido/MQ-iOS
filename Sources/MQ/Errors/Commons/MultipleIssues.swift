@@ -23,8 +23,8 @@ public struct MultipleIssues: TheError {
 	/// - Returns: New instance of ``MultipleIssues`` error with given context.
 	public static func error(
 		message: StaticString = "MultipleIssues",
-		displayableMessageExtraction: @escaping (Array<TheError>) -> DisplayableString = { _ in
-			TheErrorDisplayableMessages.message(for: Self.self)
+		displayableMessageExtraction: @escaping (Self) -> DisplayableString = { (self: Self) -> DisplayableString in
+			TheErrorDisplayableMessages.message(for: self)
 		},
 		collecting errors: TheError...,
 		file: StaticString = #fileID,
@@ -36,6 +36,7 @@ public struct MultipleIssues: TheError {
 				file: file,
 				line: line
 			),
+			group: .merging(errors.map(\.group)),
 			errors: errors,
 			displayableMessageExtraction: displayableMessageExtraction
 		)
@@ -43,12 +44,15 @@ public struct MultipleIssues: TheError {
 
 	/// Source code context of this error.
 	public var context: SourceCodeContext
+	/// Error group associated with this error instance.
+	public var group: TheErrorGroup
+
 	public var errors: Array<TheError>
 	public var displayableString: DisplayableString {
-		self.displayableMessageExtraction(self.errors)
+		self.displayableMessageExtraction(self)
 	}
 
-	private let displayableMessageExtraction: (Array<TheError>) -> DisplayableString
+	private let displayableMessageExtraction: (Self) -> DisplayableString
 }
 
 extension MultipleIssues: TheErrorCollection {
@@ -56,6 +60,7 @@ extension MultipleIssues: TheErrorCollection {
 	public mutating func add(
 		_ other: TheError
 	) {
+		self.group = .merging(self.group, other.group)
 		self.errors.append(other)
 	}
 }

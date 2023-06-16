@@ -8,6 +8,8 @@ public struct Unimplemented: TheError {
 	/// - Parameters:
 	///   - message: Message associated with this error.
 	///   Default value is based on ``TheErrorDisplayableMessages``.
+	///   - group: ``TheErrorGroup`` associated with this error instance.
+	///   Default value is ``TheErrorGroup.default``.
 	///   - file: Source code file identifier.
 	///   Filled automatically based on compile time constants.
 	///   - line: Line in given source code file.
@@ -15,7 +17,7 @@ public struct Unimplemented: TheError {
 	/// - Returns: New instance of ``Unimplemented`` error with given context.
 	public static func error(
 		message: StaticString = "Unimplemented",
-		displayableMessage: DisplayableString = TheErrorDisplayableMessages.message(for: Self.self),
+		group: TheErrorGroup = .default,
 		file: StaticString = #fileID,
 		line: UInt = #line
 	) -> Self {
@@ -25,14 +27,14 @@ public struct Unimplemented: TheError {
 				file: file,
 				line: line
 			),
-			displayableString: displayableMessage
+			group: group
 		)
 	}
 
 	/// Source code context of this error.
 	public var context: SourceCodeContext
-	/// String representation displayable to the end user.
-	public var displayableString: DisplayableString
+	/// Error group associated with this error instance.
+	public var group: TheErrorGroup
 }
 
 /// Convenient placeholder for unimplemented part of code.
@@ -43,6 +45,8 @@ public struct Unimplemented: TheError {
 /// - Parameters:
 ///   - message: Message associated with this error.
 ///   Default value is "Unimplemented".
+///   - group: ``TheErrorGroup`` associated with this error instance.
+///   Default value is ``TheErrorGroup.default``.
 ///   - file: Source code file identifier.
 ///   Filled automatically based on compile time constants.
 ///   - line: Line in given source code file.
@@ -50,12 +54,14 @@ public struct Unimplemented: TheError {
 /// - Returns: Never, function terminates the process.
 public func unimplemented(
 	_ message: StaticString = "Unimplemented",
+	group: TheErrorGroup = .default,
 	file: StaticString = #fileID,
 	line: UInt = #line
 ) -> Never {
 	Unimplemented
 		.error(
 			message: message,
+			group: group,
 			file: file,
 			line: line
 		)
@@ -70,6 +76,8 @@ public func unimplemented(
 /// - Parameters:
 ///   - message: Message associated with this error.
 ///   Default value is "Unimplemented".
+///   - group: ``TheErrorGroup`` associated with this error instance.
+///   Default value is ``TheErrorGroup.default``.
 ///   - file: Source code file identifier.
 ///   Filled automatically based on compile time constants.
 ///   - line: Line in given source code file.
@@ -77,6 +85,7 @@ public func unimplemented(
 /// - Returns: Placeholder function which terminates the process with ``Unimplemented`` error when executed.
 public func unimplemented0<R>(
 	_ message: StaticString = "Unimplemented",
+	group: TheErrorGroup = .default,
 	file: StaticString = #fileID,
 	line: UInt = #line
 ) -> @Sendable () -> R {
@@ -99,6 +108,8 @@ public func unimplemented0<R>(
 /// - Parameters:
 ///   - message: Message associated with this error.
 ///   Default value is "Unimplemented".
+///   - group: ``TheErrorGroup`` associated with this error instance.
+///   Default value is ``TheErrorGroup.default``.
 ///   - file: Source code file identifier.
 ///   Filled automatically based on compile time constants.
 ///   - line: Line in given source code file.
@@ -106,6 +117,7 @@ public func unimplemented0<R>(
 /// - Returns: Function throwing ``Unimplemented`` error when executed.
 public func unimplemented0Throwing<R>(
 	_ message: StaticString = "Unimplemented",
+	group: TheErrorGroup = .default,
 	file: StaticString = #fileID,
 	line: UInt = #line
 ) -> @Sendable () throws -> R {
@@ -128,6 +140,8 @@ public func unimplemented0Throwing<R>(
 /// - Parameters:
 ///   - message: Message associated with this error.
 ///   Default value is "Unimplemented".
+///   - group: ``TheErrorGroup`` associated with this error instance.
+///   Default value is ``TheErrorGroup.default``.
 ///   - file: Source code file identifier.
 ///   Filled automatically based on compile time constants.
 ///   - line: Line in given source code file.
@@ -135,6 +149,7 @@ public func unimplemented0Throwing<R>(
 /// - Returns: Placeholder function which terminates the process with ``Unimplemented`` error when executed.
 public func unimplemented1<A1, R>(
 	_ message: StaticString = "Unimplemented",
+	group: TheErrorGroup = .default,
 	file: StaticString = #fileID,
 	line: UInt = #line
 ) -> @Sendable (A1) -> R {
@@ -157,6 +172,8 @@ public func unimplemented1<A1, R>(
 /// - Parameters:
 ///   - message: Message associated with this error.
 ///   Default value is "Unimplemented".
+///   - group: ``TheErrorGroup`` associated with this error instance.
+///   Default value is ``TheErrorGroup.default``.
 ///   - file: Source code file identifier.
 ///   Filled automatically based on compile time constants.
 ///   - line: Line in given source code file.
@@ -164,6 +181,7 @@ public func unimplemented1<A1, R>(
 /// - Returns: Function throwing ``Unimplemented`` error when executed.
 public func unimplemented1Throwing<A1, R>(
 	_ message: StaticString = "Unimplemented",
+	group: TheErrorGroup = .default,
 	file: StaticString = #fileID,
 	line: UInt = #line
 ) -> @Sendable (A1) throws -> R {
@@ -186,6 +204,8 @@ public func unimplemented1Throwing<A1, R>(
 /// - Parameters:
 ///   - message: Message associated with this error.
 ///   Default value is "Unimplemented".
+///   - group: ``TheErrorGroup`` associated with this error instance.
+///   Default value is ``TheErrorGroup.default``.
 ///   - file: Source code file identifier.
 ///   Filled automatically based on compile time constants.
 ///   - line: Line in given source code file.
@@ -193,6 +213,7 @@ public func unimplemented1Throwing<A1, R>(
 /// - Returns: Placeholder function which terminates the process with ``Unimplemented`` error when executed.
 public func unimplemented2<A1, A2, R>(
 	_ message: StaticString = "Unimplemented",
+	group: TheErrorGroup = .default,
 	file: StaticString = #fileID,
 	line: UInt = #line
 ) -> @Sendable (A1, A2) -> R {
@@ -215,6 +236,8 @@ public func unimplemented2<A1, A2, R>(
 /// - Parameters:
 ///   - message: Message associated with this error.
 ///   Default value is "Unimplemented".
+///   - group: ``TheErrorGroup`` associated with this error instance.
+///   Default value is ``TheErrorGroup.default``.   
 ///   - file: Source code file identifier.
 ///   Filled automatically based on compile time constants.
 ///   - line: Line in given source code file.
@@ -222,6 +245,7 @@ public func unimplemented2<A1, A2, R>(
 /// - Returns: Function throwing ``Unimplemented`` error when executed.
 public func unimplemented2Throwing<A1, A2, R>(
 	_ message: StaticString = "Unimplemented",
+	group: TheErrorGroup = .default,
 	file: StaticString = #fileID,
 	line: UInt = #line
 ) -> @Sendable (A1, A2) throws -> R {
@@ -244,6 +268,8 @@ public func unimplemented2Throwing<A1, A2, R>(
 /// - Parameters:
 ///   - message: Message associated with this error.
 ///   Default value is "Unimplemented".
+///   - group: ``TheErrorGroup`` associated with this error instance.
+///   Default value is ``TheErrorGroup.default``.
 ///   - file: Source code file identifier.
 ///   Filled automatically based on compile time constants.
 ///   - line: Line in given source code file.
@@ -251,6 +277,7 @@ public func unimplemented2Throwing<A1, A2, R>(
 /// - Returns: Placeholder function which terminates the process with ``Unimplemented`` error when executed.
 public func unimplemented3<A1, A2, A3, R>(
 	_ message: StaticString = "Unimplemented",
+	group: TheErrorGroup = .default,
 	file: StaticString = #fileID,
 	line: UInt = #line
 ) -> @Sendable (A1, A2, A3) -> R {
@@ -273,6 +300,8 @@ public func unimplemented3<A1, A2, A3, R>(
 /// - Parameters:
 ///   - message: Message associated with this error.
 ///   Default value is "Unimplemented".
+///   - group: ``TheErrorGroup`` associated with this error instance.
+///   Default value is ``TheErrorGroup.default``.
 ///   - file: Source code file identifier.
 ///   Filled automatically based on compile time constants.
 ///   - line: Line in given source code file.
@@ -280,6 +309,7 @@ public func unimplemented3<A1, A2, A3, R>(
 /// - Returns: Function throwing ``Unimplemented`` error when executed.
 public func unimplemented3Throwing<A1, A2, A3, R>(
 	_ message: StaticString = "Unimplemented",
+	group: TheErrorGroup = .default,
 	file: StaticString = #fileID,
 	line: UInt = #line
 ) -> @Sendable (A1, A2, A3) throws -> R {
@@ -302,6 +332,8 @@ public func unimplemented3Throwing<A1, A2, A3, R>(
 /// - Parameters:
 ///   - message: Message associated with this error.
 ///   Default value is "Unimplemented".
+///   - group: ``TheErrorGroup`` associated with this error instance.
+///   Default value is ``TheErrorGroup.default``.
 ///   - file: Source code file identifier.
 ///   Filled automatically based on compile time constants.
 ///   - line: Line in given source code file.
@@ -309,6 +341,7 @@ public func unimplemented3Throwing<A1, A2, A3, R>(
 /// - Returns: Placeholder function which terminates the process with ``Unimplemented`` error when executed.
 public func unimplemented4<A1, A2, A3, A4, R>(
 	_ message: StaticString = "Unimplemented",
+	group: TheErrorGroup = .default,
 	file: StaticString = #fileID,
 	line: UInt = #line
 ) -> @Sendable (A1, A2, A3, A4) -> R {
@@ -331,6 +364,8 @@ public func unimplemented4<A1, A2, A3, A4, R>(
 /// - Parameters:
 ///   - message: Message associated with this error.
 ///   Default value is "Unimplemented".
+///   - group: ``TheErrorGroup`` associated with this error instance.
+///   Default value is ``TheErrorGroup.default``.
 ///   - file: Source code file identifier.
 ///   Filled automatically based on compile time constants.
 ///   - line: Line in given source code file.
@@ -338,6 +373,7 @@ public func unimplemented4<A1, A2, A3, A4, R>(
 /// - Returns: Function throwing ``Unimplemented`` error when executed.
 public func unimplemented4Throwing<A1, A2, A3, A4, R>(
 	_ message: StaticString = "Unimplemented",
+	group: TheErrorGroup = .default,
 	file: StaticString = #fileID,
 	line: UInt = #line
 ) -> @Sendable (A1, A2, A3, A4) throws -> R {
@@ -360,6 +396,8 @@ public func unimplemented4Throwing<A1, A2, A3, A4, R>(
 /// - Parameters:
 ///   - message: Message associated with this error.
 ///   Default value is "Unimplemented".
+///   - group: ``TheErrorGroup`` associated with this error instance.
+///   Default value is ``TheErrorGroup.default``.
 ///   - file: Source code file identifier.
 ///   Filled automatically based on compile time constants.
 ///   - line: Line in given source code file.
@@ -367,6 +405,7 @@ public func unimplemented4Throwing<A1, A2, A3, A4, R>(
 /// - Returns: Placeholder function which terminates the process with ``Unimplemented`` error when executed.
 public func unimplemented5<A1, A2, A3, A4, A5, R>(
 	_ message: StaticString = "Unimplemented",
+	group: TheErrorGroup = .default,
 	file: StaticString = #fileID,
 	line: UInt = #line
 ) -> @Sendable (A1, A2, A3, A4, A5) -> R {
@@ -389,6 +428,8 @@ public func unimplemented5<A1, A2, A3, A4, A5, R>(
 /// - Parameters:
 ///   - message: Message associated with this error.
 ///   Default value is "Unimplemented".
+///   - group: ``TheErrorGroup`` associated with this error instance.
+///   Default value is ``TheErrorGroup.default``.
 ///   - file: Source code file identifier.
 ///   Filled automatically based on compile time constants.
 ///   - line: Line in given source code file.
@@ -396,6 +437,7 @@ public func unimplemented5<A1, A2, A3, A4, A5, R>(
 /// - Returns: Function throwing ``Unimplemented`` error when executed.
 public func unimplemented5Throwing<A1, A2, A3, A4, A5, R>(
 	_ message: StaticString = "Unimplemented",
+	group: TheErrorGroup = .default,
 	file: StaticString = #fileID,
 	line: UInt = #line
 ) -> @Sendable (A1, A2, A3, A4, A5) throws -> R {
@@ -418,6 +460,8 @@ public func unimplemented5Throwing<A1, A2, A3, A4, A5, R>(
 /// - Parameters:
 ///   - message: Message associated with this error.
 ///   Default value is "Unimplemented".
+///   - group: ``TheErrorGroup`` associated with this error instance.
+///   Default value is ``TheErrorGroup.default``.
 ///   - file: Source code file identifier.
 ///   Filled automatically based on compile time constants.
 ///   - line: Line in given source code file.
@@ -425,6 +469,7 @@ public func unimplemented5Throwing<A1, A2, A3, A4, A5, R>(
 /// - Returns: Placeholder function which terminates the process with ``Unimplemented`` error when executed.
 public func unimplemented6<A1, A2, A3, A4, A5, A6, R>(
 	_ message: StaticString = "Unimplemented",
+	group: TheErrorGroup = .default,
 	file: StaticString = #fileID,
 	line: UInt = #line
 ) -> @Sendable (A1, A2, A3, A4, A5, A6) -> R {
@@ -447,6 +492,8 @@ public func unimplemented6<A1, A2, A3, A4, A5, A6, R>(
 /// - Parameters:
 ///   - message: Message associated with this error.
 ///   Default value is "Unimplemented".
+///   - group: ``TheErrorGroup`` associated with this error instance.
+///   Default value is ``TheErrorGroup.default``.
 ///   - file: Source code file identifier.
 ///   Filled automatically based on compile time constants.
 ///   - line: Line in given source code file.
@@ -454,6 +501,7 @@ public func unimplemented6<A1, A2, A3, A4, A5, A6, R>(
 /// - Returns: Function throwing ``Unimplemented`` error when executed.
 public func unimplemented6Throwing<A1, A2, A3, A4, A5, A6, R>(
 	_ message: StaticString = "Unimplemented",
+	group: TheErrorGroup = .default,
 	file: StaticString = #fileID,
 	line: UInt = #line
 ) -> @Sendable (A1, A2, A3, A4, A5, A6) throws -> R {
@@ -476,6 +524,8 @@ public func unimplemented6Throwing<A1, A2, A3, A4, A5, A6, R>(
 /// - Parameters:
 ///   - message: Message associated with this error.
 ///   Default value is "Unimplemented".
+///   - group: ``TheErrorGroup`` associated with this error instance.
+///   Default value is ``TheErrorGroup.default``.
 ///   - file: Source code file identifier.
 ///   Filled automatically based on compile time constants.
 ///   - line: Line in given source code file.
@@ -483,6 +533,7 @@ public func unimplemented6Throwing<A1, A2, A3, A4, A5, A6, R>(
 /// - Returns: Placeholder function which terminates the process with ``Unimplemented`` error when executed.
 public func unimplemented7<A1, A2, A3, A4, A5, A6, A7, R>(
 	_ message: StaticString = "Unimplemented",
+	group: TheErrorGroup = .default,
 	file: StaticString = #fileID,
 	line: UInt = #line
 ) -> @Sendable (A1, A2, A3, A4, A5, A6, A7) -> R {
@@ -505,6 +556,8 @@ public func unimplemented7<A1, A2, A3, A4, A5, A6, A7, R>(
 /// - Parameters:
 ///   - message: Message associated with this error.
 ///   Default value is "Unimplemented".
+///   - group: ``TheErrorGroup`` associated with this error instance.
+///   Default value is ``TheErrorGroup.default``.
 ///   - file: Source code file identifier.
 ///   Filled automatically based on compile time constants.
 ///   - line: Line in given source code file.
@@ -512,6 +565,7 @@ public func unimplemented7<A1, A2, A3, A4, A5, A6, A7, R>(
 /// - Returns: Function throwing ``Unimplemented`` error when executed.
 public func unimplemented7Throwing<A1, A2, A3, A4, A5, A6, A7, R>(
 	_ message: StaticString = "Unimplemented",
+	group: TheErrorGroup = .default,
 	file: StaticString = #fileID,
 	line: UInt = #line
 ) -> @Sendable (A1, A2, A3, A4, A5, A6, A7) throws -> R {
@@ -534,6 +588,8 @@ public func unimplemented7Throwing<A1, A2, A3, A4, A5, A6, A7, R>(
 /// - Parameters:
 ///   - message: Message associated with this error.
 ///   Default value is "Unimplemented".
+///   - group: ``TheErrorGroup`` associated with this error instance.
+///   Default value is ``TheErrorGroup.default``.
 ///   - file: Source code file identifier.
 ///   Filled automatically based on compile time constants.
 ///   - line: Line in given source code file.
@@ -541,6 +597,7 @@ public func unimplemented7Throwing<A1, A2, A3, A4, A5, A6, A7, R>(
 /// - Returns: Placeholder function which terminates the process with ``Unimplemented`` error when executed.
 public func unimplemented8<A1, A2, A3, A4, A5, A6, A7, A8, R>(
 	_ message: StaticString = "Unimplemented",
+	group: TheErrorGroup = .default,
 	file: StaticString = #fileID,
 	line: UInt = #line
 ) -> @Sendable (A1, A2, A3, A4, A5, A6, A7, A8) -> R {
@@ -563,6 +620,8 @@ public func unimplemented8<A1, A2, A3, A4, A5, A6, A7, A8, R>(
 /// - Parameters:
 ///   - message: Message associated with this error.
 ///   Default value is "Unimplemented".
+///   - group: ``TheErrorGroup`` associated with this error instance.
+///   Default value is ``TheErrorGroup.default``.   
 ///   - file: Source code file identifier.
 ///   Filled automatically based on compile time constants.
 ///   - line: Line in given source code file.
@@ -570,6 +629,7 @@ public func unimplemented8<A1, A2, A3, A4, A5, A6, A7, A8, R>(
 /// - Returns: Function throwing ``Unimplemented`` error when executed.
 public func unimplemented8Throwing<A1, A2, A3, A4, A5, A6, A7, A8, R>(
 	_ message: StaticString = "Unimplemented",
+	group: TheErrorGroup = .default,
 	file: StaticString = #fileID,
 	line: UInt = #line
 ) -> @Sendable (A1, A2, A3, A4, A5, A6, A7, A8) throws -> R {
