@@ -12,7 +12,8 @@ extension String {
 			self = string
 		}
 		else {
-			throw StringDecodingFailure
+			throw
+				StringDecodingFailure
 				.error(
 					for: data,
 					encoding: encoding
@@ -29,7 +30,8 @@ extension String {
 			return data
 		}
 		else {
-			throw StringEncodingFailure
+			throw
+				StringEncodingFailure
 				.error(
 					for: self,
 					encoding: encoding
@@ -135,4 +137,3 @@ public struct StringDecodingFailure: TheError {
 	/// Error group associated with this error instance.
 	public var group: TheErrorGroup
 }
-

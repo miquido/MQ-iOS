@@ -26,7 +26,8 @@ extension Error {
 			return theError
 
 		case let convertible as TheErrorConvertible:
-			return convertible
+			return
+				convertible
 				.convertToTheError(
 					file: file,
 					line: line
