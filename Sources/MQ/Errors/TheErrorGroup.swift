@@ -36,7 +36,7 @@ extension TheErrorGroup {
 		var result: Array<TheErrorGroup.Identifier> = .init()
 		for identifier in groups.flatMap(\.identifiers) {
 			if added.contains(identifier) {
-				continue // skip duplicates
+				continue  // skip duplicates
 			}
 			else {
 				result.append(identifier)

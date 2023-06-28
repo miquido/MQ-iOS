@@ -45,7 +45,7 @@ public struct Unreachable: TheError {
 /// - Parameters:
 ///   - message: Message associated with this error.
 ///   - group: ``TheErrorGroup`` associated with this error instance.
-///   Default value is ``TheErrorGroup.default``.   
+///   Default value is ``TheErrorGroup.default``.
 ///   - file: Source code file identifier.
 ///   Filled automatically based on compile time constants.
 ///   - line: Line in given source code file.

@@ -242,7 +242,7 @@ public func unimplemented2<A1, A2, R>(
 ///   - message: Message associated with this error.
 ///   Default value is "Unimplemented".
 ///   - group: ``TheErrorGroup`` associated with this error instance.
-///   Default value is ``TheErrorGroup.default``.   
+///   Default value is ``TheErrorGroup.default``.
 ///   - file: Source code file identifier.
 ///   Filled automatically based on compile time constants.
 ///   - line: Line in given source code file.
@@ -638,7 +638,7 @@ public func unimplemented8<A1, A2, A3, A4, A5, A6, A7, A8, R>(
 ///   - message: Message associated with this error.
 ///   Default value is "Unimplemented".
 ///   - group: ``TheErrorGroup`` associated with this error instance.
-///   Default value is ``TheErrorGroup.default``.   
+///   Default value is ``TheErrorGroup.default``.
 ///   - file: Source code file identifier.
 ///   Filled automatically based on compile time constants.
 ///   - line: Line in given source code file.

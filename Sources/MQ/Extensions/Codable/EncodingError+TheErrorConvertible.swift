@@ -6,7 +6,8 @@ extension EncodingError: TheErrorConvertible {
 	) -> TheError {
 		switch self {
 		case .invalidValue(let value, let context):
-			return InvalidValue
+			return
+				InvalidValue
 				.error(
 					message: "Trying to encode invalid value",
 					value: value,
@@ -16,7 +17,8 @@ extension EncodingError: TheErrorConvertible {
 				.with(context, for: "encoding context")
 
 		@unknown case _:
-			return Unexpected
+			return
+				Unexpected
 				.error(
 					message: "Unknown encoding error",
 					underlyingError: self,

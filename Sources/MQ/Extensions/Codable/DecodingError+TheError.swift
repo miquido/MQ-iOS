@@ -6,7 +6,8 @@ extension DecodingError: TheErrorConvertible {
 	) -> TheError {
 		switch self {
 		case .valueNotFound(let type, let context):
-			return ValueNotFound
+			return
+				ValueNotFound
 				.error(
 					message: "Trying to decode missing value",
 					type: type,
@@ -16,7 +17,8 @@ extension DecodingError: TheErrorConvertible {
 				.with(context, for: "decoding context")
 
 		case .dataCorrupted(let context):
-			return DataCorrupted
+			return
+				DataCorrupted
 				.error(
 					message: "Trying to decode corrupted data",
 					file: file,
@@ -25,7 +27,8 @@ extension DecodingError: TheErrorConvertible {
 				.with(context, for: "decoding context")
 
 		case .typeMismatch(let type, let context):
-			return TypeMismatch
+			return
+				TypeMismatch
 				.error(
 					message: "Trying to decode invalid value",
 					type: type,
@@ -35,7 +38,8 @@ extension DecodingError: TheErrorConvertible {
 				.with(context, for: "decoding context")
 
 		case .keyNotFound(let key, let context):
-			return KeyNotFound
+			return
+				KeyNotFound
 				.error(
 					message: "Trying to decode missing value",
 					key: key,
@@ -45,7 +49,8 @@ extension DecodingError: TheErrorConvertible {
 				.with(context, for: "decoding context")
 
 		@unknown case _:
-			return Unexpected
+			return
+				Unexpected
 				.error(
 					message: "Unknown decoding error",
 					underlyingError: self,
