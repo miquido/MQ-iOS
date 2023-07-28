@@ -46,6 +46,15 @@ public protocol TheError: Error, CustomStringConvertible, CustomDebugStringConve
 	func isEqual(
 		to other: Error
 	) -> Bool
+	/// Log this error.
+	///
+	/// Logging is provided by this method implemetation.
+	/// Default uses ``Diagnostics.shared`` instance with description
+	/// or debugDescription in message content.
+	///
+	/// - Returns: The same error instance.
+	@discardableResult
+	@Sendable func log() -> Self
 }
 
 // swift-format-ignore: AllPublicDeclarationsHaveDocumentation
