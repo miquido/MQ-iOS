@@ -69,6 +69,7 @@ extension Diagnostics {
 		Self.enabled = false
 	}
 
+    nonisolated(unsafe)
 	private static var enabled: Bool = {
 		// Disabled automatically for XCTest
 		!(Bundle.main.infoDictionary?["CFBundleName"] as? String == "xctest"
@@ -113,11 +114,13 @@ extension Diagnostics {
 
 	private static func live() -> Self {
 		#if os(iOS)
-		let device: String = UIDevice.current.model
-		#elseif os(watchOS)
+        let device: String = "iPhone"
+        #elseif os(watchOS)
 		let device: String = "Apple Watch"
 		#elseif os(tvOS)
 		let device: String = "Apple TV"
+        #elseif os(visionOS)
+        let device: String = "Apple Vision"
 		#else
 		let device: String = "Mac"
 		#endif

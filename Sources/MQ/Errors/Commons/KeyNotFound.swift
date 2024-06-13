@@ -1,5 +1,5 @@
 /// ``TheError`` for key not found errors.
-public struct KeyNotFound<Key>: TheError {
+public struct KeyNotFound<Key: Sendable>: TheError {
 
 	/// Create instance of ``KeyNotFound`` error.
 	///

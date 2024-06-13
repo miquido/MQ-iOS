@@ -16,6 +16,7 @@
 /// the error type name if no value was set.
 public enum TheErrorDisplayableMessages {
 
+    nonisolated(unsafe)
 	fileprivate static let storage: CriticalSection<Dictionary<AnyHashable, DisplayableString>> = .init(
 		.init()
 	)

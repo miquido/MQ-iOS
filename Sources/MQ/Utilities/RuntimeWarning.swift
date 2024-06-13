@@ -27,6 +27,7 @@ private struct RuntimeWarningHandle {
 	}
 }
 
+nonisolated(unsafe)
 private let runtimeWarningHandle: RuntimeWarningHandle = .init(
 	dso: { () -> UnsafeMutableRawPointer in
 		let count: UInt32 = _dyld_image_count()

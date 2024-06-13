@@ -23,7 +23,7 @@ public struct MultipleIssues: TheError {
 	/// - Returns: New instance of ``MultipleIssues`` error with given context.
 	public static func error(
 		message: StaticString = "MultipleIssues",
-		displayableMessageExtraction: @escaping (Self) -> DisplayableString = { (self: Self) -> DisplayableString in
+		displayableMessageExtraction: @escaping @Sendable (Self) -> DisplayableString = { (self: Self) -> DisplayableString in
 			TheErrorDisplayableMessages.message(for: self)
 		},
 		collecting errors: TheError...,
@@ -52,7 +52,7 @@ public struct MultipleIssues: TheError {
 		self.displayableMessageExtraction(self)
 	}
 
-	private let displayableMessageExtraction: (Self) -> DisplayableString
+	private let displayableMessageExtraction: @Sendable (Self) -> DisplayableString
 }
 
 extension MultipleIssues: TheErrorCollection {

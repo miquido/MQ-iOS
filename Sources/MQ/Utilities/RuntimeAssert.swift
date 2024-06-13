@@ -6,6 +6,7 @@
 /// - warning: If you replace this implementation you are responsible for release behaviour of it.
 ///
 /// - warning: Implementation exchange is not thread safe.
+nonisolated(unsafe)
 public var runtimeAssertionMethod: RuntimeAssertionMethod? = { condition, message, file, line in
 	assert(
 		condition(),

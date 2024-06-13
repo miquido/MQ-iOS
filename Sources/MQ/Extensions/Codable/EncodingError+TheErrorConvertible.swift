@@ -10,7 +10,8 @@ extension EncodingError: TheErrorConvertible {
 				InvalidValue
 				.error(
 					message: "Trying to encode invalid value",
-					value: value,
+                    // TODO: - convert `value` to `any Sendable`
+                    value: String(describing: value),
 					file: file,
 					line: line
 				)

@@ -87,8 +87,8 @@ public struct SourceCodeContext: Sendable {
 	///   - value: Any value to be associated with given key with the last ``SourceCodeMeta`` in this ``SourceCodeContext``.
 	///   Replaces previous value for the same key if it already exists in last ``SourceCodeMeta``.
 	///   - key: Key used to identify provided value.
-	public mutating func set<Value>(
-		_ value: @autoclosure () -> Value,
+    public mutating func set<Value: Sendable>(
+		_ value: @autoclosure @Sendable () -> Value,
 		for key: StaticString
 	) {
 		#if DEBUG
@@ -108,8 +108,8 @@ public struct SourceCodeContext: Sendable {
 	///   Replaces previous value for the same key if it already exists in last ``SourceCodeMeta``.
 	///   - key: Key used to identify provided value.
 	/// - Returns: Copy of this ``SourceCodeContext`` with additional value associated with last ``SourceCodeMeta`` in the copy.
-	public func with<Value>(
-		_ value: @autoclosure () -> Value,
+    public func with<Value: Sendable>(
+		_ value: @autoclosure @Sendable () -> Value,
 		for key: StaticString
 	) -> Self {
 		#if DEBUG

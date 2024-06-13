@@ -238,7 +238,7 @@ extension TheError {
 	/// - Returns: The same error instance.
 	@discardableResult @_transparent
 	@Sendable public func asBreakpoint(
-		message: @autoclosure () -> String = .init(),
+		message: @autoclosure @Sendable () -> String = .init(),
 		file: StaticString = #fileID,
 		line: UInt = #line
 	) -> Self {
@@ -341,8 +341,8 @@ extension TheError {
 	///   Replaces previous value for the same key if it already exists in last ``SourceCodeMeta``.
 	///   - key: Key used to identify provided value.
 	@_transparent
-	public mutating func set<Value>(
-		_ value: @autoclosure () -> Value,
+    public mutating func set<Value: Sendable>(
+		_ value: @autoclosure @Sendable () -> Value,
 		for key: StaticString
 	) {
 		#if DEBUG
@@ -364,8 +364,8 @@ extension TheError {
 	/// - Returns: Copy of this error with additional value associated with last
 	///  ``SourceCodeMeta`` in the copy.
 	@_transparent
-	@Sendable public func with<Value>(
-		_ value: @autoclosure () -> Value,
+    @Sendable public func with<Value: Sendable>(
+		_ value: @autoclosure @Sendable () -> Value,
 		for key: StaticString
 	) -> Self {
 		#if DEBUG

@@ -18,7 +18,8 @@ public struct InvalidValue: TheError {
 	///   - line: Line in given source code file.
 	///   Filled automatically based on compile time constants.
 	/// - Returns: New instance of ``InvalidValue`` error with given context.
-	public static func error<Value>(
+    
+    public static func error<Value: Sendable>(
 		message: StaticString,
 		group: TheErrorGroup = .default,
 		value: Value,
@@ -41,5 +42,5 @@ public struct InvalidValue: TheError {
 	/// Error group associated with this error instance.
 	public var group: TheErrorGroup
 	/// Value which was recognized as invalid.
-	public let value: Any
+	public let value: any Sendable
 }

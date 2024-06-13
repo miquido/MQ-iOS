@@ -8,7 +8,7 @@
 /// more than one identifier. Order of identifiers
 /// mattrers. It is used i.e. to find matching
 /// messages from ``TheErrorDisplayableMessages``.
-public struct TheErrorGroup {
+public struct TheErrorGroup: Sendable {
 
 	private let identifiers: Array<Identifier>
 }
@@ -53,7 +53,7 @@ extension TheErrorGroup {
 extension TheErrorGroup {
 
 	/// Identifier of error group.
-	public struct Identifier {
+	public struct Identifier: Sendable {
 
 		fileprivate let identifier: StaticString
 	}
