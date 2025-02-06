@@ -1,5 +1,5 @@
 // swift-format-ignore: AllPublicDeclarationsHaveDocumentation
-extension StaticString: Hashable {
+extension StaticString: @retroactive Hashable {
 
 	public static func == (
 		_ lhs: StaticString,
